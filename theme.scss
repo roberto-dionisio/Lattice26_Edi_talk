@@ -1,0 +1,202 @@
+/*-- scss:defaults --*/
+
+// Layered on top of the metropolis-beamer extension. Same four colors the figures
+// use (see figures/talkstyle.py) so slides and plots speak one language.
+$primary-color: #0c2344;
+$bulk-color:   #23373b;  // bulk coupling      (theme primary)
+$defect-color: #eb811b;  // defect coupling    (theme secondary)
+$easy-color:   #3b7ea1;  // easy / reference distribution
+$target-color: #9c162a;  // target distribution
+$muted-color:  #8a9aa0;
+
+/*-- scss:rules --*/
+
+// --- one-line asides: present but not competing with the figure ---------------
+.reveal .note {
+  font-size: 0.62em;
+  color: $muted-color;
+  line-height: 1.45;
+}
+
+.reveal .lead {
+  font-size: 0.78em;
+  color: #33474b;
+}
+
+// --- the result you want them to leave with ----------------------------------
+.reveal .eqbox {
+  display: inline-block;
+  border: 1.5px solid $defect-color;
+  border-radius: 4px;
+  background: rgba(235, 129, 27, 0.06);
+  padding: 0.1em 0.9em;
+  margin: 0.2em 0;
+}
+
+// --- semantic color, matching the figures -------------------------------------
+.reveal .bulk   { color: $bulk-color; }
+.reveal .defect { color: $defect-color; }
+.reveal .easy   { color: $easy-color; }
+.reveal .target { color: $target-color; }
+
+// --- boxes-and-arrows diagrams (slides 10 and 11) ------------------------------
+.reveal .flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9em;
+  margin: 0.5em 0;
+  font-size: 0.8em;
+}
+
+.reveal .flow .box {
+  border: 1.5px solid $bulk-color;
+  border-radius: 4px;
+  padding: 0.28em 1.1em;
+  color: $bulk-color;
+  white-space: nowrap;
+}
+
+.reveal .flow .box.net {
+  border-color: $defect-color;
+  color: $defect-color;
+  background: rgba(235, 129, 27, 0.06);
+}
+
+.reveal .flow .arrow {
+  color: $muted-color;
+  font-size: 1.3em;
+  line-height: 1;
+}
+
+// Two boxes trading information back and forth: the training loop.
+.reveal .loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  margin-top: 0.6em;
+  font-size: 0.78em;
+}
+
+.reveal .loop .box {
+  border: 1.5px solid $bulk-color;
+  border-radius: 4px;
+  padding: 0.3em 1.0em;
+  color: $bulk-color;
+  text-align: center;
+}
+
+.reveal .loop .exchange {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  color: $muted-color;
+  font-size: 0.82em;
+  text-align: center;
+  min-width: 8.5em;
+}
+
+// --- figures: fill their column, never taller than the slide -------------------
+// Scoped to .slides so the header logo (which the theme's JS lifts out of .slides)
+// is left alone. Width + max-height together still preserve aspect ratio: the CSS
+// min/max algorithm recomputes the width when the height cap bites.
+.reveal figure { margin: 0; }
+
+.reveal .slides img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  max-height: 56vh;
+}
+
+// Slide 12 is the money slide: give it the extra room.
+.reveal .money img { max-height: 66vh; }
+
+// --- slide 2: the plot whose curves draw themselves on --------------------------
+// The figure is inlined as SVG (figures/_fig02_overlay.qmd) so its two curves can
+// be reveal fragments. Each curve group is .draw-line and shares a fragment step
+// with its equation on the left; the base frame (axes, arrow) has no fragment
+// class, so it is always on screen.
+.reveal .slides svg.anim-fig {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  max-height: 56vh;
+  overflow: visible;
+}
+
+// Before its step the whole curve group is hidden by reveal's fragment opacity, so
+// there is no half-drawn flash. On its step the stroke unspools from one end:
+// --len is the path's own length, set by the getTotalLength() script in the qmd
+// header (the fallback only bites if that script hasn't run).
+.reveal .slides svg.anim-fig .draw-line path {
+  stroke-dasharray: var(--len, 3000);
+  stroke-dashoffset: var(--len, 3000);
+}
+.reveal .slides svg.anim-fig .draw-line.visible path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.9s ease-in-out;
+}
+
+// Slide 3: the Q=+1 worldline wraps across the periodic edge, so it is drawn in
+// two pieces. The second (upper) piece waits for the first to reach the edge, so
+// the pen runs bottom -> right edge -> left edge -> top, tracing the periodicity.
+.reveal .slides svg.anim-fig .draw-line.draw-seq2.visible path {
+  transition-delay: 0.9s;
+}
+
+// Slide 3: the two boxes live in the left column, so fill the column width and
+// just cap the height (so a tall/narrow projector can't blow them up).
+.reveal .slides svg.ring-fig {
+  width: 100%;
+  height: auto;
+  max-height: 48vh;
+  margin: 0 auto;
+}
+
+// --- footer / slide number: present, quiet ------------------------------------
+.reveal .footer {
+  font-size: 0.42em;
+  color: $muted-color;
+  opacity: 0.85;
+}
+
+.reveal .slide-number {
+  font-size: 0.5em;
+  color: $muted-color;
+  background: transparent;
+}
+
+// Two logos share the header (Pisa + Edinburgh), so let the combined image be
+// wider than the single-logo default and keep it clear of the title.
+.reveal .header-logo img {
+  max-width: max(160px, 16vw);
+  max-height: max(62px, 9vh);
+}
+
+// Title slide: a small "in collaboration with" line under the author block.
+.reveal #title-slide .quarto-title-authors::after {
+  content: "In collaboration with  Elia Cellini, Gurtej Kanwar, Satria Widyanto";
+  display: block;
+  font-size: 0.7em;
+  font-style: italic;
+  color: $muted-color;
+  margin-top: 0.3em;
+}
+
+// Title slide: the two institution wordmarks, injected as an <img> by the script
+// in the qmd header and pinned to the lower-left (overriding the generic .slides
+// img sizing).
+.reveal #title-slide .title-logos {
+  position: absolute;
+  left: 35%;
+  bottom: 7%;
+  width: min(62%, 820px);
+  height: auto;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+}

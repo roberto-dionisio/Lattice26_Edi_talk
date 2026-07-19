@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="optimal_annealing_files/libs/clipboard/clipboard.min.js"></script>
+<script src="optimal_annealing_files/libs/quarto-html/tabby.min.js"></script>
+<script src="optimal_annealing_files/libs/quarto-html/popper.min.js"></script>
+<script src="optimal_annealing_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="optimal_annealing_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="optimal_annealing_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="optimal_annealing_files/libs/quarto-html/quarto-syntax-highlighting-f8b45d2e6062d3f0773618a8522056e4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="author" content="Roberto Dionisio">
+  <meta name="dcterms.date" content="2026-07-19">
+  <title>Optimal Paths through Distribution Space for Mitigating Topological Freezing</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="optimal_annealing_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="optimal_annealing_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="optimal_annealing_files/libs/revealjs/dist/theme/quarto-22bbf2294e4bbe04200581f75f378eb6.css">
+  <link href="optimal_annealing_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="optimal_annealing_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="optimal_annealing_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="optimal_annealing_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        packages: {'[+]': ['ams', 'color']},
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      loader: {
+        load: ['[tex]/color']
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+  <script>
+    // Slide 2: give each draw-on curve its own path length, so the CSS
+    // stroke-dashoffset animation (theme.scss, svg.anim-fig) reveals it cleanly.
+    // Re-run on slide changes because getTotalLength() can read 0 on a slide
+    // that wasn't visible yet at load.
+    (function () {
+      function setLens() {
+        document.querySelectorAll('svg.anim-fig .draw-line path').forEach(function (p) {
+          var L = p.getTotalLength();
+          if (L > 0) p.style.setProperty('--len', Math.ceil(L));
+        });
+      }
+      window.addEventListener('load', function () {
+        setLens();
+        if (window.Reveal && Reveal.on) {
+          Reveal.on('ready', setLens);
+          Reveal.on('slidechanged', setLens);
+        }
+      });
+    })();
+  </script>
+  <script>
+    // Slide 6: when the optimal schedule fragment (#sched-optrow) is revealed,
+    // slide each tick from its uniform x (data-u) to its clustered x (data-c),
+    // so the row "rearranges" from the naive schedule into the optimal one.
+    (function () {
+      function morph(g, forward) {
+        var ticks = g.querySelectorAll('.opt-tick'), dur = 1000, t0 = null;
+        function ease(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+        function frame(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min(1, (ts - t0) / dur), e = forward ? ease(p) : 1 - ease(p);
+          ticks.forEach(function (ln) {
+            var u = parseFloat(ln.dataset.u), c = parseFloat(ln.dataset.c);
+            var x = (u + (c - u) * e).toFixed(1);
+            ln.setAttribute('x1', x); ln.setAttribute('x2', x);
+          });
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+      (function wire() {
+        if (!(window.Reveal && Reveal.on)) { setTimeout(wire, 100); return; }
+        Reveal.on('fragmentshown', function (e) {
+          if (e.fragment.id === 'sched-optrow') morph(e.fragment, true);
+        });
+        Reveal.on('fragmenthidden', function (e) {
+          if (e.fragment.id === 'sched-optrow') morph(e.fragment, false);
+        });
+      })();
+    })();
+  </script>
+  <script>
+    // Title slide: drop the two institution wordmarks into the lower-left.
+    // Injected as a real <img> (src resolves relative to the page) rather than a
+    // reveal background, which would tint the title text.
+    window.addEventListener('load', function () {
+      var ts = document.getElementById('title-slide');
+      if (ts && !ts.querySelector('.title-logos')) {
+        var img = document.createElement('img');
+        img.className = 'title-logos';
+        img.src = 'title_logos.png';
+        img.alt = 'University of Pisa and University of Edinburgh';
+        ts.appendChild(img);
+      }
+    });
+  </script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block">
+  <h1 class="title">Optimal Paths through Distribution Space for Mitigating Topological Freezing</h1>
+  <p class="subtitle">Fisher geodesics and learned coupling fields in <span class="math inline">\(CP^{N-1}\)</span> <br> <span class="workshop" style="display:block;text-align:left">The 43rd International Symposium on Lattice Field Theory </span></p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Roberto Dionisio 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:roberto.dionisio@phd.unipi.it">roberto.dionisio@phd.unipi.it</a>
+</div>
+        <p class="quarto-title-affiliation">
+            University of Pisa
+          </p>
+    </div>
+</div>
+
+  <p class="date">July 19, 2026</p>
+</section>
+<section id="two-flavors-of-critical-slowing-down" class="slide level2">
+<h2>Two flavors of critical slowing down</h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<div class="fragment" data-fragment-index="0" style="margin-top:90px">
+<p>Standard critical slowing down:</p>
+<p><span class="math display">\[\tau_{\mathrm{int}}(\mathcal{O}) \;\sim\; a^{-z}\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="1">
+<p>Topological freezing:</p>
+<p><span class="math display">\[\tau_{\mathrm{int}}(Q^2) \;\sim\; e^{\,c/a}\]</span></p>
+</div>
+</div><div class="column" style="width:58%;">
+<svg class="anim-fig" xlink="http://www.w3.org/1999/xlink" viewbox="0 0 381.17 263.752644" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:rdf xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+    <dc:date>2026-07-17T19:34:52.787146</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:agent>
+    </dc:creator>
+   </cc:work>
+  </rdf:rdf>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 263.752644 
+L 381.17 263.752644 
+L 381.17 0 
+L 0 0 
+L 0 263.752644 
+z
+" style="fill: none"></path>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 22.61 223.2 
+L 379.73 223.2 
+L 379.73 1.44 
+L 22.61 1.44 
+L 22.61 223.2 
+z
+" style="fill: none"></path>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="text_1">
+     <!-- $1/a$ -->
+     <g style="fill: #33474b" transform="translate(192.92 235.45) scale(0.11 -0.11)">
+      <defs>
+       <path id="FiraSans-Light-31" d="M 1869 4256 
+L 1869 0 
+L 1498 0 
+L 1498 3846 
+L 448 3194 
+L 275 3469 
+L 1549 4256 
+L 1869 4256 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Light-2f" d="M 2246 5139 
+L 2566 5056 
+L 1082 -640 
+L 762 -557 
+L 2246 5139 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-LightItalic-61" d="M 2093 3418 
+Q 2406 3418 2656 3347 
+Q 2906 3277 3168 3142 
+L 2816 730 
+Q 2803 659 2803 538 
+Q 2803 403 2851 323 
+Q 2899 243 3014 192 
+L 2906 -70 
+Q 2682 -19 2566 118 
+Q 2451 256 2458 538 
+Q 2266 256 2000 93 
+Q 1734 -70 1427 -70 
+Q 928 -70 649 278 
+Q 371 627 371 1229 
+Q 371 1728 550 2233 
+Q 730 2739 1117 3078 
+Q 1504 3418 2093 3418 
+z
+M 2106 3117 
+Q 1651 3117 1347 2822 
+Q 1043 2528 905 2093 
+Q 768 1658 768 1229 
+Q 768 742 953 492 
+Q 1139 243 1485 243 
+Q 1786 243 2026 422 
+Q 2266 602 2483 947 
+L 2771 2963 
+Q 2464 3117 2106 3117 
+z
+" transform="scale(0.015625)"></path>
+      </defs>
+      <use href="#FiraSans-Light-31" transform="translate(0 0.703125)"></use>
+      <use href="#FiraSans-Light-2f" transform="translate(41.299988 0.703125)"></use>
+      <use href="#FiraSans-LightItalic-61" transform="translate(93.299973 0.703125)"></use>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m352661e5aa" d="M 0 0 
+L -2 0 
+" style="stroke: #33474b; stroke-width: 0.6"></path>
+      </defs>
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="223.2" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_2">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="219.628445" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_3">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="195.415164" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_4">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="183.120177" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_5">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="174.396746" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_6">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="167.630327" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_7">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="162.10176" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_8">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="157.427423" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_9">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="153.378329" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_10">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="149.806774" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_11">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="125.593492" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_12">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="113.298506" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_13">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="104.575075" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_14">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="97.808656" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_15">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="92.280089" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_16">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="87.605752" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_17">
+     <g id="line2d_17">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="83.556657" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_18">
+     <g id="line2d_18">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="79.985103" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_19">
+     <g id="line2d_19">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="55.771821" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_20">
+     <g id="line2d_20">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="43.476835" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_21">
+     <g id="line2d_21">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="34.753403" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_22">
+     <g id="line2d_22">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="27.986984" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_23">
+     <g id="line2d_23">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="22.458417" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_24">
+     <g id="line2d_24">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="17.784081" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_25">
+     <g id="line2d_25">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="13.734986" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_26">
+     <g id="line2d_26">
+      <g>
+       <use href="#m352661e5aa" x="22.61" y="10.163431" style="fill: #33474b; stroke: #33474b; stroke-width: 0.6"></use>
+      </g>
+     </g>
+    </g>
+    <g id="text_2">
+     <!-- $\tau$   (log scale) -->
+     <g style="fill: #33474b" transform="translate(10.79 144.605) rotate(-90) scale(0.11 -0.11)">
+      <defs>
+       <path id="FiraSans-LightItalic-3c4" d="M 1395 781 
+Q 1382 640 1382 602 
+Q 1382 448 1436 368 
+Q 1491 288 1626 230 
+L 1485 -51 
+Q 1229 32 1120 176 
+Q 1011 320 1011 570 
+Q 1011 627 1024 781 
+L 1338 3034 
+L 826 3034 
+Q 582 3034 454 3021 
+Q 326 3008 192 2963 
+L 141 3264 
+Q 262 3309 435 3328 
+Q 608 3347 883 3347 
+L 2963 3347 
+L 2912 3034 
+L 1709 3034 
+L 1395 781 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-20" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-28" d="M 1818 5152 
+Q 1485 4659 1289 4272 
+Q 1094 3885 982 3392 
+Q 870 2899 870 2240 
+Q 870 1587 982 1094 
+Q 1094 602 1289 208 
+Q 1485 -186 1818 -672 
+L 1446 -928 
+Q 1024 -326 797 61 
+Q 570 448 413 989 
+Q 256 1530 256 2240 
+Q 256 2950 413 3491 
+Q 570 4032 797 4419 
+Q 1024 4806 1446 5408 
+L 1818 5152 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-6c" d="M 1280 -77 
+Q 954 -77 765 118 
+Q 576 314 576 666 
+L 576 4730 
+L 1165 4800 
+L 1165 678 
+Q 1165 538 1213 474 
+Q 1261 410 1376 410 
+Q 1498 410 1594 448 
+L 1747 38 
+Q 1536 -77 1280 -77 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-6f" d="M 1875 3450 
+Q 2586 3450 2979 2976 
+Q 3373 2502 3373 1690 
+Q 3373 1165 3193 765 
+Q 3014 365 2675 144 
+Q 2336 -77 1869 -77 
+Q 1158 -77 761 396 
+Q 365 870 365 1683 
+Q 365 2208 544 2608 
+Q 723 3008 1062 3229 
+Q 1402 3450 1875 3450 
+z
+M 1875 2976 
+Q 998 2976 998 1683 
+Q 998 397 1869 397 
+Q 2739 397 2739 1690 
+Q 2739 2976 1875 2976 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-67" d="M 3328 3219 
+Q 3136 3155 2905 3136 
+Q 2675 3117 2342 3117 
+Q 2938 2848 2938 2266 
+Q 2938 1760 2592 1440 
+Q 2246 1120 1651 1120 
+Q 1421 1120 1222 1184 
+Q 1146 1133 1101 1046 
+Q 1056 960 1056 870 
+Q 1056 595 1498 595 
+L 2035 595 
+Q 2374 595 2636 473 
+Q 2899 352 3043 141 
+Q 3187 -70 3187 -339 
+Q 3187 -832 2784 -1097 
+Q 2381 -1363 1606 -1363 
+Q 1062 -1363 745 -1251 
+Q 429 -1139 294 -915 
+Q 160 -691 160 -339 
+L 691 -339 
+Q 691 -544 768 -662 
+Q 845 -781 1043 -841 
+Q 1242 -902 1606 -902 
+Q 2138 -902 2365 -771 
+Q 2592 -640 2592 -378 
+Q 2592 -141 2413 -19 
+Q 2234 102 1914 102 
+L 1382 102 
+Q 954 102 733 284 
+Q 512 467 512 742 
+Q 512 909 608 1062 
+Q 704 1216 883 1338 
+Q 589 1491 451 1718 
+Q 314 1946 314 2272 
+Q 314 2611 483 2880 
+Q 653 3149 950 3299 
+Q 1248 3450 1613 3450 
+Q 2010 3443 2278 3478 
+Q 2547 3514 2723 3574 
+Q 2899 3635 3155 3750 
+L 3328 3219 
+z
+M 1613 3027 
+Q 1280 3027 1097 2819 
+Q 915 2611 915 2272 
+Q 915 1926 1100 1718 
+Q 1286 1510 1626 1510 
+Q 1971 1510 2153 1712 
+Q 2336 1914 2336 2278 
+Q 2336 3027 1613 3027 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-73" d="M 1523 3450 
+Q 1869 3450 2144 3354 
+Q 2419 3258 2669 3066 
+L 2419 2694 
+Q 2189 2842 1981 2912 
+Q 1773 2982 1542 2982 
+Q 1254 2982 1088 2864 
+Q 922 2746 922 2541 
+Q 922 2336 1078 2221 
+Q 1235 2106 1645 1997 
+Q 2208 1856 2486 1613 
+Q 2765 1370 2765 947 
+Q 2765 448 2377 185 
+Q 1990 -77 1434 -77 
+Q 666 -77 160 365 
+L 474 723 
+Q 902 397 1421 397 
+Q 1754 397 1949 534 
+Q 2144 672 2144 909 
+Q 2144 1082 2073 1187 
+Q 2003 1293 1830 1373 
+Q 1658 1453 1325 1542 
+Q 787 1683 547 1920 
+Q 307 2157 307 2522 
+Q 307 2784 464 2998 
+Q 621 3213 899 3331 
+Q 1178 3450 1523 3450 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-63" d="M 1837 3450 
+Q 2138 3450 2387 3363 
+Q 2637 3277 2867 3085 
+L 2586 2714 
+Q 2406 2842 2236 2902 
+Q 2067 2963 1862 2963 
+Q 1453 2963 1225 2636 
+Q 998 2310 998 1670 
+Q 998 1030 1222 726 
+Q 1446 422 1862 422 
+Q 2061 422 2227 483 
+Q 2394 544 2598 678 
+L 2867 294 
+Q 2406 -77 1837 -77 
+Q 1152 -77 758 384 
+Q 365 845 365 1658 
+Q 365 2195 544 2598 
+Q 723 3002 1052 3226 
+Q 1382 3450 1837 3450 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-61" d="M 2880 787 
+Q 2880 582 2950 483 
+Q 3021 384 3162 333 
+L 3027 -77 
+Q 2765 -45 2605 70 
+Q 2445 186 2368 429 
+Q 2029 -77 1363 -77 
+Q 864 -77 576 204 
+Q 288 486 288 941 
+Q 288 1478 675 1766 
+Q 1062 2054 1773 2054 
+L 2291 2054 
+L 2291 2304 
+Q 2291 2662 2118 2816 
+Q 1946 2970 1587 2970 
+Q 1216 2970 678 2790 
+L 531 3219 
+Q 1158 3450 1696 3450 
+Q 2291 3450 2585 3158 
+Q 2880 2867 2880 2330 
+L 2880 787 
+z
+M 1498 365 
+Q 2003 365 2291 890 
+L 2291 1664 
+L 1850 1664 
+Q 915 1664 915 973 
+Q 915 672 1062 518 
+Q 1210 365 1498 365 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-65" d="M 3155 1786 
+Q 3155 1638 3142 1485 
+L 992 1485 
+Q 1030 928 1273 665 
+Q 1517 403 1901 403 
+Q 2144 403 2349 473 
+Q 2554 544 2778 698 
+L 3034 346 
+Q 2496 -77 1856 -77 
+Q 1152 -77 758 384 
+Q 365 845 365 1651 
+Q 365 2176 534 2582 
+Q 704 2989 1021 3219 
+Q 1338 3450 1766 3450 
+Q 2438 3450 2796 3008 
+Q 3155 2566 3155 1786 
+z
+M 2573 1958 
+Q 2573 2458 2374 2720 
+Q 2176 2982 1779 2982 
+Q 1056 2982 992 1920 
+L 2573 1920 
+L 2573 1958 
+z
+" transform="scale(0.015625)"></path>
+       <path id="FiraSans-Regular-29" d="M 627 5408 
+Q 1050 4806 1277 4419 
+Q 1504 4032 1661 3491 
+Q 1818 2950 1818 2240 
+Q 1818 1530 1661 989 
+Q 1504 448 1277 61 
+Q 1050 -326 627 -928 
+L 256 -672 
+Q 589 -186 784 208 
+Q 979 602 1091 1094 
+Q 1203 1587 1203 2240 
+Q 1203 2899 1091 3392 
+Q 979 3885 784 4272 
+Q 589 4659 256 5152 
+L 627 5408 
+z
+" transform="scale(0.015625)"></path>
+      </defs>
+      <use href="#FiraSans-LightItalic-3c4" transform="translate(0 0.5)"></use>
+      <use href="#FiraSans-Regular-20" transform="translate(43.399994 0.5)"></use>
+      <use href="#FiraSans-Regular-20" transform="translate(69.899979 0.5)"></use>
+      <use href="#FiraSans-Regular-20" transform="translate(96.399963 0.5)"></use>
+      <use href="#FiraSans-Regular-28" transform="translate(122.899948 0.5)"></use>
+      <use href="#FiraSans-Regular-6c" transform="translate(155.299942 0.5)"></use>
+      <use href="#FiraSans-Regular-6f" transform="translate(184.59993 0.5)"></use>
+      <use href="#FiraSans-Regular-67" transform="translate(242.999924 0.5)"></use>
+      <use href="#FiraSans-Regular-20" transform="translate(294.999908 0.5)"></use>
+      <use href="#FiraSans-Regular-73" transform="translate(321.499893 0.5)"></use>
+      <use href="#FiraSans-Regular-63" transform="translate(368.19989 0.5)"></use>
+      <use href="#FiraSans-Regular-61" transform="translate(415.999878 0.5)"></use>
+      <use href="#FiraSans-Regular-6c" transform="translate(470.399872 0.5)"></use>
+      <use href="#FiraSans-Regular-65" transform="translate(499.69986 0.5)"></use>
+      <use href="#FiraSans-Regular-29" transform="translate(554.199844 0.5)"></use>
+     </g>
+    </g>
+   </g>
+   <g id="curve-std" class="fragment draw-line" data-fragment-index="0">
+    <path d="M 22.61 216.433581 
+L 26.143043 212.036995 
+L 30.382695 207.150084 
+L 34.622347 202.627766 
+L 38.861998 198.419396 
+L 43.808259 193.852461 
+L 48.754519 189.605483 
+L 53.70078 185.63655 
+L 59.353649 181.397526 
+L 65.006518 177.435541 
+L 71.365995 173.267359 
+L 77.725473 169.367323 
+L 84.791559 165.309198 
+L 91.857645 161.505674 
+L 99.63034 157.58013 
+L 107.403035 153.893306 
+L 115.882339 150.11153 
+L 125.068251 146.264376 
+L 134.960772 142.377239 
+L 144.853292 138.724313 
+L 155.452422 135.040205 
+L 166.75816 131.342521 
+L 178.770507 127.646081 
+L 191.489462 123.963216 
+L 204.915026 120.304074 
+L 219.047198 116.676904 
+L 234.592588 112.922627 
+L 250.844586 109.231367 
+L 267.803194 105.605102 
+L 286.175018 101.906876 
+L 304.546842 98.421266 
+L 304.546842 98.421266 
+" clip-path="url(#p6ea151d352)" style="fill: none; stroke: #3b7ea1; stroke-width: 2.2; stroke-linecap: round"></path>
+   </g>
+   <g id="curve-top" class="fragment draw-line" data-fragment-index="1">
+    <path d="M 22.61 216.433581 
+L 304.546842 34.494581 
+L 304.546842 34.494581 
+" clip-path="url(#p6ea151d352)" style="fill: none; stroke: #9c162a; stroke-width: 2.4; stroke-linecap: round"></path>
+   </g>
+   <g id="patch_3">
+    <path d="M 22.61 223.2 
+L 22.61 1.44 
+" style="fill: none; stroke: #33474b; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"></path>
+   </g>
+   <g id="patch_4">
+    <path d="M 22.61 223.2 
+L 379.73 223.2 
+" style="fill: none; stroke: #33474b; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"></path>
+   </g>
+   <g id="label-std" class="fragment" data-fragment-index="0">
+    <!-- $\tau \sim a^{-z}$ -->
+    <g style="fill: #3b7ea1" transform="translate(311.546842 102.918063) scale(0.13 -0.13)">
+     <defs>
+      <path id="Cmsy10-bb" d="M 447 850 
+Q 378 850 359 1013 
+L 359 1050 
+Q 359 1544 654 1947 
+Q 950 2350 1422 2350 
+Q 1716 2350 1955 2204 
+Q 2194 2059 2516 1768 
+Q 2838 1478 3055 1343 
+Q 3272 1209 3553 1209 
+Q 3806 1209 4006 1346 
+Q 4206 1484 4320 1712 
+Q 4434 1941 4434 2188 
+Q 4453 2350 4525 2350 
+Q 4597 2350 4616 2188 
+L 4616 2150 
+Q 4616 1841 4486 1537 
+Q 4356 1234 4115 1042 
+Q 3875 850 3553 850 
+Q 3259 850 3031 989 
+Q 2803 1128 2481 1417 
+Q 2159 1706 1931 1848 
+Q 1703 1991 1422 1991 
+Q 1172 1991 969 1853 
+Q 766 1716 652 1487 
+Q 538 1259 538 1013 
+Q 519 850 447 850 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-2212" d="M 442 1958 
+L 442 2285 
+L 2714 2285 
+L 2714 1958 
+L 442 1958 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-LightItalic-7a" d="M 2707 3347 
+L 2669 3059 
+L 448 320 
+L 2266 320 
+L 2182 0 
+L -64 0 
+L -19 288 
+L 2195 3021 
+L 518 3021 
+L 563 3347 
+L 2707 3347 
+z
+" transform="scale(0.015625)"></path>
+     </defs>
+     <use href="#FiraSans-LightItalic-3c4" transform="translate(0 0.784375)"></use>
+     <use href="#Cmsy10-bb" transform="translate(60.379993 0.784375)"></use>
+     <use href="#FiraSans-LightItalic-61" transform="translate(155.045538 0.784375)"></use>
+     <use href="#FiraSans-Light-2212" transform="translate(215.471747 37.392188) scale(0.7)"></use>
+     <use href="#FiraSans-LightItalic-7a" transform="translate(249.981738 37.392188) scale(0.7)"></use>
+    </g>
+   </g>
+   <g id="label-top" class="fragment" data-fragment-index="1">
+    <!-- $\tau_{\mathrm{top}} \sim e^{\,c/a}$ -->
+    <g style="fill: #9c162a" transform="translate(311.546842 38.524581) scale(0.13 -0.13)">
+     <defs>
+      <path id="FiraSans-Light-74" d="M 2202 141 
+Q 1882 -70 1498 -70 
+Q 1114 -70 896 157 
+Q 678 384 678 813 
+L 678 3046 
+L 115 3046 
+L 115 3347 
+L 678 3347 
+L 678 4147 
+L 1050 4192 
+L 1050 3347 
+L 1914 3347 
+L 1869 3046 
+L 1050 3046 
+L 1050 832 
+Q 1050 538 1171 394 
+Q 1293 250 1542 250 
+Q 1798 250 2054 397 
+L 2202 141 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-6f" d="M 1830 3418 
+Q 2496 3418 2870 2960 
+Q 3245 2502 3245 1683 
+Q 3245 870 2864 400 
+Q 2483 -70 1824 -70 
+Q 1158 -70 784 394 
+Q 410 858 410 1670 
+Q 410 2202 582 2598 
+Q 755 2995 1075 3206 
+Q 1395 3418 1830 3418 
+z
+M 1830 3104 
+Q 1344 3104 1075 2739 
+Q 806 2374 806 1670 
+Q 806 973 1072 608 
+Q 1338 243 1824 243 
+Q 2310 243 2582 608 
+Q 2854 973 2854 1683 
+Q 2854 2381 2588 2742 
+Q 2323 3104 1830 3104 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-70" d="M 2061 3418 
+Q 2669 3418 2973 2966 
+Q 3277 2515 3277 1690 
+Q 3277 883 2947 406 
+Q 2618 -70 2003 -70 
+Q 1702 -70 1459 54 
+Q 1216 179 1050 390 
+L 1050 -1261 
+L 678 -1312 
+L 678 3347 
+L 998 3347 
+L 1030 2861 
+Q 1216 3123 1481 3270 
+Q 1747 3418 2061 3418 
+z
+M 1933 243 
+Q 2394 243 2637 608 
+Q 2880 973 2880 1690 
+Q 2880 3110 1990 3110 
+Q 1690 3110 1469 2956 
+Q 1248 2803 1050 2534 
+L 1050 755 
+Q 1382 243 1933 243 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-LightItalic-65" d="M 3078 2611 
+Q 3078 1997 2476 1699 
+Q 1875 1402 768 1318 
+L 768 1280 
+Q 768 755 995 505 
+Q 1222 256 1619 256 
+Q 1882 256 2102 336 
+Q 2323 416 2566 589 
+L 2733 326 
+Q 2464 128 2185 29 
+Q 1907 -70 1594 -70 
+Q 1018 -70 698 282 
+Q 378 634 378 1274 
+Q 378 1779 560 2272 
+Q 742 2765 1129 3091 
+Q 1517 3418 2086 3418 
+Q 2554 3418 2816 3190 
+Q 3078 2963 3078 2611 
+z
+M 2086 3110 
+Q 1510 3110 1187 2668 
+Q 864 2227 787 1613 
+Q 1747 1690 2220 1920 
+Q 2694 2150 2694 2598 
+Q 2694 2816 2540 2963 
+Q 2387 3110 2086 3110 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-LightItalic-63" d="M 2048 3418 
+Q 2605 3418 2950 3072 
+L 2739 2835 
+Q 2592 2970 2425 3037 
+Q 2259 3104 2042 3104 
+Q 1594 3104 1309 2816 
+Q 1024 2528 896 2102 
+Q 768 1677 768 1261 
+Q 768 755 989 505 
+Q 1210 256 1606 256 
+Q 1837 256 2032 326 
+Q 2227 397 2432 538 
+L 2592 275 
+Q 2138 -70 1587 -70 
+Q 1024 -70 704 285 
+Q 384 640 384 1280 
+Q 384 1766 557 2259 
+Q 730 2752 1104 3085 
+Q 1478 3418 2048 3418 
+z
+" transform="scale(0.015625)"></path>
+     </defs>
+     <use href="#FiraSans-LightItalic-3c4" transform="translate(0 0.184375)"></use>
+     <use href="#FiraSans-Light-74" transform="translate(43.399994 -15.504687) scale(0.7)"></use>
+     <use href="#FiraSans-Light-6f" transform="translate(67.269987 -15.504687) scale(0.7)"></use>
+     <use href="#FiraSans-Light-70" transform="translate(107.239981 -15.504687) scale(0.7)"></use>
+     <use href="#Cmsy10-bb" transform="translate(167.504817 0.184375)"></use>
+     <use href="#FiraSans-LightItalic-65" transform="translate(262.170363 0.184375)"></use>
+     <use href="#FiraSans-LightItalic-63" transform="translate(327.801772 36.792188) scale(0.7)"></use>
+     <use href="#FiraSans-Light-2f" transform="translate(360.49177 36.792188) scale(0.7)"></use>
+     <use href="#FiraSans-LightItalic-61" transform="translate(396.891759 36.792188) scale(0.7)"></use>
+    </g>
+   </g>
+   <g id="patch_5">
+    <path d="M 79.7492 257.5728 
+Q 161.8868 257.5728 242.906366 257.5728 
+" style="fill: none; stroke: #8a9aa0; stroke-linecap: round"></path>
+    <path d="M 238.506366 255.3728 
+L 242.906366 257.5728 
+L 238.506366 259.7728 
+z
+" style="fill: #8a9aa0; stroke: #8a9aa0; stroke-linecap: round"></path>
+   </g>
+   <g id="text_3">
+    <!-- continuum limit   $a \to 0$ -->
+    <g style="fill: #8a9aa0" transform="translate(251.1668 260.262644) scale(0.1 -0.1)">
+     <defs>
+      <path id="FiraSans-Light-63" d="M 1824 3418 
+Q 2112 3418 2336 3338 
+Q 2560 3258 2771 3078 
+L 2586 2835 
+Q 2419 2970 2243 3034 
+Q 2067 3098 1843 3098 
+Q 1370 3098 1088 2730 
+Q 806 2362 806 1658 
+Q 806 960 1084 608 
+Q 1363 256 1837 256 
+Q 2061 256 2243 326 
+Q 2426 397 2611 538 
+L 2790 288 
+Q 2368 -70 1830 -70 
+Q 1402 -70 1082 134 
+Q 762 339 586 726 
+Q 410 1114 410 1651 
+Q 410 2182 586 2582 
+Q 762 2982 1082 3200 
+Q 1402 3418 1824 3418 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-6e" d="M 2157 3418 
+Q 2611 3418 2851 3149 
+Q 3091 2880 3091 2394 
+L 3091 0 
+L 2720 0 
+L 2720 2342 
+Q 2720 2746 2560 2931 
+Q 2400 3117 2086 3117 
+Q 1766 3117 1520 2941 
+Q 1274 2765 1050 2426 
+L 1050 0 
+L 678 0 
+L 678 3347 
+L 998 3347 
+L 1037 2778 
+Q 1242 3078 1523 3248 
+Q 1805 3418 2157 3418 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-69" d="M 1050 3347 
+L 1050 0 
+L 678 0 
+L 678 3347 
+L 1050 3347 
+z
+M 858 4819 
+Q 986 4819 1062 4742 
+Q 1139 4666 1139 4550 
+Q 1139 4435 1062 4358 
+Q 986 4282 858 4282 
+Q 736 4282 659 4358 
+Q 583 4435 583 4550 
+Q 583 4666 659 4742 
+Q 736 4819 858 4819 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-75" d="M 3027 0 
+L 2707 0 
+L 2688 595 
+Q 2291 -70 1594 -70 
+Q 1139 -70 892 195 
+Q 646 461 646 954 
+L 646 3347 
+L 1018 3347 
+L 1018 992 
+Q 1018 602 1181 419 
+Q 1344 237 1677 237 
+Q 2259 237 2656 922 
+L 2656 3347 
+L 3027 3347 
+L 3027 0 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-6d" d="M 3942 3418 
+Q 4346 3418 4579 3142 
+Q 4813 2867 4813 2394 
+L 4813 0 
+L 4442 0 
+L 4442 2342 
+Q 4442 2739 4291 2928 
+Q 4141 3117 3872 3117 
+Q 3590 3117 3366 2937 
+Q 3142 2758 2931 2426 
+L 2931 0 
+L 2560 0 
+L 2560 2342 
+Q 2560 2739 2409 2928 
+Q 2259 3117 1990 3117 
+Q 1702 3117 1478 2937 
+Q 1254 2758 1050 2426 
+L 1050 0 
+L 678 0 
+L 678 3347 
+L 998 3347 
+L 1030 2778 
+Q 1222 3078 1484 3248 
+Q 1747 3418 2061 3418 
+Q 2381 3418 2598 3242 
+Q 2816 3066 2893 2752 
+Q 3091 3066 3356 3242 
+Q 3622 3418 3942 3418 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-20" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-6c" d="M 1235 -70 
+Q 960 -70 803 90 
+Q 646 250 646 563 
+L 646 4710 
+L 1018 4755 
+L 1018 576 
+Q 1018 250 1286 250 
+Q 1421 250 1517 294 
+L 1619 19 
+Q 1440 -70 1235 -70 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-2192" d="M 4883 2106 
+L 3238 269 
+L 2970 506 
+L 3859 1498 
+Q 4102 1779 4333 1939 
+L 909 1939 
+L 909 2272 
+L 4333 2272 
+Q 4115 2419 3859 2714 
+L 2970 3706 
+L 3238 3942 
+L 4883 2106 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-30" d="M 1760 4326 
+Q 2419 4326 2758 3766 
+Q 3098 3206 3098 2125 
+Q 3098 1050 2755 490 
+Q 2413 -70 1760 -70 
+Q 1101 -70 761 490 
+Q 422 1050 422 2131 
+Q 422 3213 761 3769 
+Q 1101 4326 1760 4326 
+z
+M 1760 4019 
+Q 806 4019 806 2131 
+Q 806 237 1760 237 
+Q 2227 237 2467 697 
+Q 2707 1158 2707 2125 
+Q 2707 3091 2467 3555 
+Q 2227 4019 1760 4019 
+z
+" transform="scale(0.015625)"></path>
+     </defs>
+     <use href="#FiraSans-Light-63" transform="translate(0 0.703125)"></use>
+     <use href="#FiraSans-Light-6f" transform="translate(46.899994 0.703125)"></use>
+     <use href="#FiraSans-Light-6e" transform="translate(103.999985 0.703125)"></use>
+     <use href="#FiraSans-Light-74" transform="translate(162.399979 0.703125)"></use>
+     <use href="#FiraSans-Light-69" transform="translate(196.499969 0.703125)"></use>
+     <use href="#FiraSans-Light-6e" transform="translate(223.499954 0.703125)"></use>
+     <use href="#FiraSans-Light-75" transform="translate(281.899948 0.703125)"></use>
+     <use href="#FiraSans-Light-75" transform="translate(339.799942 0.703125)"></use>
+     <use href="#FiraSans-Light-6d" transform="translate(397.699936 0.703125)"></use>
+     <use href="#FiraSans-Light-20" transform="translate(482.999924 0.703125)"></use>
+     <use href="#FiraSans-Light-6c" transform="translate(510.899918 0.703125)"></use>
+     <use href="#FiraSans-Light-69" transform="translate(539.299911 0.703125)"></use>
+     <use href="#FiraSans-Light-6d" transform="translate(566.299896 0.703125)"></use>
+     <use href="#FiraSans-Light-69" transform="translate(651.599884 0.703125)"></use>
+     <use href="#FiraSans-Light-74" transform="translate(678.599869 0.703125)"></use>
+     <use href="#FiraSans-Light-20" transform="translate(712.69986 0.703125)"></use>
+     <use href="#FiraSans-Light-20" transform="translate(740.599854 0.703125)"></use>
+     <use href="#FiraSans-Light-20" transform="translate(768.499847 0.703125)"></use>
+     <use href="#FiraSans-LightItalic-61" transform="translate(796.399841 0.703125)"></use>
+     <use href="#FiraSans-Light-2192" transform="translate(869.379825 0.703125)"></use>
+     <use href="#FiraSans-Light-30" transform="translate(976.359808 0.703125)"></use>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clippath id="p6ea151d352">
+   <rect x="22.61" y="1.44" width="357.12" height="221.76"></rect>
+  </clippath>
+ </defs>
+</svg>
+</div></div>
+<div class="fragment" data-fragment-index="2" style="margin-top:-75px">
+<ul>
+<li>Topology underlies key QCD phenomena:
+<ul>
+<li>Witten–Veneziano mechanism → <span class="math inline">\(m_{\eta'~}\)</span></li>
+<li>Strong-CP problem (<span class="math inline">\(\theta\)</span>-term)</li>
+<li>QCD thermodynamics</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3" style="font-size:1.0em; font-style:italic; color:gray; margin-top:-50px; margin-left:58%; text-align:left;">
+<p>Why sampling <span style="color: #EB811B;"><strong>Topology</strong></span> is so <span style="color: #EB811B;"><strong>difficult</strong></span>?</p>
+</div>
+</section>
+<section id="where-the-exponential-comes-from" class="slide level2">
+<h2>Where the exponential comes from</h2>
+<div class="columns">
+<div class="column" style="width:58%; margin-top:1em">
+<svg class="anim-fig ring-fig" xlink="http://www.w3.org/1999/xlink" viewbox="0 0 475.856491 229.792982" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:rdf xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+    <dc:date>2026-07-17T19:34:52.819127</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:agent>
+    </dc:creator>
+   </cc:work>
+  </rdf:rdf>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 229.792982 
+L 475.856491 229.792982 
+L 475.856491 -0 
+L 0 -0 
+L 0 229.792982 
+z
+" style="fill: none"></path>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 5.696491 218.44 
+L 222.696491 218.44 
+L 222.696491 1.44 
+L 5.696491 1.44 
+L 5.696491 218.44 
+z
+" style="fill: none"></path>
+   </g>
+   <g id="patch_3">
+    <path d="M 13.310526 210.825965 
+L 203.661404 210.825965 
+L 203.661404 20.475088 
+L 13.310526 20.475088 
+L 13.310526 210.825965 
+z
+" clip-path="url(#pa219570cef)" style="fill: none; stroke: #33474b; stroke-width: 1.1; stroke-linejoin: miter"></path>
+   </g>
+   <g id="matplotlib.axis_1"></g>
+   <g id="matplotlib.axis_2"></g>
+   <g id="wl-q0-0" class="fragment draw-line" data-fragment-index="1">
+    <path d="M 108.485965 210.825965 
+L 131.335873 192.035964 
+L 140.921049 183.866399 
+L 147.623707 177.875384 
+L 152.792953 172.973645 
+L 157.069739 168.616543 
+L 160.507086 164.804079 
+L 163.397127 161.263934 
+L 165.769634 157.996108 
+L 167.666593 155.0006 
+L 169.139159 152.277412 
+L 170.353659 149.554223 
+L 171.212586 147.103354 
+L 171.838517 144.652484 
+L 172.221932 142.201614 
+L 172.352586 140.023064 
+L 172.280616 137.844513 
+L 172.002528 135.665962 
+L 171.516023 133.487411 
+L 170.820073 131.30886 
+L 169.787209 128.857991 
+L 168.492231 126.407121 
+L 166.939971 123.956251 
+L 165.1376 121.505382 
+L 162.853285 118.782193 
+L 160.288438 116.059005 
+L 157.166959 113.063497 
+L 153.438857 109.795671 
+L 148.724628 105.983207 
+L 142.95941 101.626105 
+L 134.623552 95.635091 
+L 120.19019 85.286974 
+L 114.516968 80.929873 
+L 109.922558 77.117409 
+L 106.330651 73.849583 
+L 103.36428 70.854075 
+L 100.967605 68.130887 
+L 98.878726 65.407698 
+L 97.276181 62.956829 
+L 95.946429 60.505959 
+L 94.998785 58.327408 
+L 94.274424 56.148857 
+L 93.773931 53.970306 
+L 93.495917 51.791756 
+L 93.437021 49.613205 
+L 93.591931 47.434654 
+L 93.953427 45.256103 
+L 94.595675 42.805234 
+L 95.472248 40.354364 
+L 96.698733 37.631175 
+L 98.321597 34.635668 
+L 100.370008 31.367842 
+L 103.04653 27.555378 
+L 106.991194 22.38132 
+L 108.485965 20.475088 
+L 108.485965 20.475088 
+" clip-path="url(#pa219570cef)" style="fill: none; stroke: #3b7ea1; stroke-width: 2.4; stroke-linecap: round"></path>
+   </g>
+   <g id="text_1">
+    <!-- Q = 0 -->
+    <g style="fill: #3b7ea1" transform="translate(160.552623 43.006972) scale(0.13 -0.13)">
+     <defs>
+      <path id="FiraSans-Light-51" d="M 2893 154 
+Q 3258 147 3581 41 
+Q 3904 -64 4154 -269 
+L 3898 -595 
+Q 3552 -288 3181 -173 
+Q 2810 -58 2208 -58 
+Q 1677 -58 1273 201 
+Q 870 461 646 963 
+Q 422 1466 422 2182 
+Q 422 2893 646 3405 
+Q 870 3917 1276 4185 
+Q 1683 4454 2208 4454 
+Q 2746 4454 3149 4195 
+Q 3552 3936 3776 3424 
+Q 4000 2912 4000 2189 
+Q 4000 557 2893 154 
+z
+M 826 2182 
+Q 826 1229 1200 742 
+Q 1574 256 2208 256 
+Q 2867 256 3232 739 
+Q 3597 1222 3597 2189 
+Q 3597 3162 3229 3645 
+Q 2861 4128 2208 4128 
+Q 1568 4128 1197 3638 
+Q 826 3149 826 2182 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-20" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-3d" d="M 442 2515 
+L 442 2842 
+L 2714 2842 
+L 2714 2515 
+L 442 2515 
+z
+M 442 1395 
+L 442 1722 
+L 2714 1722 
+L 2714 1395 
+L 442 1395 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-30" d="M 1760 4326 
+Q 2419 4326 2758 3766 
+Q 3098 3206 3098 2125 
+Q 3098 1050 2755 490 
+Q 2413 -70 1760 -70 
+Q 1101 -70 761 490 
+Q 422 1050 422 2131 
+Q 422 3213 761 3769 
+Q 1101 4326 1760 4326 
+z
+M 1760 4019 
+Q 806 4019 806 2131 
+Q 806 237 1760 237 
+Q 2227 237 2467 697 
+Q 2707 1158 2707 2125 
+Q 2707 3091 2467 3555 
+Q 2227 4019 1760 4019 
+z
+" transform="scale(0.015625)"></path>
+     </defs>
+     <use href="#FiraSans-Light-51"></use>
+     <use href="#FiraSans-Light-20" transform="translate(68.999985 0)"></use>
+     <use href="#FiraSans-Light-3d" transform="translate(96.899979 0)"></use>
+     <use href="#FiraSans-Light-20" transform="translate(146.199966 0)"></use>
+     <use href="#FiraSans-Light-30" transform="translate(174.09996 0)"></use>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- $x(\tau)$ -->
+    <g style="fill: #33474b" transform="translate(108.485965 225.482982) scale(0.14 -0.14)">
+     <defs>
+      <path id="FiraSans-LightItalic-78" d="M 2950 3347 
+L 1702 1766 
+L 2618 0 
+L 2202 0 
+L 1446 1542 
+L 269 0 
+L -173 0 
+L 1254 1798 
+L 454 3347 
+L 864 3347 
+L 1504 2010 
+L 2515 3347 
+L 2950 3347 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-28" d="M 1728 5203 
+Q 1389 4698 1184 4304 
+Q 979 3910 854 3404 
+Q 730 2899 730 2240 
+Q 730 1581 854 1075 
+Q 979 570 1184 176 
+Q 1389 -218 1728 -723 
+L 1491 -877 
+Q 1094 -320 867 77 
+Q 640 474 493 1005 
+Q 346 1536 346 2240 
+Q 346 2944 493 3475 
+Q 640 4006 867 4403 
+Q 1094 4800 1491 5357 
+L 1728 5203 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-LightItalic-3c4" d="M 1395 781 
+Q 1382 640 1382 602 
+Q 1382 448 1436 368 
+Q 1491 288 1626 230 
+L 1485 -51 
+Q 1229 32 1120 176 
+Q 1011 320 1011 570 
+Q 1011 627 1024 781 
+L 1338 3034 
+L 826 3034 
+Q 582 3034 454 3021 
+Q 326 3008 192 2963 
+L 141 3264 
+Q 262 3309 435 3328 
+Q 608 3347 883 3347 
+L 2963 3347 
+L 2912 3034 
+L 1709 3034 
+L 1395 781 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-29" d="M 582 5357 
+Q 979 4800 1206 4403 
+Q 1434 4006 1581 3475 
+Q 1728 2944 1728 2240 
+Q 1728 1536 1581 1005 
+Q 1434 474 1206 77 
+Q 979 -320 582 -877 
+L 346 -723 
+Q 685 -218 889 176 
+Q 1094 570 1219 1075 
+Q 1344 1581 1344 2240 
+Q 1344 2899 1219 3404 
+Q 1094 3910 889 4304 
+Q 685 4698 346 5203 
+L 582 5357 
+z
+" transform="scale(0.015625)"></path>
+     </defs>
+     <use href="#FiraSans-LightItalic-78" transform="translate(0 0.296875)"></use>
+     <use href="#FiraSans-Light-28" transform="translate(45.699997 0.296875)"></use>
+     <use href="#FiraSans-LightItalic-3c4" transform="translate(78.099991 0.296875)"></use>
+     <use href="#FiraSans-Light-29" transform="translate(121.499985 0.296875)"></use>
+    </g>
+   </g>
+   <g id="text_3">
+    <!-- $\tau$ -->
+    <g style="fill: #33474b" transform="translate(1.44 112.780526) scale(0.14 -0.14)">
+     <use href="#FiraSans-LightItalic-3c4" transform="translate(0 0.703125)"></use>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_4">
+    <path d="M 257.416491 218.44 
+L 474.416491 218.44 
+L 474.416491 1.44 
+L 257.416491 1.44 
+L 257.416491 218.44 
+z
+" style="fill: none"></path>
+   </g>
+   <g id="patch_5">
+    <path d="M 265.030526 210.825965 
+L 455.381404 210.825965 
+L 455.381404 20.475088 
+L 265.030526 20.475088 
+L 265.030526 210.825965 
+z
+" clip-path="url(#p3788f431f7)" style="fill: none; stroke: #33474b; stroke-width: 1.1; stroke-linejoin: miter"></path>
+   </g>
+   <g id="matplotlib.axis_3"></g>
+   <g id="matplotlib.axis_4"></g>
+   <g id="wl-p1-0" class="fragment draw-line" data-fragment-index="2">
+    <path d="M 360.205965 210.825965 
+L 383.388716 197.482341 
+L 395.243178 190.402051 
+L 404.859795 184.411036 
+L 413.19107 178.964659 
+L 420.305772 174.06292 
+L 426.661054 169.433499 
+L 432.642162 164.804079 
+L 437.918402 160.446977 
+L 442.84797 156.089876 
+L 447.432746 151.732774 
+L 451.680536 147.375673 
+L 455.368717 143.29089 
+L 455.368717 143.29089 
+" clip-path="url(#p3788f431f7)" style="fill: none; stroke: #9c162a; stroke-width: 2.4; stroke-linecap: round"></path>
+   </g>
+   <g id="wl-p1-1" class="fragment draw-line draw-seq2" data-fragment-index="2">
+    <path d="M 265.253963 143.018571 
+L 268.873646 138.661469 
+L 272.21249 134.304368 
+L 275.483868 129.674947 
+L 278.679587 124.773208 
+L 281.96724 119.326831 
+L 285.64803 112.791178 
+L 291.777687 101.353787 
+L 296.853254 92.094946 
+L 300.693771 85.559293 
+L 304.31648 79.840597 
+L 307.849311 74.666539 
+L 311.652502 69.492481 
+L 315.742595 64.318423 
+L 320.125597 59.144365 
+L 324.796988 53.970306 
+L 330.009484 48.523929 
+L 336.058946 42.532915 
+L 343.269021 35.724943 
+L 352.563119 27.283059 
+L 360.205965 20.475088 
+L 360.205965 20.475088 
+" clip-path="url(#p3788f431f7)" style="fill: none; stroke: #9c162a; stroke-width: 2.4; stroke-linecap: round"></path>
+   </g>
+   <g id="text_4">
+    <!-- Q = +1 -->
+    <g style="fill: #9c162a" transform="translate(407.645436 43.006972) scale(0.13 -0.13)">
+     <defs>
+      <path id="FiraSans-Light-2b" d="M 1754 3251 
+L 1754 2278 
+L 2714 2278 
+L 2714 1958 
+L 1754 1958 
+L 1754 986 
+L 1402 986 
+L 1402 1958 
+L 442 1958 
+L 442 2278 
+L 1402 2278 
+L 1402 3251 
+L 1754 3251 
+z
+" transform="scale(0.015625)"></path>
+      <path id="FiraSans-Light-31" d="M 1869 4256 
+L 1869 0 
+L 1498 0 
+L 1498 3846 
+L 448 3194 
+L 275 3469 
+L 1549 4256 
+L 1869 4256 
+z
+" transform="scale(0.015625)"></path>
+     </defs>
+     <use href="#FiraSans-Light-51"></use>
+     <use href="#FiraSans-Light-20" transform="translate(68.999985 0)"></use>
+     <use href="#FiraSans-Light-3d" transform="translate(96.899979 0)"></use>
+     <use href="#FiraSans-Light-20" transform="translate(146.199966 0)"></use>
+     <use href="#FiraSans-Light-2b" transform="translate(174.09996 0)"></use>
+     <use href="#FiraSans-Light-31" transform="translate(223.399948 0)"></use>
+    </g>
+   </g>
+   <g id="text_5">
+    <!-- $x(\tau)$ -->
+    <g style="fill: #33474b" transform="translate(360.205965 225.482982) scale(0.14 -0.14)">
+     <use href="#FiraSans-LightItalic-78" transform="translate(0 0.296875)"></use>
+     <use href="#FiraSans-Light-28" transform="translate(45.699997 0.296875)"></use>
+     <use href="#FiraSans-LightItalic-3c4" transform="translate(78.099991 0.296875)"></use>
+     <use href="#FiraSans-Light-29" transform="translate(121.499985 0.296875)"></use>
+    </g>
+   </g>
+   <g id="text_6">
+    <!-- $\tau$ -->
+    <g style="fill: #33474b" transform="translate(253.16 112.780526) scale(0.14 -0.14)">
+     <use href="#FiraSans-LightItalic-3c4" transform="translate(0 0.703125)"></use>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clippath id="pa219570cef">
+   <rect x="5.696491" y="1.44" width="217" height="217"></rect>
+  </clippath>
+  <clippath id="p3788f431f7">
+   <rect x="257.416491" y="1.44" width="217" height="217"></rect>
+  </clippath>
+ </defs>
+</svg>
+</div><div class="column" style="width:42%;">
+<div class="fragment" data-fragment-index="0" style="margin-top:0em; font-size:0.85em; text-align:center;">
+<div style="font-size:1em; text-align:center;">
+<p><strong>Particle on a ring</strong></p>
+</div>
+<div style="margin-top:0.5em;">
+
+</div>
+<p><span class="math inline">\(x(\tau): S^1_\tau \rightarrow S^1_x\)</span></p>
+<div style="margin-top:1.1em;">
+
+</div>
+<p>The path integral splits into <strong>homotopy sectors</strong> by winding number <span class="math inline">\(Q\in\mathbb{Z}\)</span>:</p>
+<p><span class="math display">\[Z \;=\; \sum_{Q} Z_Q\]</span></p>
+</div>
+<div class="fragment" data-fragment-index="3" style="margin-top:1.4em; font-size:0.85em; text-align:center;">
+<div style="font-size:1em; text-align:center;">
+<strong>Local Algorithms:</strong>
+</div>
+<p>Constant acceptance ⇒ <span class="math inline">\(\delta x \sim \sqrt{a}\)</span>.</p>
+</div>
+</div></div>
+<div class="fragment" data-fragment-index="4">
+<div class="lead" style="text-align:center; margin:0.15em auto 0.1em; max-width:94%; font-size:1.0em; margin-top:1.5em">
+<p>Topology changes require crossing an action barrier <span class="math inline">\(\Delta S \sim c/a\)</span></p>
+</div>
+<div class="eqbox" style="display:block; width:max-content; margin:0.1em auto; text-align:center">
+<p><span class="math inline">\(P_{\mathrm{tunnel}} \sim e^{-\Delta S} \quad\Longrightarrow\quad
+\tau_{\mathrm{int}}(Q) \sim e^{\,\Delta S} \sim e^{\,c/a}\)</span></p>
+</div>
+</div>
+<aside class="notes">
+<p>Particle on a ring: the path integral splits into homotopy classes labelled by the winding number Q (pi_1(S^1) = Z); the two boxes are the Q=0 and Q=+1 sectors. Local Monte Carlo at fixed acceptance proposes path changes of order sqrt(a). Changing Q needs a defect – one link with Dphi ~ pi – costing DS ~ 1/a ~ 2 beta-tilde, a barrier that diverges in the continuum. Tunnelling is suppressed as e^{-DS}, so tau_top ~ e^{c/a}. Same mechanism in CP^(N-1) and QCD.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fighting-freezing-choosing-an-annealing-protocol" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Fighting freezing = choosing an annealing protocol</h2>
+<p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
+
+<img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment" style="text-align:center">
+<p><strong>Learned sequential flows</strong></p>
+<ul>
+<li>NETS / Stochastic Normalizing Flows;</li>
+<li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment" style="text-align:center">
+<p><strong>Parallel tempering</strong></p>
+<ul>
+<li>E.g. anneal a <strong>defect coupling</strong>;</li>
+<li><strong>parallel</strong> replicas exchanged along <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="fighting-freezing-choosing-an-annealing-protocol-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Fighting freezing = choosing an annealing protocol</h2>
+<p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
+
+<img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
+<div class="column" style="width:50%;">
+<div style="text-align:center; opacity:0.4">
+<p><strong>Learned sequential flows</strong></p>
+<ul>
+<li>NETS / Stochastic Normalizing Flows;</li>
+<li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div style="text-align:center; border:3px dashed #EB811B; border-radius:10px; padding:0.4em 0.8em; background:rgba(235, 128, 27, 0.09)">
+<p><strong>Parallel tempering</strong></p>
+<ul>
+<li>E.g. anneal a <strong>defect coupling</strong>;</li>
+<li><strong>parallel</strong> replicas exchanged along <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="the-testbed-2d-cpn-1" class="slide level2">
+<h2>The testbed: 2D <span class="math inline">\(CP(N-1)\)</span></h2>
+<div class="fragment" style="text-align:center; font-size:0.88em; margin-top:-0.6em;">
+<p>A QCD-like toy model <br><span style="margin-top: 0.3em;"> asymptotic freedom, a mass gap, <span class="math inline">\(\theta\)</span>-vacua, and the <strong>same topological freezing</strong> </span></p>
+</div>
+<div class="fragment" style="text-align:center; font-size:0.88em; margin-top:-0.1em; color: #8a8a8a;">
+<p>at a fraction of the cost.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:54%;">
+<div class="fragment" style="margin-top:0.0em;">
+<p><strong>Fundamental field:</strong> a unit complex <span class="math inline">\(N\)</span>-vector</p>
+<p><span class="math display">\[z(x)\in\mathbb{C}^N,\qquad z^{\dagger}(x)\,z(x)=1\]</span></p>
+<p>with a local <span class="math inline">\(U(1)\)</span> <strong>gauge redundancy</strong></p>
+<p><span class="math display">\[z(x)\;\longrightarrow\;e^{i\alpha(x)}\,z(x)\]</span></p>
+</div>
+<div class="fragment" style="margin-top:0.9em;">
+<p><strong>Lattice action:</strong></p>
+<p><span class="math display">\[S=-2N\beta\sum_{x,\mu}\mathrm{Re}\!\big[z^{\dagger}_x\,U_{x,\mu}\,z_{x+\hat\mu}\big]\]</span></p>
+</div>
+</div><div class="column" style="width:46%;">
+<div class="fragment" style="margin-top:0.0em;">
+<p><strong>Nontrivial topology:</strong></p>
+<p><span class="math display">\[\pi_2\!\big(CP^{N-1}\big)=\mathbb{Z}\]</span></p>
+<p><span style="margin-top:1.5em; display:block;">Each configuration carries an <strong>integer topological charge</strong></span></p>
+<div class="eqbox" style="display:block; text-align:center; margin-top:1.3em">
+<p><span class="math display">\[Q=\frac{1}{2\pi}\!\int\! d^2x\;\epsilon_{\mu\nu}\,\partial_\mu A_\nu\;\in\;\mathbb{Z}\]</span></p>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annealing-the-boundary-a-tunable-defect" class="slide level2">
+<h2>Annealing the boundary: a tunable defect</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="lead" style="text-align:center; margin-bottom:0.0em">
+<p><strong>Open</strong> BC <br> No Topological barriers and <span class="math inline">\(Q\)</span> change freely</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="lead" style="text-align:center; margin-bottom:0.0em">
+<p><strong>Periodic</strong> BC <br> Target Physical Theory but topology is frozen!</p>
+</div>
+</div></div>
+
+<img data-src="figures/fig_defect_anneal.svg" class="r-stretch"><div class="lead" style="text-align:center; margin-top:0.1em">
+<p>The <strong>defect</strong> is a line of links (a cut) with tunable coupling.</p>
+<p>Anneal <span class="math inline">\(\;\beta_{\mathrm{def}}(\lambda)=\lambda\,\beta_{\mathrm{bulk}}\)</span>: at <span class="math inline">\(\lambda=0\)</span> the cut is open; at <span class="math inline">\(\lambda=1\)</span> we recover the periodic theory.</p>
+</div>
+</section>
+<section id="parallel-tempering-a-ladder-of-replicas" class="slide level2">
+<h2>Parallel tempering: a ladder of replicas</h2>
+<div class="lead" style="font-size:1em; text-align:center; margin-top:0.0em">
+<p><span class="math inline">\(N_R\)</span> replicas with fixed couplings <span class="math inline">\(\lambda_0=0\; ,\dots, \;\lambda_{N_R-1}=1\)</span> run <strong>in parallel</strong></p>
+</div>
+<div class="columns">
+<div class="column" style="width:54%;">
+<p><img data-src="figures/fig_pt_tower.svg" style="max-height:64vh; margin-top:0.5em"></p>
+</div><div class="column" style="width:46%;">
+<div class="fragment" style="font-size:0.9em; margin-top:3.5em">
+<ol type="1">
+<li><p><strong>local MC</strong> in each replica samples its own <span class="math inline">\(p_\lambda\)</span>;</p></li>
+<li><p>Propose a configuration <strong>swap</strong> between <strong>adjacent</strong> replicas</p></li>
+<li><p><strong>Accept/Reject</strong> <span class="math inline">\(\Longrightarrow\)</span> detailed balance :</p></li>
+</ol>
+<div class="eqbox" style="display:block; width:max-content; margin:0.25em auto; text-align:center">
+<p><span class="math inline">\(A=\min\!\big(1,\;\frac{p_{\lambda}(x_{\lambda+1})\, p_{\lambda+1}(x_{\lambda})}{p_{\lambda}(x_{\lambda})\, p_{\lambda+1}(x_{\lambda+1})}\big)\)</span></p>
+</div>
+</div>
+</div></div>
+<div class="fragment" style="text-align:center; margin-top:1.1em">
+<p><strong>Efficient</strong> PT ladder <span class="math inline">\(\Longrightarrow\)</span> <strong>topological mixing</strong> from the open replica to the <span style="color: #EB811B;"><strong>target</strong></span> periodic one.</p>
+</div>
+</section>
+<section id="efficiency-is-a-geometry-problem" class="slide level2">
+<h2>Efficiency is a geometry problem</h2>
+<div class="fragment" data-fragment-index="0" style="text-align:center; margin-top:1.1em">
+<p>Given a fixed budget of steps / replicas, <strong>where should they go?</strong></p>
+</div>
+<svg class="sched-anim" viewbox="0 0 760 224" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:900px;height:auto;display:block;margin:0.4em auto">
+<g class="fragment" data-fragment-index="1">
+<circle cx="215" cy="52" r="7" fill="#3B7EA1"></circle>
+<circle cx="720" cy="52" r="7" fill="#9C162A"></circle>
+<text x="215.0" y="32" text-anchor="middle" fill="#3B7EA1" font-size="19" font-style="italic">p<tspan baseline-shift="sub" font-size="0.7em" font-style="normal">0</tspan></text>
+<text x="720.0" y="32" text-anchor="middle" fill="#9C162A" font-size="19" font-style="italic">p<tspan baseline-shift="sub" font-size="0.7em" font-style="normal">target</tspan></text>
+</g>
+<g class="fragment" data-fragment-index="2">
+<line x1="215" y1="52" x2="720" y2="52" stroke="#33474B" stroke-width="2"></line>
+<path d="M 460 45 L 476 52 L 460 59 Z" fill="#33474B"></path>
+</g>
+<g class="fragment" data-fragment-index="3">
+<line class="" x1="215.0" y1="115.0" x2="215.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="265.5" y1="115.0" x2="265.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="316.0" y1="115.0" x2="316.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="366.5" y1="115.0" x2="366.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="417.0" y1="115.0" x2="417.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="467.5" y1="115.0" x2="467.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="518.0" y1="115.0" x2="518.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="568.5" y1="115.0" x2="568.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="619.0" y1="115.0" x2="619.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="669.5" y1="115.0" x2="669.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="720.0" y1="115.0" x2="720.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<text x="191" y="133" text-anchor="end" fill="#8A9AA0" font-size="14">naive: uniform schedule</text>
+</g>
+<g class="fragment" data-fragment-index="4" id="sched-optrow">
+<line class="opt-tick" x1="215.0" y1="177.0" x2="215.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="215.0" data-c="215.0"></line>
+<line class="opt-tick" x1="265.5" y1="177.0" x2="265.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="265.5" data-c="296.6"></line>
+<line class="opt-tick" x1="316.0" y1="177.0" x2="316.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="316.0" data-c="364.2"></line>
+<line class="opt-tick" x1="366.5" y1="177.0" x2="366.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="366.5" data-c="416.7"></line>
+<line class="opt-tick" x1="417.0" y1="177.0" x2="417.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="417.0" data-c="452.4"></line>
+<line class="opt-tick" x1="467.5" y1="177.0" x2="467.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="467.5" data-c="467.5"></line>
+<line class="opt-tick" x1="518.0" y1="177.0" x2="518.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="518.0" data-c="482.6"></line>
+<line class="opt-tick" x1="568.5" y1="177.0" x2="568.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="568.5" data-c="518.3"></line>
+<line class="opt-tick" x1="619.0" y1="177.0" x2="619.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="619.0" data-c="570.8"></line>
+<line class="opt-tick" x1="669.5" y1="177.0" x2="669.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="669.5" data-c="638.4"></line>
+<line class="opt-tick" x1="720.0" y1="177.0" x2="720.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="720.0" data-c="720.0"></line>
+<text x="191" y="195" text-anchor="end" fill="#23373B" font-size="14" font-weight="500">optimal: ?</text>
+</g>
+</svg>
+<div class="fragment" style="text-align:center; margin-top:2.1em">
+<p>The answer comes from <strong>Information Geometry</strong> by studying the <span style="color: #EB811B;"><strong>Fisher metric</strong></span></p>
+</div>
+</section>
+<section id="information-geometry-gives-the-answer" class="slide level2">
+<h2>Information geometry gives the answer</h2>
+<div class="fragment" style="text-align:center; font-size:0.89em; margin-bottom:0.1em">
+<p>The space of probability distributions is a <strong>smooth manifold</strong>, carrying a natural metric <span class="math inline">\(\Rightarrow\)</span> the <span style="color: #EB811B;"><strong>Fisher metric</strong></span>:</p>
+<p><span class="math display">\[g(\lambda) \;=\; \mathbb{E}_{p_\lambda}\!\Big[\big(\partial_\lambda \log p_\lambda\big)^2\Big]\]</span></p>
+</div>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="fragment" style="text-align:left; margin-top:0.0em;">
+<p>For Boltzmann like <span class="math inline">\(p_\lambda \propto e^{-S_\lambda}\)</span></p>
+<p><span class="math display">\[\partial_\lambda \log p_\lambda \;=\; -\,\partial_\lambda S_\lambda \;+\; \langle \partial_\lambda S_\lambda\rangle_{p_\lambda}\]</span></p>
+<p>so the metric is just a <strong>variance</strong>:</p>
+<div class="eqbox" style="display:block; width:max-content; margin:0.3em auto; text-align:center">
+<p><span class="math inline">\(g(\lambda) \;=\; \mathrm{Var}_{p_\lambda}\!\big[\partial_\lambda S_\lambda\big]\)</span></p>
+</div>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="fragment" style="text-align:left; margin-top:0.0em;">
+<p><strong>… and a distance</strong></p>
+<p>Second-order expansion of the KL divergence:</p>
+<p><span class="math display">\[D_{\mathrm{KL}}\big(p_\lambda \,\|\, p_{\lambda+d\lambda}\big) \;\simeq\; \tfrac{1}{2}\, g(\lambda)\, d\lambda^2\]</span></p>
+</div>
+</div></div>
+<div class="fragment" style="text-align:center; margin-top:2.0em;">
+<p><span class="math inline">\(g(\lambda)\)</span> <span class="math inline">\(\Rightarrow\)</span> <strong>local distinguishability</strong> of nearby distributions</p>
+</div>
+<div class="fragment" style="margin-top:0.6em">
+<div style="display:flex; justify-content:center; align-items:stretch; gap:1.6em; font-size:0.8em">
+<p><span style="display:inline-block; border:1.6px solid #9c162a; background:rgba(156,22,42,0.07); border-radius:8px; padding:0.45em 1.1em; color:#9c162a"><strong>large <span class="math inline">\(g\)</span></strong> <span class="math inline">\(\Rightarrow p_\lambda\)</span> moves fast, <em>hard to bridge</em></span> <span style="display:inline-block; border:1.6px solid #3b7ea1; background:rgba(59,126,161,0.07); border-radius:8px; padding:0.45em 1.1em; color:#3b7ea1"><strong>small <span class="math inline">\(g\)</span></strong> <span class="math inline">\(\Rightarrow p_\lambda\)</span> barely moves, <em>easy</em></span></p>
+</div>
+</div>
+</section>
+<section id="the-geodesic-condition" class="slide level2">
+<h2>The geodesic condition</h2>
+<div class="columns">
+<div class="column" style="width:54%; font-size:0.82em">
+<p><strong>Thermodynamic length</strong> <br> Fisher metric turns the path into a distance:</p>
+<p><span class="math display">\[\Lambda \;=\; \int_0^1 \!\sqrt{g(\lambda)}\,d\lambda \left(=\; \sum_k \Delta\ell_k \right) \]</span></p>
+<p>Running it in a finite (fictitious) time <span class="math inline">\(\tau\)</span> <strong>dissipates work</strong></p>
+<p><span class="math display">\[W_{\mathrm{diss}}
+\;\propto\; \frac{1}{\Delta t}\sum_k \Delta\ell_k^{\,2}\]</span></p>
+<p><strong>Minimize <span class="math inline">\(W_{\mathrm{diss}}\)</span> at fixed length <span class="math inline">\(\Lambda\)</span></strong> leads to</p>
+<p><span class="math display">\[\Delta\ell_1 \;=\; \Delta\ell_2 \;=\; \cdots \;=\; \Delta\ell_N .\]</span></p>
+<div class="fragment eqbox" style="display:block; width:max-content; margin:0.5em auto; text-align:center">
+<p><span class="math inline">\(\Delta\ell_k = \dfrac{\Lambda}{N} = \text{const}
+\;\;\Longleftrightarrow\;\; \dfrac{d\lambda}{dt}\propto\dfrac{1}{\sqrt{g(\lambda)}}\)</span></p>
+</div>
+</div><div class="column" style="width:46%;">
+<p><img data-src="figures/fig07_fisher_metric.svg"></p>
+<div class="fragment" style="text-align:left; margin-top:2.3em; font-size:0.86em; margin-left:3.5em">
+<p><strong>The geodesic condition</strong>:</p>
+<ol type="1">
+<li><p>Equidistribute the thermodynamic length</p></li>
+<li><p>Spend more steps <strong>where <span class="math inline">\(g\)</span> is large</strong>, fewer where it is small.</p></li>
+</ol>
+</div>
+</div></div>
+</section>
+<section id="the-protocol-doesnt-have-to-be-one-dimensional" class="slide level2">
+<h2>The protocol doesn’t have to be one-dimensional</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img data-src="figures/fig08_2d_plane.svg"></p>
+</div><div class="column" style="width:55%; font-size:0.9em">
+<div class="fragment">
+<ol type="1">
+<li>Let the <strong>bulk coupling</strong> vary along the path too:</li>
+</ol>
+<p><span class="math display">\[g_{ij} \;=\; \mathrm{Cov}_{p}\!\big[\partial_{\beta_i} S,\; \partial_{\beta_j} S\big]\]</span></p>
+<p>Optimal protocol <span class="math inline">\(\Rightarrow\)</span> <strong>geodesic</strong> in the <span class="math inline">\((\beta_{\mathrm{bulk}},\,\beta_{\mathrm{defect}})\)</span> plane.</p>
+</div>
+<div class="fragment" style="margin-top:1em">
+<ol start="2" type="1">
+<li>The defect is <strong>local</strong>: it breaks translation invariance</li>
+</ol>
+<p>Why hold every site to the same coupling?</p>
+<p>Let it vary in <strong>space</strong> too:</p>
+<div class="eqbox" style="display:block; width:max-content; margin:0.35em auto; text-align:center">
+<p><span class="math inline">\(\beta \;\longrightarrow\; \beta(x,y,t)\)</span></p>
+</div>
+</div>
+</div></div>
+</section>
+<section id="learning-the-spatial-coupling-field" class="slide level2">
+<h2>Learning the spatial coupling field</h2>
+<div class="columns">
+<div class="column" style="width:50%; font-size:0.88em">
+<p><strong>1 · Parametrize the field</strong></p>
+<div class="flow">
+<p><span class="box" style=""><span class="math inline">\(d(x,y)\)</span></span> <span class="arrow" style="">→</span> <span class="box net" style="">U-Net</span> <span class="arrow" style="">→</span> <span class="box" style=""><span class="math inline">\(F(x,y,\lambda)\)</span></span></p>
+</div>
+<p><span class="math display">\[\beta(x,y,\lambda) = \beta_{\mathrm{base}} + C_{\max}\,F(x,y,\lambda)\,\sin(\pi \lambda)\]</span></p>
+<div class="fragment" style="margin-top:2.0em">
+<ul>
+<li><span class="math inline">\(\sin(\pi \lambda)\)</span> <strong>pins the endpoints</strong> <span class="math inline">\(\lambda=0,1\)</span>;</li>
+<li>the net sees only <strong>geometry</strong> — distance to the defect, <em>never field configurations</em> <span class="math inline">\(\Rightarrow\)</span> <strong>transferable</strong></li>
+</ul>
+</div>
+</div><div class="column" style="width:50%; font-size:0.88em">
+<p><strong>2 · The loss is the geometry</strong></p>
+<p><span class="math display">\[\begin{aligned}
+\mathrm{sKL}(p_r, p_{r+1}) &amp;= \tfrac{1}{2}\big[\,D_{\mathrm{KL}}(p_r \,\|\, p_{r+1}) + D_{\mathrm{KL}}(p_{r+1} \,\|\, p_r)\,\big] \\[3pt]
+&amp;= \tfrac{1}{2}\big[\langle \Delta S\rangle_{p_r} - \langle \Delta S\rangle_{p_{r+1}}\big]
+\end{aligned}\]</span></p>
+<div class="fragment" style="margin-top:2.3em">
+<ul>
+<li>Minimizing sKL between adjacent replicas <strong>is</strong> the discretized geodesic condition</li>
+<li>straight from <strong>PT samples</strong>, no partition function.</li>
+</ul>
+</div>
+</div></div>
+<div class="loop fragment" style="margin-top:2.5em">
+  <div class="box">Parallel tempering<br>sampling</div>
+  <div class="exchange">
+    <div>\(\beta(x,y,\lambda)\) →</div>
+    <div>← \(\nabla\,\mathrm{sKL}\)</div>
+  </div>
+  <div class="box">Network<br>update</div>
+</div>
+<div class="fragment lead" style="text-align:center; margin-top:1.4em">
+<p>The U‑Net learns the <strong>Fisher geodesic</strong> end‑to‑end from PT samples — does its trajectory match the theory?</p>
+</div>
+</section>
+<section id="the-machine-finds-the-geometry" class="slide level2 money">
+<h2>The machine finds the geometry</h2>
+
+<img data-src="figures/fig_res_geometry.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.72em">
+<p>The learned schedule lands on the <strong>measured</strong> Fisher optimum <em>(left)</em> and walks the same path at <strong>equal thermodynamic length per step</strong> <em>(right)</em> — the geodesic condition, recovered from samples alone.</p>
+</div>
+</section>
+<section id="the-payoff-an-unclogged-ladder" class="slide level2">
+<h2>The payoff: an unclogged ladder</h2>
+
+<img data-src="figures/fig_res_swaps.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.72em">
+<p>The naive ladder throttles to <strong>9.5%</strong> swap acceptance at the freezing transition <em>(left)</em>; the geodesic spreads the load evenly — worst rung <strong>16%</strong> — so replicas actually <strong>round-trip</strong>. The sKL loss <em>(right)</em> settles onto that optimum.</p>
+</div>
+</section>
+<section id="not-a-schedule-a-field" class="slide level2">
+<h2>Not a schedule — a field</h2>
+<div class="columns">
+<div class="column" style="width:54%;">
+<p><img data-src="figures/fig_res_field.gif"></p>
+</div><div class="column" style="width:46%; font-size:0.92em">
+<p>The U-Net emits a full field <span class="math inline">\(\beta(x,y,\lambda)\)</span> — not a scalar schedule. The residual it carves, <span class="math inline">\(\beta_{\text{learned}}-\beta_{\text{naive}}\)</span>:</p>
+<div class="fragment" style="margin-top:0.8em">
+<ul>
+<li><strong>early</strong> — drives the defect coupling <span class="target" style=""><strong>ahead</strong></span> of the ramp</li>
+<li><strong>late</strong> — <span class="easy" style=""><strong>holds it back</strong></span></li>
+<li><strong>throughout</strong> — a spatial <strong>halo</strong> the sharp defect boundary cannot express</li>
+</ul>
+</div>
+<div class="fragment lead" style="text-align:center; margin-top:1.3em">
+<p>Freedom no scalar schedule has.</p>
+</div>
+</div></div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>Topological freezing is <strong>exponential</strong> — it needs an annealing protocol to fight it</li>
+<li>The optimal protocol is a <strong>Fisher geodesic</strong></li>
+<li>ML <strong>recovers this geometry</strong> with minimal assumptions, and generalizes to full spatial coupling fields</li>
+</ul>
+<div class="lead">
+<p><strong>Outlook:</strong> scaling to larger volumes and full QCD; other defect geometries.</p>
+</div>
+</section>
+<section id="thank-you" class="slide level2 center">
+<h2>Thank you</h2>
+<div class="lead">
+<p>YOUR NAME — PLACEHOLDER</p>
+<p><a href="mailto:your.name@institution.edu">your.name@institution.edu</a></p>
+<p>Questions?</p>
+</div>
+
+<div class="reveal-header">
+<div class="header-title">
+<p> </p>
+</div>
+<div class="header-logo">
+<img data-src="header_logos.png">
+</div>
+</div>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Optimal Annealing and Information Geometry for Topological Freezing</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="optimal_annealing_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="optimal_annealing_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="optimal_annealing_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="optimal_annealing_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+<script src="optimal_annealing_files/libs/quarto-contrib/metropolis-beamer-1.0.0/add_header.js" defer="true"></script>
+</body></html>

@@ -1,0 +1,4 @@
+project:
+  title: "Optimal Annealing and Information Geometry for Topological Freezing"
+  render:
+    - optimal_annealing.qmd

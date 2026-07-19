@@ -1,0 +1,37 @@
+# What stays in the repo is exactly what GitHub Pages needs to render the talk:
+#   optimal_annealing.html + optimal_annealing_files/   (the deck + reveal.js assets)
+#   figures/*.svg, figures/fig_res_field.gif            (the plots the slides <img>)
+#   header_logos.png, title_logos.png                   (the logos the slides <img>)
+# plus the sources to rebuild it (optimal_annealing.qmd, _quarto.yml, theme.scss,
+# _extensions/, figures/*.py, figures/fonts/, results/). Everything below is build
+# cache, OS cruft, or leftovers from a previous talk -- none of it is needed for the
+# page, so it is kept out of the push.
+
+# --- macOS / editor cruft ----------------------------------------------------
+.DS_Store
+**/.DS_Store
+*.swp
+*~
+
+# --- Python cache from the figure scripts ------------------------------------
+__pycache__/
+*.py[cod]
+
+# --- Quarto render cache (regenerated on every `quarto render`) ---------------
+/.quarto/
+
+# --- duplicate data folder ---------------------------------------------------
+/results copy/
+/results/*.md
+/results/*.npz
+
+# --- leftover style-reference deck from a previous talk (not part of this
+#     project: _quarto.yml only renders optimal_annealing.qmd) -----------------
+/quarto_PhD_seminar.qmd
+/quarto_PhD_seminar.html
+/quarto_PhD_seminar_files/
+/style.scss
+
+# --- unused template / example assets (not referenced by the deck) -----------
+/images/
+/my-iframe/
