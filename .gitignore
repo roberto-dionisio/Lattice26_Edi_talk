@@ -35,3 +35,5 @@ __pycache__/
 # --- unused template / example assets (not referenced by the deck) -----------
 /images/
 /my-iframe/
+
+**/*.quarto_ipynb

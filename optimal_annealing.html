@@ -1993,55 +1993,47 @@ z
 <p>The U‑Net learns the <strong>Fisher geodesic</strong> end‑to‑end from PT samples — does its trajectory match the theory?</p>
 </div>
 </section>
-<section id="the-machine-finds-the-geometry" class="slide level2 money">
-<h2>The machine finds the geometry</h2>
+<section id="the-model-finds-the-geometry" class="slide level2 money">
+<h2>The model finds the geometry</h2>
 
 <img data-src="figures/fig_res_geometry.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.72em">
-<p>The learned schedule lands on the <strong>measured</strong> Fisher optimum <em>(left)</em> and walks the same path at <strong>equal thermodynamic length per step</strong> <em>(right)</em> — the geodesic condition, recovered from samples alone.</p>
+<p>Define phsical parameters used for this experiment</p>
+<p>The learned schedule lands on the <strong>measured</strong> Fisher optimum <em>(left)</em> and walks the same path at <strong>equal thermodynamic length per step</strong> <em>(right)</em> the geodesic condition recovered from samples alone.</p>
 </div>
 </section>
-<section id="the-payoff-an-unclogged-ladder" class="slide level2">
-<h2>The payoff: an unclogged ladder</h2>
+<section id="solved-bottleneck-ladder-tbd" class="slide level2">
+<h2>Solved bottleneck ladder (tbd ?)</h2>
 
 <img data-src="figures/fig_res_swaps.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.72em">
-<p>The naive ladder throttles to <strong>9.5%</strong> swap acceptance at the freezing transition <em>(left)</em>; the geodesic spreads the load evenly — worst rung <strong>16%</strong> — so replicas actually <strong>round-trip</strong>. The sKL loss <em>(right)</em> settles onto that optimum.</p>
+<p><strong>Put few words here</strong></p>
 </div>
 </section>
-<section id="not-a-schedule-a-field" class="slide level2">
-<h2>Not a schedule — a field</h2>
+<section id="a-field-of-coupling" class="slide level2">
+<h2>A field of coupling</h2>
 <div class="columns">
 <div class="column" style="width:54%;">
 <p><img data-src="figures/fig_res_field.gif"></p>
 </div><div class="column" style="width:46%; font-size:0.92em">
-<p>The U-Net emits a full field <span class="math inline">\(\beta(x,y,\lambda)\)</span> — not a scalar schedule. The residual it carves, <span class="math inline">\(\beta_{\text{learned}}-\beta_{\text{naive}}\)</span>:</p>
+<p>The U-Net emits a full field <span class="math inline">\(\beta(x,y,\lambda)\)</span>, not a scalar schedule. The residual it carves, <span class="math inline">\(\beta_{\text{learned}}-\beta_{\text{naive}}\)</span>:</p>
 <div class="fragment" style="margin-top:0.8em">
-<ul>
-<li><strong>early</strong> — drives the defect coupling <span class="target" style=""><strong>ahead</strong></span> of the ramp</li>
-<li><strong>late</strong> — <span class="easy" style=""><strong>holds it back</strong></span></li>
-<li><strong>throughout</strong> — a spatial <strong>halo</strong> the sharp defect boundary cannot express</li>
-</ul>
+<p><strong>Explain a lil bit </strong></p>
 </div>
 <div class="fragment lead" style="text-align:center; margin-top:1.3em">
 <p>Freedom no scalar schedule has.</p>
 </div>
 </div></div>
 </section>
-<section id="summary" class="slide level2">
-<h2>Summary</h2>
-<ul>
-<li>Topological freezing is <strong>exponential</strong> — it needs an annealing protocol to fight it</li>
-<li>The optimal protocol is a <strong>Fisher geodesic</strong></li>
-<li>ML <strong>recovers this geometry</strong> with minimal assumptions, and generalizes to full spatial coupling fields</li>
-</ul>
-<div class="lead">
-<p><strong>Outlook:</strong> scaling to larger volumes and full QCD; other defect geometries.</p>
-</div>
+<section id="to-be-added" class="slide level2">
+<h2>To be added</h2>
+<ol type="1">
+<li><p>Results of the scaling with Physical volume of Topo observables</p></li>
+<li><p>Scaling of the prefactor Linear vs Optimized</p></li>
+<li><p>Advantages of the optimal schedule</p></li>
+</ol>
 </section>
 <section id="thank-you" class="slide level2 center">
 <h2>Thank you</h2>
 <div class="lead">
-<p>YOUR NAME — PLACEHOLDER</p>
-<p><a href="mailto:your.name@institution.edu">your.name@institution.edu</a></p>
 <p>Questions?</p>
 </div>
 

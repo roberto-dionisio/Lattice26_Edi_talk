@@ -619,27 +619,30 @@ trajectory match the theory?
 
 
 
-## The machine finds the geometry {.money}
+## The model finds the geometry {.money}
 
 ![](figures/fig_res_geometry.svg)
 
 ::: {.fragment .lead style="text-align:center; margin-top:0.3em; font-size:0.72em"}
+
+Define phsical parameters used for this experiment 
+
+
 The learned schedule lands on the **measured** Fisher optimum *(left)* and walks the
-same path at **equal thermodynamic length per step** *(right)* — the geodesic
-condition, recovered from samples alone.
+same path at **equal thermodynamic length per step** *(right)* the geodesic
+condition recovered from samples alone.
 :::
 
-## The payoff: an unclogged ladder
+## Solved bottleneck ladder (tbd ?)
 
 ![](figures/fig_res_swaps.svg)
 
 ::: {.fragment .lead style="text-align:center; margin-top:0.3em; font-size:0.72em"}
-The naive ladder throttles to **9.5%** swap acceptance at the freezing transition
-*(left)*; the geodesic spreads the load evenly — worst rung **16%** — so replicas
-actually **round-trip**. The sKL loss *(right)* settles onto that optimum.
+
+**Put few words here**
 :::
 
-## Not a schedule — a field
+## A field of coupling
 
 :::: {.columns}
 ::: {.column width="54%"}
@@ -649,13 +652,11 @@ actually **round-trip**. The sKL loss *(right)* settles onto that optimum.
 :::
 ::: {.column style="width:46%; font-size:0.92em"}
 
-The U-Net emits a full field $\beta(x,y,\lambda)$ — not a scalar schedule. The residual
+The U-Net emits a full field $\beta(x,y,\lambda)$, not a scalar schedule. The residual
 it carves, $\beta_{\text{learned}}-\beta_{\text{naive}}$:
 
 ::: {.fragment style="margin-top:0.8em"}
-- **early** — drives the defect coupling [**ahead**]{.target} of the ramp
-- **late** — [**holds it back**]{.easy}
-- **throughout** — a spatial **halo** the sharp defect boundary cannot express
+**Explain a lil bit **
 :::
 
 ::: {.fragment .lead style="text-align:center; margin-top:1.3em"}
@@ -665,23 +666,19 @@ Freedom no scalar schedule has.
 :::
 ::::
 
-## Summary
+## To be added
 
-- Topological freezing is **exponential** — it needs an annealing protocol to fight it
-- The optimal protocol is a **Fisher geodesic**
-- ML **recovers this geometry** with minimal assumptions, and generalizes to full
-  spatial coupling fields
+1. Results of the scaling with Physical volume of Topo observables
 
-::: {.lead}
-**Outlook:** scaling to larger volumes and full QCD; other defect geometries.
-:::
+2. Scaling of the prefactor Linear vs Optimized 
+
+3. Advantages of the optimal schedule 
+
+
 
 ## Thank you {.center}
 
 ::: {.lead}
-YOUR NAME — PLACEHOLDER
-
-[your.name@institution.edu](mailto:your.name@institution.edu)
 
 Questions?
 :::
