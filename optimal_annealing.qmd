@@ -212,7 +212,7 @@ barrier that diverges in the continuum. Tunnelling is suppressed as e^{-DS}, so
 tau_top ~ e^{c/a}. Same mechanism in CP^(N-1) and QCD.
 :::
 
-## Fighting freezing = choosing an annealing protocol {auto-animate=true}
+## Fighting freezing = choosing an annealing protocol 
 
 $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} $$
 
@@ -242,7 +242,7 @@ $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow
 :::
 ::::
 
-## Fighting freezing = choosing an annealing protocol {auto-animate=true}
+## Fighting freezing = choosing an annealing protocol 
 
 $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} $$
 
