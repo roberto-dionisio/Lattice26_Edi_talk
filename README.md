@@ -2,5 +2,5 @@
 
 Quarto reveal.js framework for my talk @Lattice26.
 
-A live demo of the presentation is available [here](https://roberto-dionisio.github.io/ECT_talk/quarto_PhD_seminar.html#/title-slide).
+A live demo of the presentation is available [here](https://https://github.io/roberto-dionisio/Lattice26_Edi_talk/optimal_annealing.html#/title-slide).
 
