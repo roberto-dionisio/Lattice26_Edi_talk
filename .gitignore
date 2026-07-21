@@ -17,6 +17,9 @@
 __pycache__/
 *.py[cod]
 
+*.py
+/figures/*.py
+figures/make_figures.py
 # --- Quarto render cache (regenerated on every `quarto render`) ---------------
 /.quarto/
 
@@ -25,6 +28,11 @@ __pycache__/
 /results/*.md
 /results/*.npz
 
+
+/fin_data/
+/fin_data/*
+/fisher_metric/
+/fisher_metric/*
 # --- leftover style-reference deck from a previous talk (not part of this
 #     project: _quarto.yml only renders optimal_annealing.qmd) -----------------
 /quarto_PhD_seminar.qmd

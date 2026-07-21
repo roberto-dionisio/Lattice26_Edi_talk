@@ -19,6 +19,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap, to_rgb
 from matplotlib.patches import FancyArrowPatch, Rectangle, FancyBboxPatch
+from matplotlib.ticker import NullFormatter
+from matplotlib.lines import Line2D
 
 sys.path.insert(0, str(Path(__file__).parent))
 import talkstyle as ts
@@ -721,7 +723,7 @@ def fig_res_geometry():
 
     # --- A: learned schedule vs the measured Fisher optimum -----------------
     r = ds["rep_idx"]
-    axA.plot(r, ds["beta_def_base"], ls=(0, (5, 4)), color=MUTED, lw=1.8,
+    axA.plot(r, ds["beta_def_base"], color=MUTED, lw=2.0,
              label="naive: linear ramp")
     th = ds["beta_def_thermo"]
     the = float(ds["err_mult_thermo"]) * ds["beta_def_thermo_err"]
@@ -739,15 +741,16 @@ def fig_res_geometry():
     axA.legend(loc="upper left", fontsize=9, handlelength=1.6, labelspacing=0.4)
 
     # --- B: cumulative thermodynamic length ---------------------------------
+    # dashed black "ideal straight" reference: above the error bands, behind the curves
     rf = dl["rep_f"]
-    axB.plot([0, 17], [0, float(dl["L_learn"])], color=FAINT, lw=1.4,
-             ls=(0, (4, 4)), zorder=1)
+    axB.plot([0, 17], [0, float(dl["L_learn"])], color="black", lw=1.5,
+             ls=(0, (5, 4)), zorder=2)
     bf, bse = dl["basel_f"], dl["basel_se_f"]
-    axB.fill_between(rf, bf - bse, bf + bse, color=MUTED, alpha=0.22, lw=0)
-    axB.plot(rf, bf, color=MUTED, lw=2.2, label="naive")
+    axB.fill_between(rf, bf - bse, bf + bse, color=MUTED, alpha=0.22, lw=0, zorder=1)
+    axB.plot(rf, bf, color=MUTED, lw=2.2, label="naive", zorder=3)
     lf, lse = dl["learn_f"], dl["learn_se_f"]
-    axB.fill_between(rf, lf - lse, lf + lse, color=DEFECT, alpha=0.20, lw=0)
-    axB.plot(rf, lf, color=DEFECT, lw=2.4, label="learned")
+    axB.fill_between(rf, lf - lse, lf + lse, color=DEFECT, alpha=0.20, lw=0, zorder=1)
+    axB.plot(rf, lf, color=DEFECT, lw=2.4, label="learned", zorder=3)
     axB.set_xlabel(r"replica  $k$")
     axB.set_ylabel(r"cumulative length  $\Lambda(k)$")
     axB.set_xlim(0, 17)
@@ -909,6 +912,241 @@ def fig_res_field_gif():
 
 
 # =============================================================================
+# The physics payoff -- integrated autocorrelation time of the topological charge,
+# read from ../fin_data/. tau_int(Q^2) tables (measured, jackknife errors) + one
+# representative Q history. See fin_data/README.md and fin_data/fit_parameters.txt.
+# =============================================================================
+FIN = Path(__file__).parent.parent / "fin_data"
+FISHER = Path(__file__).parent.parent / "fisher_metric"
+
+# Three defect-to-correlation ratios Lambda/xi, coloured consistently across the
+# tau_int plots; the two schedules keep the deck's naive=muted / optimized=defect
+# convention.
+_LXIS = [0.75, 1.25, 1.75]
+_CAMPCOL = {0.75: EASY, 1.25: TARGET, 1.75: BULK}
+_SCHEDCOL = {"run": MUTED, "optrun": DEFECT}
+_SCHEDNAME = {"run": "linear", "optrun": "optimized"}
+_DARK = "#14232a"   # near-black ink for legend / label text that must stay legible
+
+
+def _load_tau_main():
+    """tau_int_Q2_results.dat -> {(schedule, lambda_xi): array of (xi, tau, dtau)}."""
+    d = {}
+    for line in open(FIN / "tau_int_Q2_results.dat"):
+        if not line.strip() or line.startswith("#"):
+            continue
+        r = line.split()
+        key = (r[2], float(r[1]))                       # (schedule, lambda_xi)
+        d.setdefault(key, []).append((float(r[4]), float(r[6]), float(r[7])))
+    return {k: np.array(sorted(v)) for k, v in d.items()}
+
+
+def _wls_loglog(x, y, dy):
+    """Weighted least squares for log(y) = a + b*log(x), sigma_logy = dy/y (as in
+    fin_data/scripts: weighted log-log, absolute_sigma). Returns a, b and the
+    variances va, vb, cab of the intercept/slope."""
+    X, Y, w = np.log(x), np.log(y), (y / dy) ** 2
+    Sw, Sx, Sy = w.sum(), (w * X).sum(), (w * Y).sum()
+    Sxx, Sxy = (w * X * X).sum(), (w * X * Y).sum()
+    D = Sw * Sxx - Sx ** 2
+    b = (Sw * Sxy - Sx * Sy) / D
+    a = (Sxx * Sy - Sx * Sxy) / D
+    return a, b, Sxx / D, Sw / D, -Sx / D
+
+
+def _anorm(arr, xi_ref=6.0):
+    """Prefactor A = tau_int at xi/a = xi_ref, from the (xi/a)^z fit, with error."""
+    a, b, va, vb, cab = _wls_loglog(arr[:, 0], arr[:, 1], arr[:, 2])
+    x0 = np.log(xi_ref)
+    A = np.exp(a + b * x0)
+    return A, A * (va + x0 ** 2 * vb + 2 * x0 * cab) ** 0.5
+
+
+def fig_res_tau_scaling():
+    """Critical slowing down of the topological charge: tau_int(Q^2) ~ (xi/a)^z,
+    the five volumes at each Lambda/xi, one panel per schedule, z in the legend."""
+    d = _load_tau_main()
+    fig, axes = plt.subplots(1, 2, figsize=(10.6, 4.5), sharey=True,
+                             gridspec_kw=dict(wspace=0.05))
+    for ax, sched in zip(axes, ("run", "optrun")):
+        for lxi in _LXIS:
+            arr = d[(sched, lxi)]
+            x, y, dy = arr[:, 0], arr[:, 1], arr[:, 2]
+            a, b, va, vb, cab = _wls_loglog(x, y, dy)
+            c = _CAMPCOL[lxi]
+            xx = np.linspace(x.min() * 0.93, x.max() * 1.07, 40)
+            ax.plot(xx, np.exp(a) * xx ** b, color=c, lw=1.9, ls=(0, (5, 3)),
+                    alpha=0.9, zorder=2)
+            ax.errorbar(x, y, yerr=dy, fmt="o", color=c, ms=8, mec="white", mew=0.9,
+                        capsize=3, lw=1.6, zorder=4,
+                        label=rf"$\Lambda/\xi={lxi}$:  $z={b:.2f}\pm{vb**0.5:.2f}$")
+        ax.set_xscale("log")
+        ax.set_yscale("log")
+        ax.set_xlabel(r"$\xi/a$", fontsize=15)
+        ax.set_ylim(3.3, 70)
+        ax.tick_params(labelsize=12)
+        ax.set_title(_SCHEDNAME[sched], color=INK, fontsize=15)
+        leg = ax.legend(loc="upper left", handlelength=1.3, labelspacing=0.4,
+                        labelcolor="black", frameon=False,
+                        prop=dict(size=12.5, weight="medium"))
+        leg.set_zorder(6)
+    axes[0].set_ylabel(r"$\tau_{\mathrm{int}}(Q^2)$  [meas. units]", fontsize=15)
+    fig.subplots_adjust(left=0.085, right=0.98, top=0.92, bottom=0.14)
+    ts.save(fig, "fig_res_tau_scaling")
+
+
+def fig_res_prefactor():
+    """How the autocorrelation amplitude scales with the defect: prefactor
+    A(xi/a=6) ~ (Lambda/xi)^gamma, both schedules, gamma in the legend."""
+    d = _load_tau_main()
+    lx = np.array(_LXIS)
+    fig, ax = plt.subplots(figsize=(5.9, 4.5))
+    for sched in ("run", "optrun"):
+        A = np.array([_anorm(d[(sched, l)])[0] for l in _LXIS])
+        dA = np.array([_anorm(d[(sched, l)])[1] for l in _LXIS])
+        a, b, va, vb, cab = _wls_loglog(lx, A, dA)
+        c = _SCHEDCOL[sched]
+        xx = np.linspace(0.68, 1.92, 40)
+        ax.plot(xx, np.exp(a) * xx ** b, color=c, lw=2.0, ls=(0, (5, 3)), alpha=0.9)
+        ax.errorbar(lx, A, yerr=dA, fmt="o", color=c, ms=8.5, mec="white", mew=0.9,
+                    capsize=3.5, lw=1.7,
+                    label=rf"{_SCHEDNAME[sched]}:  $\gamma={b:.2f}\pm{vb**0.5:.2f}$")
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.set_xlabel(r"$\Lambda/\xi$", fontsize=16)
+    ax.set_ylabel(r"prefactor  $A\,(\xi/a{=}6)$  [meas. units]", fontsize=14)
+    ax.set_xlim(0.66, 1.98)
+    ax.set_xticks(_LXIS)
+    ax.set_xticklabels([str(l) for l in _LXIS])
+    ax.xaxis.set_minor_formatter(NullFormatter())
+    ax.tick_params(labelsize=12.5)
+    ax.legend(loc="upper right", handlelength=1.3, labelcolor="black", frameon=False,
+              prop=dict(size=13, weight="medium"))
+    fig.subplots_adjust(left=0.15, right=0.97, top=0.95, bottom=0.14)
+    ts.save(fig, "fig_res_prefactor")
+
+
+def fig_res_speedup():
+    """The optimized schedule's advantage: the prefactor ratio A_opt / A_lin sits
+    a uniform ~25% below one across Lambda/xi. No fit -- just the measured ratio."""
+    d = _load_tau_main()
+    lx = np.array(_LXIS)
+    ratio, dratio = [], []
+    for l in _LXIS:
+        Ao, dAo = _anorm(d[("optrun", l)])
+        Al, dAl = _anorm(d[("run", l)])
+        ratio.append(Ao / Al)
+        dratio.append((Ao / Al) * np.hypot(dAo / Ao, dAl / Al))
+    ratio, dratio = np.array(ratio), np.array(dratio)
+
+    fig, ax = plt.subplots(figsize=(5.9, 4.5))
+    ax.axhline(1.0, color=MUTED, lw=1.4, ls=(0, (4, 4)), zorder=1)
+    ax.fill_between([0.6, 1.95], 0.5, 1.0, color=DEFECT, alpha=0.07, lw=0, zorder=0)
+    ax.errorbar(lx, ratio, yerr=dratio, fmt="o-", color=DEFECT, ms=9, mec="white",
+                mew=0.9, capsize=4, lw=2.0, zorder=3)
+    ax.text(1.93, 1.01, "no gain", color=_DARK, fontsize=11, ha="right", va="bottom")
+    ax.text(1.25, 0.70, "optimized faster", color=DEFECT, fontsize=13,
+            ha="center", va="center", style="italic", fontweight="bold")
+    ax.set_xlabel(r"$\Lambda/\xi$", fontsize=16)
+    ax.set_ylabel(r"$A_{\mathrm{opt}}\,/\,A_{\mathrm{lin}}$", fontsize=16)
+    ax.set_xlim(0.6, 1.95)
+    ax.set_ylim(0.6, 1.1)
+    ax.set_xticks(_LXIS)
+    ax.set_xticklabels([str(l) for l in _LXIS])
+    ax.tick_params(labelsize=12.5)
+    ts.bare(ax)
+    fig.subplots_adjust(left=0.14, right=0.97, top=0.95, bottom=0.14)
+    ts.save(fig, "fig_res_speedup")
+
+
+def fig_res_qhistory():
+    """Topological-charge history: the optimized-schedule run (all seeds glued, ~350k
+    measurements) tunnels through every sector *with* parallel tempering, next to a
+    fictitious *without-tempering* trace -- a rare-jump walk with a huge autocorrelation
+    time that stays frozen in a sector for enormous stretches."""
+    d = np.loadtxt(FIN / "example_case/topo_charge_optimal_glued.dat")
+    idx, seed, Q = d[:, 0] / 1000.0, d[:, 1], d[:, 3]
+    # break the trace between independent seeds so they are not joined by a spurious
+    # vertical connector at each glue boundary
+    bnd = np.where(np.diff(seed) != 0)[0] + 1
+    idx = np.insert(idx, bnd, np.nan)
+    Q = np.insert(Q, bnd, np.nan)
+    qlo, qhi = int(np.nanmin(Q)), int(np.nanmax(Q))
+    xmax = np.nanmax(idx)
+
+    # Fictitious "no tempering": long plateaus near Q=0 with a couple of long
+    # excursions to +/-1 -- an enormous autocorrelation time (once it moves, it stays).
+    rng = np.random.default_rng(1)
+    t, lev, cur = [0.0], [], 0
+    while t[-1] < xmax:
+        t.append(min(t[-1] + rng.uniform(42, 90), xmax))
+    for _ in range(len(t) - 1):
+        lev.append(cur)
+        p = [0.60, 0.25, 0.15] if cur >= 1 else \
+            [0.15, 0.25, 0.60] if cur <= -1 else [0.32, 0.34, 0.34]
+        cur = int(np.clip(cur + int(rng.choice([-1, 0, 1], p=p)), -2, 2))
+    fx, fy = [], []
+    for i in range(len(lev)):
+        fx += [t[i], t[i + 1]]
+        fy += [lev[i], lev[i]]
+
+    fig, ax = plt.subplots(figsize=(10.6, 4.0), dpi=150)
+    for qi in range(qlo, qhi + 1):
+        ax.axhline(qi, color=FAINT, lw=0.5, zorder=0)
+    ax.plot(idx, Q, color=EASY, lw=0.3, zorder=3, rasterized=True)
+    ax.plot(fx, fy, color=TARGET, lw=2.3, zorder=5)
+    ax.set_xlabel(r"measurement  [$\times 10^{3}$]", fontsize=15)
+    ax.set_ylabel(r"$Q$   (physical replica)", fontsize=15)
+    ax.set_yticks(range(qlo, qhi + 1, 2))
+    ax.set_xlim(0, xmax)
+    ax.set_ylim(qlo - 0.6, qhi + 2.4)
+    ax.tick_params(labelsize=12)
+    ts.bare(ax)
+    handles = [Line2D([0], [0], color=EASY, lw=2.3, label="Parallel Tempering"),
+               Line2D([0], [0], color=TARGET, lw=2.3, label="No Parallel Tempering")]
+    ax.legend(handles=handles, loc="upper center", ncol=2, frameon=False,
+              labelcolor="black", prop=dict(size=13, weight="medium"),
+              handlelength=1.6, columnspacing=2.2)
+    fig.subplots_adjust(left=0.07, right=0.98, top=0.96, bottom=0.15)
+    ts.save(fig, "fig_res_qhistory")
+
+
+def fig_res_fisher():
+    """The measured Fisher = thermodynamic metric g(beta_def) = Var(E_def) along the
+    linear PT schedule (fisher_metric/, CP(N-1) disk defect, largest volume L=64). It
+    is strongly non-uniform, peaking at the topological crossover -- the real integrand
+    the geodesic condition redistributes."""
+    z = np.load(FISHER / "fisher_metric_thermo.npz")
+    b, g, ge = z["L64_beta_def"], z["L64_g"], z["L64_g_err"]
+
+    fig, ax = plt.subplots(figsize=(6.6, 3.9))
+    ax.fill_between(b, g, color=BULK, alpha=0.10, lw=0)
+    ax.plot(b, g, color=BULK, lw=2.6, zorder=3)
+    ax.errorbar(b, g, yerr=ge, fmt="o", color=BULK, ms=6.5, mec="white", mew=0.8,
+                capsize=3, lw=1.4, zorder=4)
+
+    ip = int(np.argmax(g))
+    ax.annotate("topological crossover:\ngeodesic packs replicas here",
+                xy=(b[ip], g[ip]), xytext=(0.06, g[ip] * 0.84),
+                color="black", fontsize=13, fontweight="medium", ha="left",
+                va="top", linespacing=1.3,
+                arrowprops=dict(arrowstyle="->", color=INK, lw=1.6))
+    ax.text(0.02, 0.97, r"$L=64$", transform=ax.transAxes, color=INK,
+            fontsize=13.5, fontweight="medium", ha="left", va="top")
+
+    ax.set_xlabel(r"$\beta_{\mathrm{def}}$", fontsize=17)
+    ax.set_ylabel(r"$g(\beta_{\mathrm{def}})$", fontsize=17)
+    ax.set_xlim(-0.06, 1.96)
+    ax.set_ylim(0, g.max() * 1.15)
+    ax.set_xticks([0.0, 0.5, 1.0, 1.5])
+    ax.set_yticks([0, 1000, 2000, 3000, 4000])
+    ax.tick_params(labelsize=12.5)
+    ts.bare(ax)
+    fig.subplots_adjust(left=0.155, right=0.97, top=0.95, bottom=0.18)
+    ts.save(fig, "fig_res_fisher")
+
+
+# =============================================================================
 FIGURES = {
     "fig02": fig02_critical_slowing_down,
     "fig03": fig03_ring_sectors,
@@ -923,6 +1161,11 @@ FIGURES = {
     "res_swaps": fig_res_swaps,
     "res_field": fig_res_field,
     "res_field_gif": fig_res_field_gif,
+    "res_tau": fig_res_tau_scaling,
+    "res_prefactor": fig_res_prefactor,
+    "res_speedup": fig_res_speedup,
+    "res_qhist": fig_res_qhistory,
+    "res_fisher": fig_res_fisher,
 }
 
 

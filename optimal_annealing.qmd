@@ -212,9 +212,16 @@ barrier that diverges in the continuum. Tunnelling is suppressed as e^{-DS}, so
 tau_top ~ e^{c/a}. Same mechanism in CP^(N-1) and QCD.
 :::
 
-## Fighting freezing = choosing an annealing protocol 
+## Fighting freezing: an annealing protocol
+
+::: {.note style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;"}
+One route among others: **interpolate** an easy
+distribution to the target.
+:::
 
 $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} $$
+
+
 
 ![](figures/fig04_annealing_family.svg)
 
@@ -235,16 +242,27 @@ $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow
 ::: {.fragment style="text-align:center"}
 **Parallel tempering**
 
-- E.g. anneal a **defect coupling**; 
-- **parallel** replicas exchanged along $\lambda$.
+- **parallel** replicas exchanged along $\lambda$;
+- asymptotically exact, no network to train.
 :::
 
 :::
 ::::
+<!--
+::: {.fragment .note style="text-align:center; margin-top:0.5em"}
+Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a choice among many others.
+:::
+-->
+## Fighting freezing: an annealing protocol
 
-## Fighting freezing = choosing an annealing protocol 
+::: {.note style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;"}
+One route among others: **interpolate** an easy
+distribution to the target.
+:::
 
 $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} $$
+
+
 
 ![](figures/fig04_annealing_family.svg)
 
@@ -265,12 +283,14 @@ $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow
 ::: {style="text-align:center; border:3px dashed #EB811B; border-radius:10px; padding:0.4em 0.8em; background:rgba(235, 128, 27, 0.09)"}
 **Parallel tempering**
 
-- E.g. anneal a **defect coupling**;
-- **parallel** replicas exchanged along $\lambda$.
+- **parallel** replicas exchanged along $\lambda$;
+- asymptotically exact, no network to train.
 :::
 
 :::
 ::::
+
+
 
 ## The testbed: 2D $CP(N-1)$
 
@@ -506,7 +526,7 @@ $\Delta\ell_k = \dfrac{\Lambda}{N} = \text{const}
 :::
 ::: {.column width="46%"}
 
-![](figures/fig07_fisher_metric.svg)
+![](figures/fig_res_fisher.svg)
 
 
 
@@ -574,7 +594,7 @@ $$\beta(x,y,\lambda) = \beta_{\mathrm{base}} + C_{\max}\,F(x,y,\lambda)\,\sin(\p
 
 ::: {.fragment style="margin-top:2.0em"}
 - $\sin(\pi \lambda)$ **pins the endpoints** $\lambda=0,1$;
-- the net sees only **geometry** — distance to the defect, *never field
+- the net sees only **geometry**, i.e. distance to the defect, *never field
   configurations* $\Rightarrow$ **transferable** 
 :::
 
@@ -588,9 +608,15 @@ $$\begin{aligned}
 &= \tfrac{1}{2}\big[\langle \Delta S\rangle_{p_r} - \langle \Delta S\rangle_{p_{r+1}}\big]
 \end{aligned}$$
 
-::: {.fragment style="margin-top:2.3em"}
-- Minimizing sKL between adjacent replicas **is** the discretized geodesic condition
-- straight from **PT samples**, no partition function.
+::: {.fragment style="margin-top:1.1em"}
+Small steps: $\;\mathrm{sKL}_r \approx \tfrac{1}{2}\,g(\lambda_r)\,\Delta\lambda_r^{2} = \tfrac{1}{2}\,\Delta\ell_r^{2}$
+
+$$\sum_r \mathrm{sKL}_r \;\approx\; \tfrac{1}{2}\sum_r \Delta\ell_r^{2}\;\ge\;\frac{\Lambda^{2}}{2N}$$
+
+Minimizing it $\Rightarrow$ equal $\Delta\ell$: 
+
+**Geodesic** of length $\Lambda$,
+from **PT samples** (no $Z$).
 :::
 
 
@@ -613,7 +639,7 @@ $$\begin{aligned}
 
 
 ::: {.fragment .lead style="text-align:center; margin-top:1.4em"}
-The U‑Net learns the **Fisher geodesic** end‑to‑end from PT samples — does its
+The U‑Net learns the **Fisher geodesic** end‑to‑end from PT samples,does its
 trajectory match the theory?
 :::
 
@@ -621,26 +647,44 @@ trajectory match the theory?
 
 ## The model finds the geometry {.money}
 
+<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
+$L=32 \quad \beta=1.8 \quad N=6$
+</div>
+
 ![](figures/fig_res_geometry.svg)
 
-::: {.fragment .lead style="text-align:center; margin-top:0.3em; font-size:0.72em"}
-
-Define phsical parameters used for this experiment 
-
-
-The learned schedule lands on the **measured** Fisher optimum *(left)* and walks the
-same path at **equal thermodynamic length per step** *(right)* the geodesic
-condition recovered from samples alone.
+:::: {.columns}
+::: {.column width="50%"}
+::: {.fragment .lead style="text-align:center; font-size:0.8em; margin-top:0.2em"}
+The learned schedule lands </br> on the **measured** Fisher optimum.
 :::
+:::
+::: {.column width="50%"}
+::: {.fragment .lead style="text-align:center; font-size:0.8em; margin-top:0.2em; margin-left:2.5em;"}
+…and walks it at **equal thermodynamic length per step** </br>
+the geodesic condition recovered from samples alone.
+:::
+:::
+::::
 
-## Solved bottleneck ladder (tbd ?)
+## Solved ladder bottleneck
 
 ![](figures/fig_res_swaps.svg)
 
-::: {.fragment .lead style="text-align:center; margin-top:0.3em; font-size:0.72em"}
-
-**Put few words here**
+:::: {.columns}
+::: {.column width="58%"}
+::: {.fragment .lead style="text-align:center; font-size:0.72em; margin-top:0.2em"}
+The naive ladder **chokes to 9.5%** acceptance at the crossover — its rate-limiting
+rung. The learned schedule keeps every rung **uniform**, so replicas **round-trip**.
 :::
+:::
+::: {.column width="42%"}
+::: {.fragment .lead style="text-align:center; font-size:0.72em; margin-top:0.2em"}
+It gets there by minimizing the **sKL loss** — equal-length steps, the geodesic
+condition.
+:::
+:::
+::::
 
 ## A field of coupling
 
@@ -651,30 +695,75 @@ condition recovered from samples alone.
 
 :::
 ::: {.column style="width:46%; font-size:0.92em"}
-
-The U-Net emits a full field $\beta(x,y,\lambda)$, not a scalar schedule. The residual
-it carves, $\beta_{\text{learned}}-\beta_{\text{naive}}$:
-
+:::{.div style="margin-top:6.0em; font-size:0.88em; text-align:center;"} 
+The U-Net emits a full field $\beta(x,y,\lambda)$;</br> not a scalar schedule. 
+:::
 ::: {.fragment style="margin-top:0.8em"}
-**Explain a lil bit **
+- **early**: drives the defect coupling [**ahead**]{.target} of the ramp;
+- **late**: [**holds it back**]{.easy};
 :::
 
-::: {.fragment .lead style="text-align:center; margin-top:1.3em"}
+::: {.fragment .lead style="text-align:center; margin-top:1.3em; font-size:0.78em"}
 Freedom no scalar schedule has.
 :::
 
 :::
 ::::
 
-## To be added
+## Topology is not frozen!
 
-1. Results of the scaling with Physical volume of Topo observables
+![](figures/fig_res_qhistory.svg)
 
-2. Scaling of the prefactor Linear vs Optimized 
+::: {.fragment .lead style="text-align:center; margin-top:0.5em; font-size:0.84em"}
+The full run **~350k measurements** ($L=150$, optimized schedule): the physical
+replica visits sectors $-8\ldots+8$ </br> tempering through the defect
+keeps the charge [**unfrozen**]{.easy}, where local updates would [**freeze**]{style='color: #913030;'} it.
+:::
 
-3. Advantages of the optimal schedule 
+## Critical slowing down of Q²
+
+:::{.div style="text-align:center; margin-top:-0.8em; font-size:0.88em"}
+$\tau_{\mathrm{int}}(Q^2)\sim(\xi/a)^{z}$
+
+:::
 
 
+![](figures/fig_res_tau_scaling.svg)
+
+::: {.fragment .lead style="text-align:center; margin-top:0.3em; font-size:0.78em; color: #212121"}
+Five volumes with $L/\xi \gtrsim 20$ and three defect sizes: optimized 
+schedule *(**right**)* sits systematically below the linear one *(**left**)*.
+:::
+
+## Optimized annealing pays off
+
+:::: {.columns}
+::: {.column width="50%"}
+
+![](figures/fig_res_prefactor.svg)
+
+:::
+::: {.column width="50%"}
+
+![](figures/fig_res_speedup.svg)
+
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+::: {.fragment .lead style="text-align:center; font-size:0.72em; margin-top:0.2em; color:  #212121"}
+The prefactor falls as $A\sim(\Lambda/\xi)^{\gamma}$ with $\gamma\approx-1$ </br> a larger
+defect (more replicas) already helps.
+:::
+:::
+::: {.column width="50%"}
+::: {.fragment .lead style="text-align:center; font-size:0.72em; margin-top:0.2em; color:  #212121"}
+On top of that, the optimized schedule has a **further $\sim20\%$** off, uniformly
+in $\Lambda/\xi$.
+:::
+:::
+::::
 
 ## Thank you {.center}
 
