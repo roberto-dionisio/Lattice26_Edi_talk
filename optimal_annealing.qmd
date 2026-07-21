@@ -715,7 +715,7 @@ Freedom no scalar schedule has.
 
 ::: {.fragment .lead style="text-align:center; margin-top:0.5em; font-size:0.84em"}
 The full run **~350k measurements** ($L=150$, optimized schedule): the physical
-replica visits sectors $-8\ldots+8$ </br> tempering through the defect
+replica visits sectors $-8\ldots+8$. </br> Tempering through the defect
 keeps the charge [**unfrozen**]{.easy}, where local updates would [**freeze**]{style='color: #913030;'} it.
 :::
 
