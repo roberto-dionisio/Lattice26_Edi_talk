@@ -674,8 +674,7 @@ the geodesic condition recovered from samples alone.
 :::: {.columns}
 ::: {.column width="58%"}
 ::: {.fragment .lead style="text-align:center; font-size:0.72em; margin-top:0.2em"}
-The naive ladder **chokes to 9.5%** acceptance at the crossover — its rate-limiting
-rung. The learned schedule keeps every rung **uniform**, so replicas **round-trip**.
+The naive ladder **drops to 9.5%** acceptance at the crossover.</br> The learned schedule keeps every rung **uniform**, so replicas **round-trip**.
 :::
 :::
 ::: {.column width="42%"}
