@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Roberto Dionisio">
-  <meta name="dcterms.date" content="2026-07-21">
+  <meta name="dcterms.date" content="2026-07-24">
   <title>Optimal Paths through Distribution Space for Mitigating Topological Freezing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -232,7 +232,7 @@ Roberto Dionisio
     </div>
 </div>
 
-  <p class="date">July 21, 2026</p>
+  <p class="date">July 24, 2026</p>
 </section>
 <section id="two-flavors-of-critical-slowing-down" class="slide level2">
 <h2>Two flavors of critical slowing down</h2>
@@ -243,7 +243,7 @@ Roberto Dionisio
 <p><span class="math display">\[\tau_{\mathrm{int}}(\mathcal{O}) \;\sim\; a^{-z}\]</span></p>
 </div>
 <div class="fragment" data-fragment-index="1">
-<p>Topological freezing:</p>
+<p>Topological freezing: <span style=";color: gray;">[1]</span> <span style=";color: gray;">[2]</span></p>
 <p><span class="math display">\[\tau_{\mathrm{int}}(Q^2) \;\sim\; e^{\,c/a}\]</span></p>
 </div>
 </div><div class="column" style="width:58%;">
@@ -1705,16 +1705,16 @@ z
 <section id="fighting-freezing-an-annealing-protocol" class="slide level2">
 <h2>Fighting freezing: an annealing protocol</h2>
 <div class="note" style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;">
-<p>One route among others: <strong>interpolate</strong> an easy distribution to the target.</p>
+<p>One route among others: <strong>interpolate</strong> an easy distribution to the target. <span style=";color: gray;">[3]</span></p>
 </div>
 <p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
 
 <img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
 <div class="column" style="width:50%;">
 <div class="fragment" style="text-align:center">
-<p><strong>Learned sequential flows</strong></p>
+<p><strong>Learned sequential flows</strong> <span style=";color: gray;">[6]</span></p>
 <ul>
-<li>NETS / Stochastic Normalizing Flows;</li>
+<li>NETS / Stochastic Normalizing Flows; <span style=";color: gray;">[4]</span> <span style=";color: gray;">[5]</span></li>
 <li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
 </ul>
 </div>
@@ -1736,16 +1736,16 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 <section id="fighting-freezing-an-annealing-protocol-1" class="slide level2">
 <h2>Fighting freezing: an annealing protocol</h2>
 <div class="note" style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;">
-<p>One route among others: <strong>interpolate</strong> an easy distribution to the target.</p>
+<p>One route among others: <strong>interpolate</strong> an easy distribution to the target. <span style=";color: gray;">[3]</span></p>
 </div>
 <p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
 
 <img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
 <div class="column" style="width:50%;">
 <div style="text-align:center; opacity:0.4">
-<p><strong>Learned sequential flows</strong></p>
+<p><strong>Learned sequential flows</strong> <span style=";color: gray;">[6]</span></p>
 <ul>
-<li>NETS / Stochastic Normalizing Flows;</li>
+<li>NETS / Stochastic Normalizing Flows; <span style=";color: gray;">[4]</span> <span style=";color: gray;">[5]</span></li>
 <li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
 </ul>
 </div>
@@ -1795,7 +1795,7 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="lead" style="text-align:center; margin-bottom:0.0em">
-<p><strong>Open</strong> BC <br> No Topological barriers and <span class="math inline">\(Q\)</span> change freely</p>
+<p><strong>Open</strong> BC <span style=";color: gray;">[7]</span> <br> No Topological barriers and <span class="math inline">\(Q\)</span> change freely</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="lead" style="text-align:center; margin-bottom:0.0em">
@@ -1804,7 +1804,7 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 </div></div>
 
 <img data-src="figures/fig_defect_anneal.svg" class="r-stretch"><div class="lead" style="text-align:center; margin-top:0.1em">
-<p>The <strong>defect</strong> is a line of links (a cut) with tunable coupling.</p>
+<p>The <strong>defect</strong> is a line of links (a cut) with tunable coupling. <span style=";color: gray;">[8]</span></p>
 <p>Anneal <span class="math inline">\(\;\beta_{\mathrm{def}}(\lambda)=\lambda\,\beta_{\mathrm{bulk}}\)</span>: at <span class="math inline">\(\lambda=0\)</span> the cut is open; at <span class="math inline">\(\lambda=1\)</span> we recover the periodic theory.</p>
 </div>
 </section>
@@ -1829,7 +1829,7 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 </div>
 </div></div>
 <div class="fragment" style="text-align:center; margin-top:1.1em">
-<p><strong>Efficient</strong> PT ladder <span class="math inline">\(\Longrightarrow\)</span> <strong>topological mixing</strong> from the open replica to the <span style="color: #EB811B;"><strong>target</strong></span> periodic one.</p>
+<p><strong>Efficient</strong> PT ladder <span class="math inline">\(\Longrightarrow\)</span> <strong>topological mixing</strong> from the open replica to the <span style="color: #EB811B;"><strong>target</strong></span> periodic one. <span style=";color: gray;">[9]</span></p>
 </div>
 </section>
 <section id="efficiency-is-a-geometry-problem" class="slide level2">
@@ -1917,9 +1917,9 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 <h2>The geodesic condition</h2>
 <div class="columns">
 <div class="column" style="width:54%; font-size:0.82em">
-<p><strong>Thermodynamic length</strong> <br> Fisher metric turns the path into a distance:</p>
+<p><strong>Thermodynamic length</strong> <span style=";color: gray;">[10]</span> <br> Fisher metric turns the path into a distance:</p>
 <p><span class="math display">\[\Lambda \;=\; \int_0^1 \!\sqrt{g(\lambda)}\,d\lambda \left(=\; \sum_k \Delta\ell_k \right) \]</span></p>
-<p>Running it in a finite (fictitious) time <span class="math inline">\(\tau\)</span> <strong>dissipates work</strong></p>
+<p>Running it in a finite (fictitious) time <span class="math inline">\(\tau\)</span> <strong>dissipates work</strong> <span style=";color: gray;">[11]</span></p>
 <p><span class="math display">\[W_{\mathrm{diss}}
 \;\propto\; \frac{1}{\Delta t}\sum_k \Delta\ell_k^{\,2}\]</span></p>
 <p><strong>Minimize <span class="math inline">\(W_{\mathrm{diss}}\)</span> at fixed length <span class="math inline">\(\Lambda\)</span></strong> leads to</p>
@@ -2041,7 +2041,7 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 <div class="column" style="width:54%;">
 <p><img data-src="figures/fig_res_field.gif"></p>
 </div><div class="column" style="width:46%; font-size:0.92em">
-<div class="div" style="margin-top:6.0em; font-size:0.88em; text-align:center;">
+<div class="div" style="margin-top:5.0em; font-size:0.88em; text-align:center;">
 <p>The U-Net emits a full field <span class="math inline">\(\beta(x,y,\lambda)\)</span>;<br> not a scalar schedule.</p>
 </div>
 <div class="fragment" style="margin-top:0.8em">
@@ -2053,10 +2053,19 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 <div class="fragment lead" style="text-align:center; margin-top:1.3em; font-size:0.78em">
 <p>Freedom no scalar schedule has.</p>
 </div>
+<div class="fragment lead" style="text-align:center; margin-top:1.3em; font-size:0.85em">
+<ul>
+<li>We have explored <strong>different defect shapes</strong>: disk, square and stripe</li>
+<li>We stick to a finite stripe (cheaper).</li>
+</ul>
+</div>
 </div></div>
 </section>
 <section id="topology-is-not-frozen" class="slide level2">
 <h2>Topology is not frozen!</h2>
+<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
+<p><span class="math inline">\(N=21 \quad L=150 \quad \beta \simeq 0.8 \quad N_R=12\)</span></p>
+</div>
 
 <img data-src="figures/fig_res_qhistory.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.5em; font-size:0.84em">
 <p>The full run <strong>~350k measurements</strong> (<span class="math inline">\(L=150\)</span>, optimized schedule): the physical replica visits sectors <span class="math inline">\(-8\ldots+8\)</span>. <br> Tempering through the defect keeps the charge <span class="easy" style=""><strong>unfrozen</strong></span>, where local updates would <span style="color: #913030;"><strong>freeze</strong></span> it.</p>
@@ -2064,8 +2073,11 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 </section>
 <section id="critical-slowing-down-of-q²" class="slide level2">
 <h2>Critical slowing down of Q²</h2>
-<div class="div" style="text-align:center; margin-top:-0.8em; font-size:0.88em">
+<div class="div" style="text-align:center; margin-top:-1.15em; font-size:0.88em">
 <p><span class="math inline">\(\tau_{\mathrm{int}}(Q^2)\sim(\xi/a)^{z}\)</span></p>
+</div>
+<div style="text-align:center; margin-top:-0.35em; font-size:0.6em; color:#666">
+<p><span class="math inline">\(\Lambda/\xi \equiv L_d/\xi \qquad\)</span> <span class="math inline">\(\qquad L_d \lesssim 12\%\,L \qquad\)</span> <span class="math inline">\(\qquad \Lambda \propto \sqrt{L_d} \qquad\)</span></p>
 </div>
 
 <img data-src="figures/fig_res_tau_scaling.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.78em; color: #212121">
@@ -2095,6 +2107,12 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 <h2>Thank you</h2>
 <div class="lead">
 <p>Questions?</p>
+</div>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<div style="font-size: 0.72em; line-height: 1.7;">
+<p><span style=";color: gray;">[1]</span> Del Debbio, Manca, Vicari, Phys. Lett. B 594 (2004) 315 [arXiv:hep-lat/0403001] <br> <span style=";color: gray;">[2]</span> Schaefer, Sommer, Virotta (ALPHA), Nucl. Phys. B 845 (2011) 93 [arXiv:1009.5228] <br> <span style=";color: gray;">[3]</span> Neal, Stat. Comput. 11 (2001) 125 [arXiv:physics/9803008] <br> <span style=";color: gray;">[4]</span> Caselle, Cellini, Nada, Panero, JHEP 07 (2022) 015 [arXiv:2201.08862] <br> <span style=";color: gray;">[5]</span> Albergo, Vanden-Eijnden, ICML 2025 [arXiv:2410.02711] <br> <span style=";color: gray;">[6]</span> Albergo, Kanwar, Shanahan, Phys. Rev.&nbsp;D 100 (2019) 034515 [arXiv:1904.12072] <br> <span style=";color: gray;">[7]</span> Lüscher, Schaefer, JHEP 07 (2011) 036 [arXiv:1105.4749] <br> <span style=";color: gray;">[8]</span> Hasenbusch, Phys. Rev.&nbsp;D 96 (2017) 054504 [arXiv:1706.04443] <br> <span style=";color: gray;">[9]</span> Bonanno, Clemente, D’Elia, Maio, Parente, JHEP 08 (2024) 236 [arXiv:2404.14151] <br> <span style=";color: gray;">[10]</span> Crooks, Phys. Rev.&nbsp;Lett. 99 (2007) 100602 [arXiv:0706.0559] <br> <span style=";color: gray;">[11]</span> Sivak, Crooks, Phys. Rev.&nbsp;Lett. 108 (2012) 190602 [arXiv:1201.4166] <br></p>
 </div>
 
 <div class="reveal-header">

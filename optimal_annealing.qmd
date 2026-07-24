@@ -121,7 +121,7 @@ $$\tau_{\mathrm{int}}(\mathcal{O}) \;\sim\; a^{-z}$$
 :::
 
 ::: {.fragment fragment-index=1}
-Topological freezing:
+Topological freezing: [[1]]{color=gray} [[2]]{color=gray}
 
 $$\tau_{\mathrm{int}}(Q^2) \;\sim\; e^{\,c/a}$$
 :::
@@ -216,7 +216,7 @@ tau_top ~ e^{c/a}. Same mechanism in CP^(N-1) and QCD.
 
 ::: {.note style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;"}
 One route among others: **interpolate** an easy
-distribution to the target.
+distribution to the target. [[3]]{color=gray}
 :::
 
 $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} $$
@@ -229,9 +229,9 @@ $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow
 ::: {.column width="50%"}
 
 ::: {.fragment style="text-align:center"}
-**Learned sequential flows**
+**Learned sequential flows** [[6]]{color=gray}
 
-- NETS / Stochastic Normalizing Flows;
+- NETS / Stochastic Normalizing Flows; [[4]]{color=gray} [[5]]{color=gray}
 - **sequential** learned steps along $\lambda$.
 :::
 
@@ -257,7 +257,7 @@ Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a
 
 ::: {.note style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;"}
 One route among others: **interpolate** an easy
-distribution to the target.
+distribution to the target. [[3]]{color=gray}
 :::
 
 $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} $$
@@ -270,9 +270,9 @@ $$S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow
 ::: {.column width="50%"}
 
 ::: {style="text-align:center; opacity:0.4"}
-**Learned sequential flows**
+**Learned sequential flows** [[6]]{color=gray}
 
-- NETS / Stochastic Normalizing Flows;
+- NETS / Stochastic Normalizing Flows; [[4]]{color=gray} [[5]]{color=gray}
 - **sequential** learned steps along $\lambda$.
 :::
 
@@ -354,7 +354,7 @@ $$Q=\frac{1}{2\pi}\!\int\! d^2x\;\epsilon_{\mu\nu}\,\partial_\mu A_\nu\;\in\;\ma
 ::: {.column width="50%"}
 
 ::: {.lead style="text-align:center; margin-bottom:0.0em"}
-**Open** BC </br>
+**Open** BC [[7]]{color=gray} </br>
 No Topological barriers and $Q$ change freely
 :::
 
@@ -374,7 +374,7 @@ Target Physical Theory but topology is frozen!
 ![](figures/fig_defect_anneal.svg)
 
 ::: {.lead style="text-align:center; margin-top:0.1em"}
-The **defect** is a line of links (a cut) with tunable coupling. 
+The **defect** is a line of links (a cut) with tunable coupling. [[8]]{color=gray} 
 
 Anneal
 $\;\beta_{\mathrm{def}}(\lambda)=\lambda\,\beta_{\mathrm{bulk}}$: at $\lambda=0$ the cut is
@@ -418,7 +418,7 @@ $A=\min\!\big(1,\;\frac{p_{\lambda}(x_{\lambda+1})\, p_{\lambda+1}(x_{\lambda})}
 
 
 ::: {.fragment style="text-align:center; margin-top:1.1em"}
- **Efficient** PT ladder $\Longrightarrow$ **topological mixing** from the open replica to the [**target**]{style="color: #EB811B;"} periodic one. 
+ **Efficient** PT ladder $\Longrightarrow$ **topological mixing** from the open replica to the [**target**]{style="color: #EB811B;"} periodic one. [[9]]{color=gray}
 
 :::
 
@@ -502,12 +502,12 @@ $g(\lambda)$ $\Rightarrow$ **local distinguishability** of nearby distributions
 :::: {.columns}
 ::: {.column style="width:54%; font-size:0.82em"}
 
-**Thermodynamic length** </br>
+**Thermodynamic length** [[10]]{color=gray} </br>
 Fisher metric turns the path into a distance:
 
 $$\Lambda \;=\; \int_0^1 \!\sqrt{g(\lambda)}\,d\lambda \left(=\; \sum_k \Delta\ell_k \right) $$
 
-Running it in a finite (fictitious) time $\tau$ **dissipates work**
+Running it in a finite (fictitious) time $\tau$ **dissipates work** [[11]]{color=gray}
 
 $$W_{\mathrm{diss}}
 \;\propto\; \frac{1}{\Delta t}\sum_k \Delta\ell_k^{\,2}$$
@@ -694,7 +694,7 @@ condition.
 
 :::
 ::: {.column style="width:46%; font-size:0.92em"}
-:::{.div style="margin-top:6.0em; font-size:0.88em; text-align:center;"} 
+:::{.div style="margin-top:5.0em; font-size:0.88em; text-align:center;"} 
 The U-Net emits a full field $\beta(x,y,\lambda)$;</br> not a scalar schedule. 
 :::
 ::: {.fragment style="margin-top:0.8em"}
@@ -706,10 +706,20 @@ The U-Net emits a full field $\beta(x,y,\lambda)$;</br> not a scalar schedule.
 Freedom no scalar schedule has.
 :::
 
+::: {.fragment .lead style="text-align:center; margin-top:1.3em; font-size:0.85em"}
+- We have explored **different defect shapes**: disk, square and stripe
+- We stick to a finite stripe (cheaper).
+:::
+
+
 :::
 ::::
 
 ## Topology is not frozen!
+
+<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
+$N=21 \quad L=150 \quad \beta \simeq 0.8 \quad N_R=12$
+</div>
 
 ![](figures/fig_res_qhistory.svg)
 
@@ -721,16 +731,19 @@ keeps the charge [**unfrozen**]{.easy}, where local updates would [**freeze**]{s
 
 ## Critical slowing down of Q²
 
-:::{.div style="text-align:center; margin-top:-0.8em; font-size:0.88em"}
+:::{.div style="text-align:center; margin-top:-1.15em; font-size:0.88em"}
 $\tau_{\mathrm{int}}(Q^2)\sim(\xi/a)^{z}$
+:::
 
+::: {style="text-align:center; margin-top:-0.35em; font-size:0.6em; color:#666"}
+$\Lambda/\xi \equiv L_d/\xi \qquad$   $\qquad L_d \lesssim 12\%\,L \qquad$  $\qquad \Lambda \propto \sqrt{L_d} \qquad$
 :::
 
 
 ![](figures/fig_res_tau_scaling.svg)
 
 ::: {.fragment .lead style="text-align:center; margin-top:0.3em; font-size:0.78em; color: #212121"}
-Five volumes with $L/\xi \gtrsim 20$ and three defect sizes: optimized 
+Five volumes with $L/\xi \gtrsim 20$ and three defect sizes: optimized
 schedule *(**right**)* sits systematically below the linear one *(**left**)*.
 :::
 
@@ -769,4 +782,22 @@ in $\Lambda/\xi$.
 ::: {.lead}
 
 Questions?
+:::
+
+## References
+
+::: {style="font-size: 0.72em; line-height: 1.7;"}
+
+[[1]]{color=gray} Del Debbio, Manca, Vicari, Phys. Lett. B 594 (2004) 315 [arXiv:hep-lat/0403001] <br>
+[[2]]{color=gray} Schaefer, Sommer, Virotta (ALPHA), Nucl. Phys. B 845 (2011) 93 [arXiv:1009.5228] <br>
+[[3]]{color=gray} Neal, Stat. Comput. 11 (2001) 125 [arXiv:physics/9803008] <br>
+[[4]]{color=gray} Caselle, Cellini, Nada, Panero, JHEP 07 (2022) 015 [arXiv:2201.08862] <br>
+[[5]]{color=gray} Albergo, Vanden-Eijnden, ICML 2025 [arXiv:2410.02711] <br>
+[[6]]{color=gray} Albergo, Kanwar, Shanahan, Phys. Rev. D 100 (2019) 034515 [arXiv:1904.12072] <br>
+[[7]]{color=gray} Lüscher, Schaefer, JHEP 07 (2011) 036 [arXiv:1105.4749] <br>
+[[8]]{color=gray} Hasenbusch, Phys. Rev. D 96 (2017) 054504 [arXiv:1706.04443] <br>
+[[9]]{color=gray} Bonanno, Clemente, D'Elia, Maio, Parente, JHEP 08 (2024) 236 [arXiv:2404.14151] <br>
+[[10]]{color=gray} Crooks, Phys. Rev. Lett. 99 (2007) 100602 [arXiv:0706.0559] <br>
+[[11]]{color=gray} Sivak, Crooks, Phys. Rev. Lett. 108 (2012) 190602 [arXiv:1201.4166] <br>
+
 :::
