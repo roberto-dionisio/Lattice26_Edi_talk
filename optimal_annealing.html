@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Roberto Dionisio">
-  <meta name="dcterms.date" content="2026-07-24">
+  <meta name="dcterms.date" content="2026-07-26">
   <title>Optimal Paths through Distribution Space for Mitigating Topological Freezing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -232,7 +232,7 @@ Roberto Dionisio
     </div>
 </div>
 
-  <p class="date">July 24, 2026</p>
+  <p class="date">July 26, 2026</p>
 </section>
 <section id="two-flavors-of-critical-slowing-down" class="slide level2">
 <h2>Two flavors of critical slowing down</h2>
@@ -1257,6 +1257,433 @@ z
 <p>Why sampling <span style="color: #EB811B;"><strong>Topology</strong></span> is so <span style="color: #EB811B;"><strong>difficult</strong></span>?</p>
 </div>
 </section>
+<section id="fighting-freezing-an-annealing-protocol" class="slide level2">
+<h2>Fighting freezing: an annealing protocol</h2>
+<div class="note" style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;">
+<p>One route among others: <strong>interpolate</strong> an easy distribution to the target. <span style=";color: gray;">[3]</span></p>
+</div>
+<p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
+
+<img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment" style="text-align:center">
+<p><strong>Learned sequential flows</strong> <span style=";color: gray;">[6]</span></p>
+<ul>
+<li>NETS / Stochastic Normalizing Flows; <span style=";color: gray;">[4]</span> <span style=";color: gray;">[5]</span></li>
+<li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment" style="text-align:center">
+<p><strong>Parallel tempering</strong></p>
+<ul>
+<li><strong>parallel</strong> replicas exchanged along <span class="math inline">\(\lambda\)</span>;</li>
+<li>asymptotically exact, no network to train.</li>
+</ul>
+</div>
+</div></div>
+<!--
+::: {.fragment .note style="text-align:center; margin-top:0.5em"}
+Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a choice among many others.
+:::
+-->
+</section>
+<section id="fighting-freezing-an-annealing-protocol-1" class="slide level2">
+<h2>Fighting freezing: an annealing protocol</h2>
+<div class="note" style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;">
+<p>One route among others: <strong>interpolate</strong> an easy distribution to the target. <span style=";color: gray;">[3]</span></p>
+</div>
+<p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
+
+<img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
+<div class="column" style="width:50%;">
+<div style="text-align:center; opacity:0.4">
+<p><strong>Learned sequential flows</strong> <span style=";color: gray;">[6]</span></p>
+<ul>
+<li>NETS / Stochastic Normalizing Flows; <span style=";color: gray;">[4]</span> <span style=";color: gray;">[5]</span></li>
+<li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div style="text-align:center; border:3px dashed #EB811B; border-radius:10px; padding:0.4em 0.8em; background:rgba(235, 128, 27, 0.09)">
+<p><strong>Parallel tempering</strong></p>
+<ul>
+<li><strong>parallel</strong> replicas exchanged along <span class="math inline">\(\lambda\)</span>;</li>
+<li>asymptotically exact, no network to train.</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="the-testbed-2d-cpn-1" class="slide level2">
+<h2>The testbed: 2D <span class="math inline">\(CP(N-1)\)</span></h2>
+<div class="fragment" style="text-align:center; font-size:0.88em; margin-top:-0.6em;">
+<p>A QCD-like toy model <br><span style="margin-top: 0.3em;"> asymptotic freedom, a mass gap, <span class="math inline">\(\theta\)</span>-vacua, and the <strong>same topological freezing</strong> </span></p>
+</div>
+<div class="fragment" style="text-align:center; font-size:0.88em; margin-top:-0.1em; color: #8a8a8a;">
+<p>at a fraction of the cost.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:54%;">
+<div class="fragment" style="margin-top:0.0em;">
+<p><strong>Fundamental field:</strong> a unit complex <span class="math inline">\(N\)</span>-vector</p>
+<p><span class="math display">\[z(x)\in\mathbb{C}^N,\qquad z^{\dagger}(x)\,z(x)=1\]</span></p>
+<p>with a local <span class="math inline">\(U(1)\)</span> <strong>gauge redundancy</strong></p>
+<p><span class="math display">\[z(x)\;\longrightarrow\;e^{i\alpha(x)}\,z(x)\]</span></p>
+</div>
+<div class="fragment" style="margin-top:0.9em;">
+<p><strong>Lattice action:</strong></p>
+<p><span class="math display">\[S=-2N\beta\sum_{x,\mu}\mathrm{Re}\!\big[z^{\dagger}_x\,U_{x,\mu}\,z_{x+\hat\mu}\big]\]</span></p>
+</div>
+</div><div class="column" style="width:46%;">
+<div class="fragment" style="margin-top:0.0em;">
+<p><strong>Nontrivial topology:</strong></p>
+<p><span class="math display">\[\pi_2\!\big(CP^{N-1}\big)=\mathbb{Z}\]</span></p>
+<p><span style="margin-top:1.5em; display:block;">Each configuration carries an <strong>integer topological charge</strong></span></p>
+<div class="eqbox" style="display:block; text-align:center; margin-top:1.3em">
+<p><span class="math display">\[Q=\frac{1}{2\pi}\!\int\! d^2x\;\epsilon_{\mu\nu}\,\partial_\mu A_\nu\;\in\;\mathbb{Z}\]</span></p>
+</div>
+</div>
+</div></div>
+</section>
+<section id="annealing-the-boundary-a-tunable-defect" class="slide level2">
+<h2>Annealing the boundary: a tunable defect</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="lead" style="text-align:center; margin-bottom:0.0em">
+<p><strong>Open</strong> BC <span style=";color: gray;">[7]</span> <br> No Topological barriers and <span class="math inline">\(Q\)</span> change freely</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="lead" style="text-align:center; margin-bottom:0.0em">
+<p><strong>Periodic</strong> BC <br> Target Physical Theory but topology is frozen!</p>
+</div>
+</div></div>
+
+<img data-src="figures/fig_defect_anneal.svg" class="r-stretch"><div class="lead" style="text-align:center; margin-top:0.1em">
+<p>The <strong>defect</strong> is a line of links (a cut) with tunable coupling. <span style=";color: gray;">[8]</span></p>
+<p>Anneal <span class="math inline">\(\;\beta_{\mathrm{def}}(\lambda)=\lambda\,\beta_{\mathrm{bulk}}\)</span>: at <span class="math inline">\(\lambda=0\)</span> the cut is open; at <span class="math inline">\(\lambda=1\)</span> we recover the periodic theory.</p>
+</div>
+</section>
+<section id="parallel-tempering-a-ladder-of-replicas" class="slide level2">
+<h2>Parallel tempering: a ladder of replicas</h2>
+<div class="lead" style="font-size:1em; text-align:center; margin-top:0.0em">
+<p><span class="math inline">\(N_R\)</span> replicas with fixed couplings <span class="math inline">\(\lambda_0=0\; ,\dots, \;\lambda_{N_R-1}=1\)</span> run <strong>in parallel</strong></p>
+</div>
+<div class="columns">
+<div class="column" style="width:54%;">
+<p><img data-src="figures/fig_pt_tower.svg" style="max-height:64vh; margin-top:0.5em"></p>
+</div><div class="column" style="width:46%;">
+<div class="fragment" style="font-size:0.9em; margin-top:3.5em">
+<ol type="1">
+<li><p><strong>local MC</strong> in each replica samples its own <span class="math inline">\(p_\lambda\)</span>;</p></li>
+<li><p>Propose a configuration <strong>swap</strong> between <strong>adjacent</strong> replicas</p></li>
+<li><p><strong>Accept/Reject</strong> <span class="math inline">\(\Longrightarrow\)</span> detailed balance :</p></li>
+</ol>
+<div class="eqbox" style="display:block; width:max-content; margin:0.25em auto; text-align:center">
+<p><span class="math inline">\(A=\min\!\big(1,\;\frac{p_{\lambda}(x_{\lambda+1})\, p_{\lambda+1}(x_{\lambda})}{p_{\lambda}(x_{\lambda})\, p_{\lambda+1}(x_{\lambda+1})}\big)\)</span></p>
+</div>
+</div>
+</div></div>
+<div class="fragment" style="text-align:center; margin-top:1.1em">
+<p><strong>Efficient</strong> PT ladder <span class="math inline">\(\Longrightarrow\)</span> <strong>topological mixing</strong> from the open replica to the <span style="color: #EB811B;"><strong>target</strong></span> periodic one. <span style=";color: gray;">[9]</span></p>
+</div>
+</section>
+<section id="efficiency-is-a-geometry-problem" class="slide level2">
+<h2>Efficiency is a geometry problem</h2>
+<div class="fragment" data-fragment-index="0" style="text-align:center; margin-top:1.1em">
+<p>Given a fixed budget of steps / replicas, <strong>where should they go?</strong></p>
+</div>
+<svg class="sched-anim" viewbox="0 0 760 224" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:900px;height:auto;display:block;margin:0.4em auto">
+<g class="fragment" data-fragment-index="1">
+<circle cx="215" cy="52" r="7" fill="#3B7EA1"></circle>
+<circle cx="720" cy="52" r="7" fill="#9C162A"></circle>
+<text x="215.0" y="32" text-anchor="middle" fill="#3B7EA1" font-size="19" font-style="italic">p<tspan baseline-shift="sub" font-size="0.7em" font-style="normal">0</tspan></text>
+<text x="720.0" y="32" text-anchor="middle" fill="#9C162A" font-size="19" font-style="italic">p<tspan baseline-shift="sub" font-size="0.7em" font-style="normal">target</tspan></text>
+</g>
+<g class="fragment" data-fragment-index="2">
+<line x1="215" y1="52" x2="720" y2="52" stroke="#33474B" stroke-width="2"></line>
+<path d="M 460 45 L 476 52 L 460 59 Z" fill="#33474B"></path>
+</g>
+<g class="fragment" data-fragment-index="3">
+<line class="" x1="215.0" y1="115.0" x2="215.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="265.5" y1="115.0" x2="265.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="316.0" y1="115.0" x2="316.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="366.5" y1="115.0" x2="366.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="417.0" y1="115.0" x2="417.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="467.5" y1="115.0" x2="467.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="518.0" y1="115.0" x2="518.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="568.5" y1="115.0" x2="568.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="619.0" y1="115.0" x2="619.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="669.5" y1="115.0" x2="669.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<line class="" x1="720.0" y1="115.0" x2="720.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
+<text x="191" y="133" text-anchor="end" fill="#8A9AA0" font-size="14">naive: uniform schedule</text>
+</g>
+<g class="fragment" data-fragment-index="4" id="sched-optrow">
+<line class="opt-tick" x1="215.0" y1="177.0" x2="215.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="215.0" data-c="215.0"></line>
+<line class="opt-tick" x1="265.5" y1="177.0" x2="265.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="265.5" data-c="296.6"></line>
+<line class="opt-tick" x1="316.0" y1="177.0" x2="316.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="316.0" data-c="364.2"></line>
+<line class="opt-tick" x1="366.5" y1="177.0" x2="366.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="366.5" data-c="416.7"></line>
+<line class="opt-tick" x1="417.0" y1="177.0" x2="417.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="417.0" data-c="452.4"></line>
+<line class="opt-tick" x1="467.5" y1="177.0" x2="467.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="467.5" data-c="467.5"></line>
+<line class="opt-tick" x1="518.0" y1="177.0" x2="518.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="518.0" data-c="482.6"></line>
+<line class="opt-tick" x1="568.5" y1="177.0" x2="568.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="568.5" data-c="518.3"></line>
+<line class="opt-tick" x1="619.0" y1="177.0" x2="619.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="619.0" data-c="570.8"></line>
+<line class="opt-tick" x1="669.5" y1="177.0" x2="669.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="669.5" data-c="638.4"></line>
+<line class="opt-tick" x1="720.0" y1="177.0" x2="720.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="720.0" data-c="720.0"></line>
+<text x="191" y="195" text-anchor="end" fill="#23373B" font-size="14" font-weight="500">optimal: ?</text>
+</g>
+</svg>
+<div class="fragment" style="text-align:center; margin-top:2.1em">
+<p>The answer comes from <strong>Information Geometry</strong> by studying the <span style="color: #EB811B;"><strong>Fisher metric</strong></span></p>
+</div>
+</section>
+<section id="information-geometry-gives-the-answer" class="slide level2">
+<h2>Information geometry gives the answer</h2>
+<div class="fragment" style="text-align:center; font-size:0.89em; margin-bottom:0.1em">
+<p>The space of probability distributions is a <strong>smooth manifold</strong>, carrying a natural metric <span class="math inline">\(\Rightarrow\)</span> the <span style="color: #EB811B;"><strong>Fisher metric</strong></span>:</p>
+<p><span class="math display">\[g(\lambda) \;=\; \mathbb{E}_{p_\lambda}\!\Big[\big(\partial_\lambda \log p_\lambda\big)^2\Big]\]</span></p>
+</div>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="fragment" style="text-align:left; margin-top:0.0em;">
+<p>For Boltzmann like <span class="math inline">\(p_\lambda \propto e^{-S_\lambda}\)</span></p>
+<p><span class="math display">\[\partial_\lambda \log p_\lambda \;=\; -\,\partial_\lambda S_\lambda \;+\; \langle \partial_\lambda S_\lambda\rangle_{p_\lambda}\]</span></p>
+<p>so the metric is just a <strong>variance</strong>:</p>
+<div class="eqbox" style="display:block; width:max-content; margin:0.3em auto; text-align:center">
+<p><span class="math inline">\(g(\lambda) \;=\; \mathrm{Var}_{p_\lambda}\!\big[\partial_\lambda S_\lambda\big]\)</span></p>
+</div>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="fragment" style="text-align:left; margin-top:0.0em;">
+<p><strong>… and a distance</strong></p>
+<p>Second-order expansion of the KL divergence:</p>
+<p><span class="math display">\[D_{\mathrm{KL}}\big(p_\lambda \,\|\, p_{\lambda+d\lambda}\big) \;\simeq\; \tfrac{1}{2}\, g(\lambda)\, d\lambda^2\]</span></p>
+</div>
+</div></div>
+<div class="fragment" style="text-align:center; margin-top:2.0em;">
+<p><span class="math inline">\(g(\lambda)\)</span> <span class="math inline">\(\Rightarrow\)</span> <strong>local distinguishability</strong> of nearby distributions</p>
+</div>
+<div class="fragment" style="margin-top:0.6em">
+<div style="display:flex; justify-content:center; align-items:stretch; gap:1.6em; font-size:0.8em">
+<p><span style="display:inline-block; border:1.6px solid #9c162a; background:rgba(156,22,42,0.07); border-radius:8px; padding:0.45em 1.1em; color:#9c162a"><strong>large <span class="math inline">\(g\)</span></strong> <span class="math inline">\(\Rightarrow p_\lambda\)</span> moves fast, <em>hard to bridge</em></span> <span style="display:inline-block; border:1.6px solid #3b7ea1; background:rgba(59,126,161,0.07); border-radius:8px; padding:0.45em 1.1em; color:#3b7ea1"><strong>small <span class="math inline">\(g\)</span></strong> <span class="math inline">\(\Rightarrow p_\lambda\)</span> barely moves, <em>easy</em></span></p>
+</div>
+</div>
+</section>
+<section id="the-geodesic-condition" class="slide level2">
+<h2>The geodesic condition</h2>
+<div class="columns">
+<div class="column" style="width:54%; font-size:0.82em">
+<p><strong>Thermodynamic length</strong> <span style=";color: gray;">[10]</span> <br> Fisher metric turns the path into a distance:</p>
+<p><span class="math display">\[\Lambda \;=\; \int_0^1 \!\sqrt{g(\lambda)}\,d\lambda \left(=\; \sum_k \Delta\ell_k \right) \]</span></p>
+<p>Running it in a finite (fictitious) time <span class="math inline">\(\tau\)</span> <strong>dissipates work</strong> <span style=";color: gray;">[11]</span></p>
+<p><span class="math display">\[W_{\mathrm{diss}}
+\;\propto\; \frac{1}{\Delta t}\sum_k \Delta\ell_k^{\,2}\]</span></p>
+<p><strong>Minimize <span class="math inline">\(W_{\mathrm{diss}}\)</span> at fixed length <span class="math inline">\(\Lambda\)</span></strong> leads to</p>
+<p><span class="math display">\[\Delta\ell_1 \;=\; \Delta\ell_2 \;=\; \cdots \;=\; \Delta\ell_N .\]</span></p>
+<div class="fragment eqbox" style="display:block; width:max-content; margin:0.5em auto; text-align:center">
+<p><span class="math inline">\(\Delta\ell_k = \dfrac{\Lambda}{N} = \text{const}
+\;\;\Longleftrightarrow\;\; \dfrac{d\lambda}{dt}\propto\dfrac{1}{\sqrt{g(\lambda)}}\)</span></p>
+</div>
+</div><div class="column" style="width:46%;">
+<p><img data-src="figures/fig_res_fisher.svg"></p>
+<div class="fragment" style="text-align:left; margin-top:2.3em; font-size:0.86em; margin-left:3.5em">
+<p><strong>The geodesic condition</strong>:</p>
+<ol type="1">
+<li><p>Equidistribute the thermodynamic length</p></li>
+<li><p>Spend more steps <strong>where <span class="math inline">\(g\)</span> is large</strong>, fewer where it is small.</p></li>
+</ol>
+</div>
+</div></div>
+</section>
+<section id="the-protocol-doesnt-have-to-be-one-dimensional" class="slide level2">
+<h2>The protocol doesn’t have to be one-dimensional</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img data-src="figures/fig08_2d_plane.svg"></p>
+</div><div class="column" style="width:55%; font-size:0.9em">
+<div class="fragment">
+<ol type="1">
+<li>Let the <strong>bulk coupling</strong> vary along the path too:</li>
+</ol>
+<p><span class="math display">\[g_{ij} \;=\; \mathrm{Cov}_{p}\!\big[\partial_{\beta_i} S,\; \partial_{\beta_j} S\big]\]</span></p>
+<p>Optimal protocol <span class="math inline">\(\Rightarrow\)</span> <strong>geodesic</strong> in the <span class="math inline">\((\beta_{\mathrm{bulk}},\,\beta_{\mathrm{defect}})\)</span> plane.</p>
+</div>
+<div class="fragment" style="margin-top:1em">
+<ol start="2" type="1">
+<li>The defect is <strong>local</strong>: it breaks translation invariance</li>
+</ol>
+<p>Why hold every site to the same coupling?</p>
+<p>Let it vary in <strong>space</strong> too:</p>
+<div class="eqbox" style="display:block; width:max-content; margin:0.35em auto; text-align:center">
+<p><span class="math inline">\(\beta \;\longrightarrow\; \beta(x,y,t)\)</span></p>
+</div>
+</div>
+</div></div>
+</section>
+<section id="learning-the-spatial-coupling-field" class="slide level2">
+<h2>Learning the spatial coupling field</h2>
+<div class="columns">
+<div class="column" style="width:50%; font-size:0.88em">
+<p><strong>1 · Parametrize the field</strong></p>
+<div class="flow">
+<p><span class="box" style=""><span class="math inline">\(d(x,y)\)</span></span> <span class="arrow" style="">→</span> <span class="box net" style="">U-Net</span> <span class="arrow" style="">→</span> <span class="box" style=""><span class="math inline">\(F(x,y,\lambda)\)</span></span></p>
+</div>
+<p><span class="math display">\[\beta(x,y,\lambda) = \beta_{\mathrm{base}} + C_{\max}\,F(x,y,\lambda)\,\sin(\pi \lambda)\]</span></p>
+<div class="fragment" style="margin-top:2.0em">
+<ul>
+<li><span class="math inline">\(\sin(\pi \lambda)\)</span> <strong>pins the endpoints</strong> <span class="math inline">\(\lambda=0,1\)</span>;</li>
+<li>the net sees only <strong>geometry</strong>, i.e.&nbsp;distance to the defect, <em>never field configurations</em> <span class="math inline">\(\Rightarrow\)</span> <strong>transferable</strong></li>
+</ul>
+</div>
+</div><div class="column" style="width:50%; font-size:0.88em">
+<p><strong>2 · The loss is the geometry</strong></p>
+<p><span class="math display">\[\begin{aligned}
+\mathrm{sKL}(p_r, p_{r+1}) &amp;= \tfrac{1}{2}\big[\,D_{\mathrm{KL}}(p_r \,\|\, p_{r+1}) + D_{\mathrm{KL}}(p_{r+1} \,\|\, p_r)\,\big] \\[3pt]
+&amp;= \tfrac{1}{2}\big[\langle \Delta S\rangle_{p_r} - \langle \Delta S\rangle_{p_{r+1}}\big]
+\end{aligned}\]</span></p>
+<div class="fragment" style="margin-top:1.1em">
+<p>Small steps: <span class="math inline">\(\;\mathrm{sKL}_r \approx \tfrac{1}{2}\,g(\lambda_r)\,\Delta\lambda_r^{2} = \tfrac{1}{2}\,\Delta\ell_r^{2}\)</span></p>
+<p><span class="math display">\[\sum_r \mathrm{sKL}_r \;\approx\; \tfrac{1}{2}\sum_r \Delta\ell_r^{2}\;\ge\;\frac{\Lambda^{2}}{2N}\]</span></p>
+<p>Minimizing it <span class="math inline">\(\Rightarrow\)</span> equal <span class="math inline">\(\Delta\ell\)</span>:</p>
+<p><strong>Geodesic</strong> of length <span class="math inline">\(\Lambda\)</span>, from <strong>PT samples</strong> (no <span class="math inline">\(Z\)</span>).</p>
+</div>
+</div></div>
+<div class="loop fragment" style="margin-top:2.5em">
+  <div class="box">Parallel tempering<br>sampling</div>
+  <div class="exchange">
+    <div>\(\beta(x,y,\lambda)\) →</div>
+    <div>← \(\nabla\,\mathrm{sKL}\)</div>
+  </div>
+  <div class="box">Network<br>update</div>
+</div>
+<div class="fragment lead" style="text-align:center; margin-top:1.4em">
+<p>The U‑Net learns the <strong>Fisher geodesic</strong> end‑to‑end from PT samples,does its trajectory match the theory?</p>
+</div>
+</section>
+<section id="the-model-finds-the-geometry" class="slide level2 money">
+<h2>The model finds the geometry</h2>
+<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
+<p><span class="math inline">\(L=32 \quad \beta=1.8 \quad N=6\)</span></p>
+</div>
+
+<img data-src="figures/fig_res_geometry.svg" class="r-stretch"><div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment lead" style="text-align:center; font-size:0.8em; margin-top:0.2em">
+<p>The learned schedule lands <br> on the <strong>measured</strong> Fisher optimum.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment lead" style="text-align:center; font-size:0.8em; margin-top:0.2em; margin-left:2.5em;">
+<p>…and walks it at <strong>equal thermodynamic length per step</strong> <br> the geodesic condition recovered from samples alone.</p>
+</div>
+</div></div>
+</section>
+<section id="solved-ladder-bottleneck" class="slide level2">
+<h2>Solved ladder bottleneck</h2>
+
+<img data-src="figures/fig_res_swaps.svg" class="r-stretch"><div class="columns">
+<div class="column" style="width:58%;">
+<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em">
+<p>The naive ladder <strong>drops to 9.5%</strong> acceptance at the crossover.<br> The learned schedule keeps every rung <strong>uniform</strong>, so replicas <strong>round-trip</strong>.</p>
+</div>
+</div><div class="column" style="width:42%;">
+<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em">
+<p>It gets there by minimizing the <strong>sKL loss</strong> — equal-length steps, the geodesic condition.</p>
+</div>
+</div></div>
+</section>
+<section id="a-field-of-coupling" class="slide level2">
+<h2>A field of coupling</h2>
+<div class="columns">
+<div class="column" style="width:54%;">
+<p><img data-src="figures/fig_res_field.gif"></p>
+</div><div class="column" style="width:46%; font-size:0.92em">
+<div class="div" style="margin-top:5.0em; font-size:0.88em; text-align:center;">
+<p>The U-Net emits a full field <span class="math inline">\(\beta(x,y,\lambda)\)</span>;<br> not a scalar schedule.</p>
+</div>
+<div class="fragment" style="margin-top:0.8em">
+<ul>
+<li><strong>early</strong>: drives the defect coupling <span class="target" style=""><strong>ahead</strong></span> of the ramp;</li>
+<li><strong>late</strong>: <span class="easy" style=""><strong>holds it back</strong></span>;</li>
+</ul>
+</div>
+<div class="fragment lead" style="text-align:center; margin-top:1.3em; font-size:0.78em">
+<p>Freedom no scalar schedule has.</p>
+</div>
+<div class="fragment lead" style="text-align:center; margin-top:1.3em; font-size:0.85em">
+<ul>
+<li>We have explored <strong>different defect shapes</strong>: disk, square and stripe</li>
+<li>We stick to a finite stripe (cheaper).</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="topology-is-not-frozen" class="slide level2">
+<h2>Topology is not frozen!</h2>
+<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
+<p><span class="math inline">\(N=21 \quad L=150 \quad \beta \simeq 0.8 \quad N_R=12\)</span></p>
+</div>
+
+<img data-src="figures/fig_res_qhistory.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.5em; font-size:0.84em">
+<p>The full run <strong>~350k measurements</strong> (<span class="math inline">\(L=150\)</span>, optimized schedule): the physical replica visits sectors <span class="math inline">\(-8\ldots+8\)</span>. <br> Tempering through the defect keeps the charge <span class="easy" style=""><strong>unfrozen</strong></span>, where local updates would <span style="color: #913030;"><strong>freeze</strong></span> it.</p>
+</div>
+</section>
+<section id="critical-slowing-down-of-q²" class="slide level2">
+<h2>Critical slowing down of Q²</h2>
+<div class="div" style="text-align:center; margin-top:-1.15em; font-size:0.88em">
+<p><span class="math inline">\(\tau_{\mathrm{int}}(Q^2)\sim(\xi/a)^{z}\)</span></p>
+</div>
+<div style="text-align:center; margin-top:-0.35em; font-size:0.76em; color:#666">
+<p><span class="math inline">\(\Lambda/\xi \equiv L_d/\xi \qquad\)</span> <span class="math inline">\(\qquad L_d \lesssim 12\%\,L \qquad\)</span> <span class="math inline">\(\qquad \Lambda \propto \sqrt{L_d} \qquad\)</span></p>
+</div>
+
+<img data-src="figures/fig_res_tau_scaling.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.78em; color: #212121">
+<p>Five volumes with <span class="math inline">\(L/\xi \gtrsim 20\)</span> and three defect sizes: optimized schedule <em>(<strong>right</strong>)</em> sits systematically below the linear one <em>(<strong>left</strong>)</em>.</p>
+</div>
+</section>
+<section id="optimized-annealing-pays-off" class="slide level2">
+<h2>Optimized annealing pays off</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="figures/fig_res_prefactor.svg"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="figures/fig_res_speedup.svg"></p>
+</div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em; color:  #212121">
+<p>The prefactor falls as <span class="math inline">\(A\sim(\Lambda/\xi)^{\gamma}\)</span> with <span class="math inline">\(\gamma\approx-1\)</span> <br> a larger defect (more replicas) already helps.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em; color:  #212121">
+<p>On top of that, the optimized schedule has a <strong>further <span class="math inline">\(\sim20\%\)</span></strong> off, uniformly in <span class="math inline">\(\Lambda/\xi\)</span>.</p>
+</div>
+</div></div>
+</section>
+<section id="conclusions" class="slide level2">
+<h2>Conclusions</h2>
+<div class="fragment" style="margin-top:1.1em">
+<p><span style="color:#EB811B; font-size:1.05em"><strong>Parallel tempering + optimal schedule beats topological freezing</strong></span></p>
+<p>With the Fisher-geodesic condition we get a good <strong>diffusion</strong> of topological mixing, from the open replica up to the periodic one.</p>
+</div>
+<div class="fragment" style="margin-top:1.7em">
+<p><strong>A ready-made, exact framework</strong></p>
+<p>The same parallel tempering already runs in full <span class="math inline">\(2\!+\!1\)</span> QCD <span style=";color: gray;">[9]</span>, and across 2D CP(N-1) <span style=";color: gray;">[12]</span><span style=";color: gray;">[13]</span> and pure-gauge SU(3) / SU(N) <span style=";color: gray;">[14]</span><span style=";color: gray;">[15]</span><span style=";color: gray;">[16]</span>. Schedule optimization plugs straight in.</p>
+</div>
+<div class="fragment" style="margin-top:1.9em; border-left:5px solid #3b7ea1; background:rgba(59,126,161,0.07); border-radius:6px; padding:0.55em 1.2em">
+<p><span style="color:#3b7ea1"><strong>Outlook</strong></span> · minimize the <strong>cost</strong>, not only the protocol: a cost function of the defect size <span class="math inline">\(L_d\)</span>, the number of replicas <span class="math inline">\(N_R\)</span> and the autocorrelation time <span class="math inline">\(\tau_{\mathrm{int}}\)</span>, minimized to the true compute optimum.</p>
+</div>
+</section>
+<section id="thank-you" class="slide level2 center">
+<h2>Thank you</h2>
+<div class="lead">
+<p>Questions?</p>
+</div>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<div style="font-size: 0.72em; line-height: 1.7;">
+<p><span style=";color: gray;">[1]</span> Del Debbio, Manca, Vicari, Phys. Lett. B 594 (2004) 315 [arXiv:hep-lat/0403001] <br> <span style=";color: gray;">[2]</span> Schaefer, Sommer, Virotta (ALPHA), Nucl. Phys. B 845 (2011) 93 [arXiv:1009.5228] <br> <span style=";color: gray;">[3]</span> Neal, Stat. Comput. 11 (2001) 125 [arXiv:physics/9803008] <br> <span style=";color: gray;">[4]</span> Caselle, Cellini, Nada, Panero, JHEP 07 (2022) 015 [arXiv:2201.08862] <br> <span style=";color: gray;">[5]</span> Albergo, Vanden-Eijnden, ICML 2025 [arXiv:2410.02711] <br> <span style=";color: gray;">[6]</span> Albergo, Kanwar, Shanahan, Phys. Rev.&nbsp;D 100 (2019) 034515 [arXiv:1904.12072] <br> <span style=";color: gray;">[7]</span> Lüscher, Schaefer, JHEP 07 (2011) 036 [arXiv:1105.4749] <br> <span style=";color: gray;">[8]</span> Hasenbusch, Phys. Rev.&nbsp;D 96 (2017) 054504 [arXiv:1706.04443] <br> <span style=";color: gray;">[9]</span> Bonanno, Clemente, D’Elia, Maio, Parente, JHEP 08 (2024) 236 [arXiv:2404.14151] <br> <span style=";color: gray;">[10]</span> Crooks, Phys. Rev.&nbsp;Lett. 99 (2007) 100602 [arXiv:0706.0559] <br> <span style=";color: gray;">[11]</span> Sivak, Crooks, Phys. Rev.&nbsp;Lett. 108 (2012) 190602 [arXiv:1201.4166] <br> <span style=";color: gray;">[12]</span> Berni, Bonanno, D’Elia, Phys. Rev.&nbsp;D 100 (2019) 114509 [arXiv:1911.03384] <br> <span style=";color: gray;">[13]</span> Bonanno, Phys. Rev.&nbsp;D 107 (2023) 014514 [arXiv:2212.02330] <br> <span style=";color: gray;">[14]</span> Bonanno, Dasilva Golán, D’Elia, García Pérez, Giorgieri, EPJC 84 (2024) 916 [arXiv:2403.13607] <br> <span style=";color: gray;">[15]</span> Bonanno, JHEP 01 (2026) 039 [arXiv:2510.08006] <br> <span style=";color: gray;">[16]</span> Bonanno, Bonati, D’Elia, JHEP 03 (2021) 111 [arXiv:2012.14000] <br></p>
+</div>
+</section>
 <section id="where-the-exponential-comes-from" class="slide level2">
 <h2>Where the exponential comes from</h2>
 <div class="columns">
@@ -1701,419 +2128,6 @@ z
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-<section id="fighting-freezing-an-annealing-protocol" class="slide level2">
-<h2>Fighting freezing: an annealing protocol</h2>
-<div class="note" style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;">
-<p>One route among others: <strong>interpolate</strong> an easy distribution to the target. <span style=";color: gray;">[3]</span></p>
-</div>
-<p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
-
-<img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
-<div class="column" style="width:50%;">
-<div class="fragment" style="text-align:center">
-<p><strong>Learned sequential flows</strong> <span style=";color: gray;">[6]</span></p>
-<ul>
-<li>NETS / Stochastic Normalizing Flows; <span style=";color: gray;">[4]</span> <span style=";color: gray;">[5]</span></li>
-<li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
-</ul>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="fragment" style="text-align:center">
-<p><strong>Parallel tempering</strong></p>
-<ul>
-<li><strong>parallel</strong> replicas exchanged along <span class="math inline">\(\lambda\)</span>;</li>
-<li>asymptotically exact, no network to train.</li>
-</ul>
-</div>
-</div></div>
-<!--
-::: {.fragment .note style="text-align:center; margin-top:0.5em"}
-Our choice **defect coupling** annealing (open $\leftrightarrow$ periodic)  is a choice among many others.
-:::
--->
-</section>
-<section id="fighting-freezing-an-annealing-protocol-1" class="slide level2">
-<h2>Fighting freezing: an annealing protocol</h2>
-<div class="note" style="text-align:center; margin-top:-0.4em; font-size:0.8em; color: #040404;">
-<p>One route among others: <strong>interpolate</strong> an easy distribution to the target. <span style=";color: gray;">[3]</span></p>
-</div>
-<p><span class="math display">\[S_\lambda = (1-\lambda)\,S_0 + \lambda\,S_{\mathrm{target}}  \;\Longrightarrow \; p_\lambda \sim e^{-S_\lambda} \]</span></p>
-
-<img data-src="figures/fig04_annealing_family.svg" class="r-stretch"><div class="columns">
-<div class="column" style="width:50%;">
-<div style="text-align:center; opacity:0.4">
-<p><strong>Learned sequential flows</strong> <span style=";color: gray;">[6]</span></p>
-<ul>
-<li>NETS / Stochastic Normalizing Flows; <span style=";color: gray;">[4]</span> <span style=";color: gray;">[5]</span></li>
-<li><strong>sequential</strong> learned steps along <span class="math inline">\(\lambda\)</span>.</li>
-</ul>
-</div>
-</div><div class="column" style="width:50%;">
-<div style="text-align:center; border:3px dashed #EB811B; border-radius:10px; padding:0.4em 0.8em; background:rgba(235, 128, 27, 0.09)">
-<p><strong>Parallel tempering</strong></p>
-<ul>
-<li><strong>parallel</strong> replicas exchanged along <span class="math inline">\(\lambda\)</span>;</li>
-<li>asymptotically exact, no network to train.</li>
-</ul>
-</div>
-</div></div>
-</section>
-<section id="the-testbed-2d-cpn-1" class="slide level2">
-<h2>The testbed: 2D <span class="math inline">\(CP(N-1)\)</span></h2>
-<div class="fragment" style="text-align:center; font-size:0.88em; margin-top:-0.6em;">
-<p>A QCD-like toy model <br><span style="margin-top: 0.3em;"> asymptotic freedom, a mass gap, <span class="math inline">\(\theta\)</span>-vacua, and the <strong>same topological freezing</strong> </span></p>
-</div>
-<div class="fragment" style="text-align:center; font-size:0.88em; margin-top:-0.1em; color: #8a8a8a;">
-<p>at a fraction of the cost.</p>
-</div>
-<div class="columns">
-<div class="column" style="width:54%;">
-<div class="fragment" style="margin-top:0.0em;">
-<p><strong>Fundamental field:</strong> a unit complex <span class="math inline">\(N\)</span>-vector</p>
-<p><span class="math display">\[z(x)\in\mathbb{C}^N,\qquad z^{\dagger}(x)\,z(x)=1\]</span></p>
-<p>with a local <span class="math inline">\(U(1)\)</span> <strong>gauge redundancy</strong></p>
-<p><span class="math display">\[z(x)\;\longrightarrow\;e^{i\alpha(x)}\,z(x)\]</span></p>
-</div>
-<div class="fragment" style="margin-top:0.9em;">
-<p><strong>Lattice action:</strong></p>
-<p><span class="math display">\[S=-2N\beta\sum_{x,\mu}\mathrm{Re}\!\big[z^{\dagger}_x\,U_{x,\mu}\,z_{x+\hat\mu}\big]\]</span></p>
-</div>
-</div><div class="column" style="width:46%;">
-<div class="fragment" style="margin-top:0.0em;">
-<p><strong>Nontrivial topology:</strong></p>
-<p><span class="math display">\[\pi_2\!\big(CP^{N-1}\big)=\mathbb{Z}\]</span></p>
-<p><span style="margin-top:1.5em; display:block;">Each configuration carries an <strong>integer topological charge</strong></span></p>
-<div class="eqbox" style="display:block; text-align:center; margin-top:1.3em">
-<p><span class="math display">\[Q=\frac{1}{2\pi}\!\int\! d^2x\;\epsilon_{\mu\nu}\,\partial_\mu A_\nu\;\in\;\mathbb{Z}\]</span></p>
-</div>
-</div>
-</div></div>
-</section>
-<section id="annealing-the-boundary-a-tunable-defect" class="slide level2">
-<h2>Annealing the boundary: a tunable defect</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="lead" style="text-align:center; margin-bottom:0.0em">
-<p><strong>Open</strong> BC <span style=";color: gray;">[7]</span> <br> No Topological barriers and <span class="math inline">\(Q\)</span> change freely</p>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="lead" style="text-align:center; margin-bottom:0.0em">
-<p><strong>Periodic</strong> BC <br> Target Physical Theory but topology is frozen!</p>
-</div>
-</div></div>
-
-<img data-src="figures/fig_defect_anneal.svg" class="r-stretch"><div class="lead" style="text-align:center; margin-top:0.1em">
-<p>The <strong>defect</strong> is a line of links (a cut) with tunable coupling. <span style=";color: gray;">[8]</span></p>
-<p>Anneal <span class="math inline">\(\;\beta_{\mathrm{def}}(\lambda)=\lambda\,\beta_{\mathrm{bulk}}\)</span>: at <span class="math inline">\(\lambda=0\)</span> the cut is open; at <span class="math inline">\(\lambda=1\)</span> we recover the periodic theory.</p>
-</div>
-</section>
-<section id="parallel-tempering-a-ladder-of-replicas" class="slide level2">
-<h2>Parallel tempering: a ladder of replicas</h2>
-<div class="lead" style="font-size:1em; text-align:center; margin-top:0.0em">
-<p><span class="math inline">\(N_R\)</span> replicas with fixed couplings <span class="math inline">\(\lambda_0=0\; ,\dots, \;\lambda_{N_R-1}=1\)</span> run <strong>in parallel</strong></p>
-</div>
-<div class="columns">
-<div class="column" style="width:54%;">
-<p><img data-src="figures/fig_pt_tower.svg" style="max-height:64vh; margin-top:0.5em"></p>
-</div><div class="column" style="width:46%;">
-<div class="fragment" style="font-size:0.9em; margin-top:3.5em">
-<ol type="1">
-<li><p><strong>local MC</strong> in each replica samples its own <span class="math inline">\(p_\lambda\)</span>;</p></li>
-<li><p>Propose a configuration <strong>swap</strong> between <strong>adjacent</strong> replicas</p></li>
-<li><p><strong>Accept/Reject</strong> <span class="math inline">\(\Longrightarrow\)</span> detailed balance :</p></li>
-</ol>
-<div class="eqbox" style="display:block; width:max-content; margin:0.25em auto; text-align:center">
-<p><span class="math inline">\(A=\min\!\big(1,\;\frac{p_{\lambda}(x_{\lambda+1})\, p_{\lambda+1}(x_{\lambda})}{p_{\lambda}(x_{\lambda})\, p_{\lambda+1}(x_{\lambda+1})}\big)\)</span></p>
-</div>
-</div>
-</div></div>
-<div class="fragment" style="text-align:center; margin-top:1.1em">
-<p><strong>Efficient</strong> PT ladder <span class="math inline">\(\Longrightarrow\)</span> <strong>topological mixing</strong> from the open replica to the <span style="color: #EB811B;"><strong>target</strong></span> periodic one. <span style=";color: gray;">[9]</span></p>
-</div>
-</section>
-<section id="efficiency-is-a-geometry-problem" class="slide level2">
-<h2>Efficiency is a geometry problem</h2>
-<div class="fragment" data-fragment-index="0" style="text-align:center; margin-top:1.1em">
-<p>Given a fixed budget of steps / replicas, <strong>where should they go?</strong></p>
-</div>
-<svg class="sched-anim" viewbox="0 0 760 224" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:900px;height:auto;display:block;margin:0.4em auto">
-<g class="fragment" data-fragment-index="1">
-<circle cx="215" cy="52" r="7" fill="#3B7EA1"></circle>
-<circle cx="720" cy="52" r="7" fill="#9C162A"></circle>
-<text x="215.0" y="32" text-anchor="middle" fill="#3B7EA1" font-size="19" font-style="italic">p<tspan baseline-shift="sub" font-size="0.7em" font-style="normal">0</tspan></text>
-<text x="720.0" y="32" text-anchor="middle" fill="#9C162A" font-size="19" font-style="italic">p<tspan baseline-shift="sub" font-size="0.7em" font-style="normal">target</tspan></text>
-</g>
-<g class="fragment" data-fragment-index="2">
-<line x1="215" y1="52" x2="720" y2="52" stroke="#33474B" stroke-width="2"></line>
-<path d="M 460 45 L 476 52 L 460 59 Z" fill="#33474B"></path>
-</g>
-<g class="fragment" data-fragment-index="3">
-<line class="" x1="215.0" y1="115.0" x2="215.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="265.5" y1="115.0" x2="265.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="316.0" y1="115.0" x2="316.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="366.5" y1="115.0" x2="366.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="417.0" y1="115.0" x2="417.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="467.5" y1="115.0" x2="467.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="518.0" y1="115.0" x2="518.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="568.5" y1="115.0" x2="568.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="619.0" y1="115.0" x2="619.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="669.5" y1="115.0" x2="669.5" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<line class="" x1="720.0" y1="115.0" x2="720.0" y2="141.0" stroke="#8A9AA0" stroke-width="2.4" stroke-linecap="round"></line>
-<text x="191" y="133" text-anchor="end" fill="#8A9AA0" font-size="14">naive: uniform schedule</text>
-</g>
-<g class="fragment" data-fragment-index="4" id="sched-optrow">
-<line class="opt-tick" x1="215.0" y1="177.0" x2="215.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="215.0" data-c="215.0"></line>
-<line class="opt-tick" x1="265.5" y1="177.0" x2="265.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="265.5" data-c="296.6"></line>
-<line class="opt-tick" x1="316.0" y1="177.0" x2="316.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="316.0" data-c="364.2"></line>
-<line class="opt-tick" x1="366.5" y1="177.0" x2="366.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="366.5" data-c="416.7"></line>
-<line class="opt-tick" x1="417.0" y1="177.0" x2="417.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="417.0" data-c="452.4"></line>
-<line class="opt-tick" x1="467.5" y1="177.0" x2="467.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="467.5" data-c="467.5"></line>
-<line class="opt-tick" x1="518.0" y1="177.0" x2="518.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="518.0" data-c="482.6"></line>
-<line class="opt-tick" x1="568.5" y1="177.0" x2="568.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="568.5" data-c="518.3"></line>
-<line class="opt-tick" x1="619.0" y1="177.0" x2="619.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="619.0" data-c="570.8"></line>
-<line class="opt-tick" x1="669.5" y1="177.0" x2="669.5" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="669.5" data-c="638.4"></line>
-<line class="opt-tick" x1="720.0" y1="177.0" x2="720.0" y2="203.0" stroke="#23373B" stroke-width="2.4" stroke-linecap="round" data-u="720.0" data-c="720.0"></line>
-<text x="191" y="195" text-anchor="end" fill="#23373B" font-size="14" font-weight="500">optimal: ?</text>
-</g>
-</svg>
-<div class="fragment" style="text-align:center; margin-top:2.1em">
-<p>The answer comes from <strong>Information Geometry</strong> by studying the <span style="color: #EB811B;"><strong>Fisher metric</strong></span></p>
-</div>
-</section>
-<section id="information-geometry-gives-the-answer" class="slide level2">
-<h2>Information geometry gives the answer</h2>
-<div class="fragment" style="text-align:center; font-size:0.89em; margin-bottom:0.1em">
-<p>The space of probability distributions is a <strong>smooth manifold</strong>, carrying a natural metric <span class="math inline">\(\Rightarrow\)</span> the <span style="color: #EB811B;"><strong>Fisher metric</strong></span>:</p>
-<p><span class="math display">\[g(\lambda) \;=\; \mathbb{E}_{p_\lambda}\!\Big[\big(\partial_\lambda \log p_\lambda\big)^2\Big]\]</span></p>
-</div>
-<div class="columns">
-<div class="column" style="width:55%;">
-<div class="fragment" style="text-align:left; margin-top:0.0em;">
-<p>For Boltzmann like <span class="math inline">\(p_\lambda \propto e^{-S_\lambda}\)</span></p>
-<p><span class="math display">\[\partial_\lambda \log p_\lambda \;=\; -\,\partial_\lambda S_\lambda \;+\; \langle \partial_\lambda S_\lambda\rangle_{p_\lambda}\]</span></p>
-<p>so the metric is just a <strong>variance</strong>:</p>
-<div class="eqbox" style="display:block; width:max-content; margin:0.3em auto; text-align:center">
-<p><span class="math inline">\(g(\lambda) \;=\; \mathrm{Var}_{p_\lambda}\!\big[\partial_\lambda S_\lambda\big]\)</span></p>
-</div>
-</div>
-</div><div class="column" style="width:45%;">
-<div class="fragment" style="text-align:left; margin-top:0.0em;">
-<p><strong>… and a distance</strong></p>
-<p>Second-order expansion of the KL divergence:</p>
-<p><span class="math display">\[D_{\mathrm{KL}}\big(p_\lambda \,\|\, p_{\lambda+d\lambda}\big) \;\simeq\; \tfrac{1}{2}\, g(\lambda)\, d\lambda^2\]</span></p>
-</div>
-</div></div>
-<div class="fragment" style="text-align:center; margin-top:2.0em;">
-<p><span class="math inline">\(g(\lambda)\)</span> <span class="math inline">\(\Rightarrow\)</span> <strong>local distinguishability</strong> of nearby distributions</p>
-</div>
-<div class="fragment" style="margin-top:0.6em">
-<div style="display:flex; justify-content:center; align-items:stretch; gap:1.6em; font-size:0.8em">
-<p><span style="display:inline-block; border:1.6px solid #9c162a; background:rgba(156,22,42,0.07); border-radius:8px; padding:0.45em 1.1em; color:#9c162a"><strong>large <span class="math inline">\(g\)</span></strong> <span class="math inline">\(\Rightarrow p_\lambda\)</span> moves fast, <em>hard to bridge</em></span> <span style="display:inline-block; border:1.6px solid #3b7ea1; background:rgba(59,126,161,0.07); border-radius:8px; padding:0.45em 1.1em; color:#3b7ea1"><strong>small <span class="math inline">\(g\)</span></strong> <span class="math inline">\(\Rightarrow p_\lambda\)</span> barely moves, <em>easy</em></span></p>
-</div>
-</div>
-</section>
-<section id="the-geodesic-condition" class="slide level2">
-<h2>The geodesic condition</h2>
-<div class="columns">
-<div class="column" style="width:54%; font-size:0.82em">
-<p><strong>Thermodynamic length</strong> <span style=";color: gray;">[10]</span> <br> Fisher metric turns the path into a distance:</p>
-<p><span class="math display">\[\Lambda \;=\; \int_0^1 \!\sqrt{g(\lambda)}\,d\lambda \left(=\; \sum_k \Delta\ell_k \right) \]</span></p>
-<p>Running it in a finite (fictitious) time <span class="math inline">\(\tau\)</span> <strong>dissipates work</strong> <span style=";color: gray;">[11]</span></p>
-<p><span class="math display">\[W_{\mathrm{diss}}
-\;\propto\; \frac{1}{\Delta t}\sum_k \Delta\ell_k^{\,2}\]</span></p>
-<p><strong>Minimize <span class="math inline">\(W_{\mathrm{diss}}\)</span> at fixed length <span class="math inline">\(\Lambda\)</span></strong> leads to</p>
-<p><span class="math display">\[\Delta\ell_1 \;=\; \Delta\ell_2 \;=\; \cdots \;=\; \Delta\ell_N .\]</span></p>
-<div class="fragment eqbox" style="display:block; width:max-content; margin:0.5em auto; text-align:center">
-<p><span class="math inline">\(\Delta\ell_k = \dfrac{\Lambda}{N} = \text{const}
-\;\;\Longleftrightarrow\;\; \dfrac{d\lambda}{dt}\propto\dfrac{1}{\sqrt{g(\lambda)}}\)</span></p>
-</div>
-</div><div class="column" style="width:46%;">
-<p><img data-src="figures/fig_res_fisher.svg"></p>
-<div class="fragment" style="text-align:left; margin-top:2.3em; font-size:0.86em; margin-left:3.5em">
-<p><strong>The geodesic condition</strong>:</p>
-<ol type="1">
-<li><p>Equidistribute the thermodynamic length</p></li>
-<li><p>Spend more steps <strong>where <span class="math inline">\(g\)</span> is large</strong>, fewer where it is small.</p></li>
-</ol>
-</div>
-</div></div>
-</section>
-<section id="the-protocol-doesnt-have-to-be-one-dimensional" class="slide level2">
-<h2>The protocol doesn’t have to be one-dimensional</h2>
-<div class="columns">
-<div class="column" style="width:45%;">
-<p><img data-src="figures/fig08_2d_plane.svg"></p>
-</div><div class="column" style="width:55%; font-size:0.9em">
-<div class="fragment">
-<ol type="1">
-<li>Let the <strong>bulk coupling</strong> vary along the path too:</li>
-</ol>
-<p><span class="math display">\[g_{ij} \;=\; \mathrm{Cov}_{p}\!\big[\partial_{\beta_i} S,\; \partial_{\beta_j} S\big]\]</span></p>
-<p>Optimal protocol <span class="math inline">\(\Rightarrow\)</span> <strong>geodesic</strong> in the <span class="math inline">\((\beta_{\mathrm{bulk}},\,\beta_{\mathrm{defect}})\)</span> plane.</p>
-</div>
-<div class="fragment" style="margin-top:1em">
-<ol start="2" type="1">
-<li>The defect is <strong>local</strong>: it breaks translation invariance</li>
-</ol>
-<p>Why hold every site to the same coupling?</p>
-<p>Let it vary in <strong>space</strong> too:</p>
-<div class="eqbox" style="display:block; width:max-content; margin:0.35em auto; text-align:center">
-<p><span class="math inline">\(\beta \;\longrightarrow\; \beta(x,y,t)\)</span></p>
-</div>
-</div>
-</div></div>
-</section>
-<section id="learning-the-spatial-coupling-field" class="slide level2">
-<h2>Learning the spatial coupling field</h2>
-<div class="columns">
-<div class="column" style="width:50%; font-size:0.88em">
-<p><strong>1 · Parametrize the field</strong></p>
-<div class="flow">
-<p><span class="box" style=""><span class="math inline">\(d(x,y)\)</span></span> <span class="arrow" style="">→</span> <span class="box net" style="">U-Net</span> <span class="arrow" style="">→</span> <span class="box" style=""><span class="math inline">\(F(x,y,\lambda)\)</span></span></p>
-</div>
-<p><span class="math display">\[\beta(x,y,\lambda) = \beta_{\mathrm{base}} + C_{\max}\,F(x,y,\lambda)\,\sin(\pi \lambda)\]</span></p>
-<div class="fragment" style="margin-top:2.0em">
-<ul>
-<li><span class="math inline">\(\sin(\pi \lambda)\)</span> <strong>pins the endpoints</strong> <span class="math inline">\(\lambda=0,1\)</span>;</li>
-<li>the net sees only <strong>geometry</strong>, i.e.&nbsp;distance to the defect, <em>never field configurations</em> <span class="math inline">\(\Rightarrow\)</span> <strong>transferable</strong></li>
-</ul>
-</div>
-</div><div class="column" style="width:50%; font-size:0.88em">
-<p><strong>2 · The loss is the geometry</strong></p>
-<p><span class="math display">\[\begin{aligned}
-\mathrm{sKL}(p_r, p_{r+1}) &amp;= \tfrac{1}{2}\big[\,D_{\mathrm{KL}}(p_r \,\|\, p_{r+1}) + D_{\mathrm{KL}}(p_{r+1} \,\|\, p_r)\,\big] \\[3pt]
-&amp;= \tfrac{1}{2}\big[\langle \Delta S\rangle_{p_r} - \langle \Delta S\rangle_{p_{r+1}}\big]
-\end{aligned}\]</span></p>
-<div class="fragment" style="margin-top:1.1em">
-<p>Small steps: <span class="math inline">\(\;\mathrm{sKL}_r \approx \tfrac{1}{2}\,g(\lambda_r)\,\Delta\lambda_r^{2} = \tfrac{1}{2}\,\Delta\ell_r^{2}\)</span></p>
-<p><span class="math display">\[\sum_r \mathrm{sKL}_r \;\approx\; \tfrac{1}{2}\sum_r \Delta\ell_r^{2}\;\ge\;\frac{\Lambda^{2}}{2N}\]</span></p>
-<p>Minimizing it <span class="math inline">\(\Rightarrow\)</span> equal <span class="math inline">\(\Delta\ell\)</span>:</p>
-<p><strong>Geodesic</strong> of length <span class="math inline">\(\Lambda\)</span>, from <strong>PT samples</strong> (no <span class="math inline">\(Z\)</span>).</p>
-</div>
-</div></div>
-<div class="loop fragment" style="margin-top:2.5em">
-  <div class="box">Parallel tempering<br>sampling</div>
-  <div class="exchange">
-    <div>\(\beta(x,y,\lambda)\) →</div>
-    <div>← \(\nabla\,\mathrm{sKL}\)</div>
-  </div>
-  <div class="box">Network<br>update</div>
-</div>
-<div class="fragment lead" style="text-align:center; margin-top:1.4em">
-<p>The U‑Net learns the <strong>Fisher geodesic</strong> end‑to‑end from PT samples,does its trajectory match the theory?</p>
-</div>
-</section>
-<section id="the-model-finds-the-geometry" class="slide level2 money">
-<h2>The model finds the geometry</h2>
-<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
-<p><span class="math inline">\(L=32 \quad \beta=1.8 \quad N=6\)</span></p>
-</div>
-
-<img data-src="figures/fig_res_geometry.svg" class="r-stretch"><div class="columns">
-<div class="column" style="width:50%;">
-<div class="fragment lead" style="text-align:center; font-size:0.8em; margin-top:0.2em">
-<p>The learned schedule lands <br> on the <strong>measured</strong> Fisher optimum.</p>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="fragment lead" style="text-align:center; font-size:0.8em; margin-top:0.2em; margin-left:2.5em;">
-<p>…and walks it at <strong>equal thermodynamic length per step</strong> <br> the geodesic condition recovered from samples alone.</p>
-</div>
-</div></div>
-</section>
-<section id="solved-ladder-bottleneck" class="slide level2">
-<h2>Solved ladder bottleneck</h2>
-
-<img data-src="figures/fig_res_swaps.svg" class="r-stretch"><div class="columns">
-<div class="column" style="width:58%;">
-<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em">
-<p>The naive ladder <strong>drops to 9.5%</strong> acceptance at the crossover.<br> The learned schedule keeps every rung <strong>uniform</strong>, so replicas <strong>round-trip</strong>.</p>
-</div>
-</div><div class="column" style="width:42%;">
-<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em">
-<p>It gets there by minimizing the <strong>sKL loss</strong> — equal-length steps, the geodesic condition.</p>
-</div>
-</div></div>
-</section>
-<section id="a-field-of-coupling" class="slide level2">
-<h2>A field of coupling</h2>
-<div class="columns">
-<div class="column" style="width:54%;">
-<p><img data-src="figures/fig_res_field.gif"></p>
-</div><div class="column" style="width:46%; font-size:0.92em">
-<div class="div" style="margin-top:5.0em; font-size:0.88em; text-align:center;">
-<p>The U-Net emits a full field <span class="math inline">\(\beta(x,y,\lambda)\)</span>;<br> not a scalar schedule.</p>
-</div>
-<div class="fragment" style="margin-top:0.8em">
-<ul>
-<li><strong>early</strong>: drives the defect coupling <span class="target" style=""><strong>ahead</strong></span> of the ramp;</li>
-<li><strong>late</strong>: <span class="easy" style=""><strong>holds it back</strong></span>;</li>
-</ul>
-</div>
-<div class="fragment lead" style="text-align:center; margin-top:1.3em; font-size:0.78em">
-<p>Freedom no scalar schedule has.</p>
-</div>
-<div class="fragment lead" style="text-align:center; margin-top:1.3em; font-size:0.85em">
-<ul>
-<li>We have explored <strong>different defect shapes</strong>: disk, square and stripe</li>
-<li>We stick to a finite stripe (cheaper).</li>
-</ul>
-</div>
-</div></div>
-</section>
-<section id="topology-is-not-frozen" class="slide level2">
-<h2>Topology is not frozen!</h2>
-<div style="text-align:center; font-size:0.88em; margin-top:-0.3em">
-<p><span class="math inline">\(N=21 \quad L=150 \quad \beta \simeq 0.8 \quad N_R=12\)</span></p>
-</div>
-
-<img data-src="figures/fig_res_qhistory.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.5em; font-size:0.84em">
-<p>The full run <strong>~350k measurements</strong> (<span class="math inline">\(L=150\)</span>, optimized schedule): the physical replica visits sectors <span class="math inline">\(-8\ldots+8\)</span>. <br> Tempering through the defect keeps the charge <span class="easy" style=""><strong>unfrozen</strong></span>, where local updates would <span style="color: #913030;"><strong>freeze</strong></span> it.</p>
-</div>
-</section>
-<section id="critical-slowing-down-of-q²" class="slide level2">
-<h2>Critical slowing down of Q²</h2>
-<div class="div" style="text-align:center; margin-top:-1.15em; font-size:0.88em">
-<p><span class="math inline">\(\tau_{\mathrm{int}}(Q^2)\sim(\xi/a)^{z}\)</span></p>
-</div>
-<div style="text-align:center; margin-top:-0.35em; font-size:0.6em; color:#666">
-<p><span class="math inline">\(\Lambda/\xi \equiv L_d/\xi \qquad\)</span> <span class="math inline">\(\qquad L_d \lesssim 12\%\,L \qquad\)</span> <span class="math inline">\(\qquad \Lambda \propto \sqrt{L_d} \qquad\)</span></p>
-</div>
-
-<img data-src="figures/fig_res_tau_scaling.svg" class="r-stretch"><div class="fragment lead" style="text-align:center; margin-top:0.3em; font-size:0.78em; color: #212121">
-<p>Five volumes with <span class="math inline">\(L/\xi \gtrsim 20\)</span> and three defect sizes: optimized schedule <em>(<strong>right</strong>)</em> sits systematically below the linear one <em>(<strong>left</strong>)</em>.</p>
-</div>
-</section>
-<section id="optimized-annealing-pays-off" class="slide level2">
-<h2>Optimized annealing pays off</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="figures/fig_res_prefactor.svg"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="figures/fig_res_speedup.svg"></p>
-</div></div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em; color:  #212121">
-<p>The prefactor falls as <span class="math inline">\(A\sim(\Lambda/\xi)^{\gamma}\)</span> with <span class="math inline">\(\gamma\approx-1\)</span> <br> a larger defect (more replicas) already helps.</p>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="fragment lead" style="text-align:center; font-size:0.72em; margin-top:0.2em; color:  #212121">
-<p>On top of that, the optimized schedule has a <strong>further <span class="math inline">\(\sim20\%\)</span></strong> off, uniformly in <span class="math inline">\(\Lambda/\xi\)</span>.</p>
-</div>
-</div></div>
-</section>
-<section id="thank-you" class="slide level2 center">
-<h2>Thank you</h2>
-<div class="lead">
-<p>Questions?</p>
-</div>
-</section>
-<section id="references" class="slide level2">
-<h2>References</h2>
-<div style="font-size: 0.72em; line-height: 1.7;">
-<p><span style=";color: gray;">[1]</span> Del Debbio, Manca, Vicari, Phys. Lett. B 594 (2004) 315 [arXiv:hep-lat/0403001] <br> <span style=";color: gray;">[2]</span> Schaefer, Sommer, Virotta (ALPHA), Nucl. Phys. B 845 (2011) 93 [arXiv:1009.5228] <br> <span style=";color: gray;">[3]</span> Neal, Stat. Comput. 11 (2001) 125 [arXiv:physics/9803008] <br> <span style=";color: gray;">[4]</span> Caselle, Cellini, Nada, Panero, JHEP 07 (2022) 015 [arXiv:2201.08862] <br> <span style=";color: gray;">[5]</span> Albergo, Vanden-Eijnden, ICML 2025 [arXiv:2410.02711] <br> <span style=";color: gray;">[6]</span> Albergo, Kanwar, Shanahan, Phys. Rev.&nbsp;D 100 (2019) 034515 [arXiv:1904.12072] <br> <span style=";color: gray;">[7]</span> Lüscher, Schaefer, JHEP 07 (2011) 036 [arXiv:1105.4749] <br> <span style=";color: gray;">[8]</span> Hasenbusch, Phys. Rev.&nbsp;D 96 (2017) 054504 [arXiv:1706.04443] <br> <span style=";color: gray;">[9]</span> Bonanno, Clemente, D’Elia, Maio, Parente, JHEP 08 (2024) 236 [arXiv:2404.14151] <br> <span style=";color: gray;">[10]</span> Crooks, Phys. Rev.&nbsp;Lett. 99 (2007) 100602 [arXiv:0706.0559] <br> <span style=";color: gray;">[11]</span> Sivak, Crooks, Phys. Rev.&nbsp;Lett. 108 (2012) 190602 [arXiv:1201.4166] <br></p>
-</div>
 
 <div class="reveal-header">
 <div class="header-title">

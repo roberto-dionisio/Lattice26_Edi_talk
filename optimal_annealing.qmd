@@ -151,66 +151,7 @@ Why sampling [**Topology**]{style="color: #EB811B;"} is so [**difficult**]{style
 
 
 
-## Where the exponential comes from
 
-:::: {.columns}
-::: {.column style="width:58%; margin-top:1em"}
-
-{{< include figures/_fig03_overlay.qmd >}}
-
-:::
-::: {.column width="42%"}
-
-::: {class="fragment" fragment-index=0 style="margin-top:0em; font-size:0.85em; text-align:center;"}
-
-<div style="font-size:1em; text-align:center;"> **Particle on a ring**
-</div> 
-<div style="margin-top:0.5em;">
-</div>
-
-$x(\tau): S^1_\tau \rightarrow S^1_x$
-
-<div style="margin-top:1.1em;">
-</div>
-The path integral splits into **homotopy sectors** by winding number
-$Q\in\mathbb{Z}$:
-
-$$Z \;=\; \sum_{Q} Z_Q$$
-:::
-
-::: {class="fragment" fragment-index=3 style="margin-top:1.4em; font-size:0.85em; text-align:center;"}
-<div style="font-size:1em; text-align:center;">**Local Algorithms:** </div>
-Constant acceptance ⇒  $\delta x \sim \sqrt{a}$.
-:::
-
-
-
-
-:::
-::::
-
-::: {.fragment fragment-index=4}
-
-::: {.lead style="text-align:center; margin:0.15em auto 0.1em; max-width:94%; font-size:1.0em; margin-top:1.5em"}
- Topology changes
-require crossing an action barrier $\Delta S \sim c/a$
-:::
-
-::: {.eqbox style="display:block; width:max-content; margin:0.1em auto; text-align:center"}
-$P_{\mathrm{tunnel}} \sim e^{-\Delta S} \quad\Longrightarrow\quad
- \tau_{\mathrm{int}}(Q) \sim e^{\,\Delta S} \sim e^{\,c/a}$
-:::
-
-:::
-
-::: {.notes}
-Particle on a ring: the path integral splits into homotopy classes labelled by the
-winding number Q (pi_1(S^1) = Z); the two boxes are the Q=0 and Q=+1 sectors. Local
-Monte Carlo at fixed acceptance proposes path changes of order sqrt(a). Changing Q
-needs a defect -- one link with Dphi ~ pi -- costing DS ~ 1/a ~ 2 beta-tilde, a
-barrier that diverges in the continuum. Tunnelling is suppressed as e^{-DS}, so
-tau_top ~ e^{c/a}. Same mechanism in CP^(N-1) and QCD.
-:::
 
 ## Fighting freezing: an annealing protocol
 
@@ -735,7 +676,7 @@ keeps the charge [**unfrozen**]{.easy}, where local updates would [**freeze**]{s
 $\tau_{\mathrm{int}}(Q^2)\sim(\xi/a)^{z}$
 :::
 
-::: {style="text-align:center; margin-top:-0.35em; font-size:0.6em; color:#666"}
+::: {style="text-align:center; margin-top:-0.35em; font-size:0.76em; color:#666"}
 $\Lambda/\xi \equiv L_d/\xi \qquad$   $\qquad L_d \lesssim 12\%\,L \qquad$  $\qquad \Lambda \propto \sqrt{L_d} \qquad$
 :::
 
@@ -777,6 +718,30 @@ in $\Lambda/\xi$.
 :::
 ::::
 
+## Conclusions
+
+::: {.fragment style="margin-top:1.1em"}
+[**Parallel tempering + optimal schedule beats topological freezing**]{style="color:#EB811B; font-size:1.05em"}
+
+With the Fisher-geodesic condition we get a good **diffusion** of topological mixing,
+from the open replica up to the periodic one.
+:::
+
+::: {.fragment style="margin-top:1.7em"}
+**A ready-made, exact framework**
+
+The same parallel tempering already runs in full $2\!+\!1$ QCD [[9]]{color=gray}, and
+across 2D CP(N-1) [[12]]{color=gray}[[13]]{color=gray} and pure-gauge SU(3) / SU(N)
+[[14]]{color=gray}[[15]]{color=gray}[[16]]{color=gray}. Schedule optimization plugs
+straight in.
+:::
+
+::: {.fragment style="margin-top:1.9em; border-left:5px solid #3b7ea1; background:rgba(59,126,161,0.07); border-radius:6px; padding:0.55em 1.2em"}
+[**Outlook**]{style="color:#3b7ea1"}  ·  minimize the **cost**, not only the protocol: a
+cost function of the defect size $L_d$, the number of replicas $N_R$ and the
+autocorrelation time $\tau_{\mathrm{int}}$, minimized to the true compute optimum.
+:::
+
 ## Thank you {.center}
 
 ::: {.lead}
@@ -799,5 +764,72 @@ Questions?
 [[9]]{color=gray} Bonanno, Clemente, D'Elia, Maio, Parente, JHEP 08 (2024) 236 [arXiv:2404.14151] <br>
 [[10]]{color=gray} Crooks, Phys. Rev. Lett. 99 (2007) 100602 [arXiv:0706.0559] <br>
 [[11]]{color=gray} Sivak, Crooks, Phys. Rev. Lett. 108 (2012) 190602 [arXiv:1201.4166] <br>
+[[12]]{color=gray} Berni, Bonanno, D'Elia, Phys. Rev. D 100 (2019) 114509 [arXiv:1911.03384] <br>
+[[13]]{color=gray} Bonanno, Phys. Rev. D 107 (2023) 014514 [arXiv:2212.02330] <br>
+[[14]]{color=gray} Bonanno, Dasilva Golán, D'Elia, García Pérez, Giorgieri, EPJC 84 (2024) 916 [arXiv:2403.13607] <br>
+[[15]]{color=gray} Bonanno, JHEP 01 (2026) 039 [arXiv:2510.08006] <br>
+[[16]]{color=gray} Bonanno, Bonati, D'Elia, JHEP 03 (2021) 111 [arXiv:2012.14000] <br>
 
+:::
+
+
+## Where the exponential comes from
+
+:::: {.columns}
+::: {.column style="width:58%; margin-top:1em"}
+
+{{< include figures/_fig03_overlay.qmd >}}
+
+:::
+::: {.column width="42%"}
+
+::: {class="fragment" fragment-index=0 style="margin-top:0em; font-size:0.85em; text-align:center;"}
+
+<div style="font-size:1em; text-align:center;"> **Particle on a ring**
+</div> 
+<div style="margin-top:0.5em;">
+</div>
+
+$x(\tau): S^1_\tau \rightarrow S^1_x$
+
+<div style="margin-top:1.1em;">
+</div>
+The path integral splits into **homotopy sectors** by winding number
+$Q\in\mathbb{Z}$:
+
+$$Z \;=\; \sum_{Q} Z_Q$$
+:::
+
+::: {class="fragment" fragment-index=3 style="margin-top:1.4em; font-size:0.85em; text-align:center;"}
+<div style="font-size:1em; text-align:center;">**Local Algorithms:** </div>
+Constant acceptance ⇒  $\delta x \sim \sqrt{a}$.
+:::
+
+
+
+
+:::
+::::
+
+::: {.fragment fragment-index=4}
+
+::: {.lead style="text-align:center; margin:0.15em auto 0.1em; max-width:94%; font-size:1.0em; margin-top:1.5em"}
+ Topology changes
+require crossing an action barrier $\Delta S \sim c/a$
+:::
+
+::: {.eqbox style="display:block; width:max-content; margin:0.1em auto; text-align:center"}
+$P_{\mathrm{tunnel}} \sim e^{-\Delta S} \quad\Longrightarrow\quad
+ \tau_{\mathrm{int}}(Q) \sim e^{\,\Delta S} \sim e^{\,c/a}$
+:::
+
+:::
+
+::: {.notes}
+Particle on a ring: the path integral splits into homotopy classes labelled by the
+winding number Q (pi_1(S^1) = Z); the two boxes are the Q=0 and Q=+1 sectors. Local
+Monte Carlo at fixed acceptance proposes path changes of order sqrt(a). Changing Q
+needs a defect -- one link with Dphi ~ pi -- costing DS ~ 1/a ~ 2 beta-tilde, a
+barrier that diverges in the continuum. Tunnelling is suppressed as e^{-DS}, so
+tau_top ~ e^{c/a}. Same mechanism in CP^(N-1) and QCD.
 :::
