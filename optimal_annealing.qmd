@@ -742,12 +742,8 @@ cost function of the defect size $L_d$, the number of replicas $N_R$ and the
 autocorrelation time $\tau_{\mathrm{int}}$, minimized to the true compute optimum.
 :::
 
-## Thank you {.center}
+# Thank you for your attention!
 
-::: {.lead}
-
-Questions?
-:::
 
 ## References
 
