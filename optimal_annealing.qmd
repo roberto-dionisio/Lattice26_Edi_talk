@@ -145,7 +145,7 @@ $$\tau_{\mathrm{int}}(Q^2) \;\sim\; e^{\,c/a}$$
 
 
 ::: {class="fragment" fragment-index=3 style="font-size:1.0em; font-style:italic; color:gray; margin-top:-50px; margin-left:58%; text-align:left;"}
-Why sampling [**Topology**]{style="color: #EB811B;"} is so [**difficult**]{style="color: #EB811B;"}?
+How we can  [**fight it**]{style="color: #EB811B;"}?
 :::
 
 
